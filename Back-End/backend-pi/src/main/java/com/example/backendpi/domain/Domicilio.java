@@ -10,11 +10,14 @@ public class Domicilio {
     private String localidad;
     private String provincia;
 
-    public Domicilio(String calle, String numero, String localidad, String provincia) {
+    private Usuario usuario;
+
+    public Domicilio(String calle, String numero, String localidad, String provincia, Usuario usuario) {
         this.calle = calle;
         this.numero = numero;
         this.localidad = localidad;
         this.provincia = provincia;
+        this.usuario = usuario;
     }
 
     public Domicilio() {
@@ -58,5 +61,13 @@ public class Domicilio {
 
     public void setProvincia(String provincia) {
         this.provincia = provincia;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

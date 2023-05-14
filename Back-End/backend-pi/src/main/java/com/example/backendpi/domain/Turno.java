@@ -1,5 +1,7 @@
 package com.example.backendpi.domain;
 
+import com.example.backendpi.service.ClienteService;
+
 import javax.persistence.Entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,15 +12,15 @@ public class Turno {
     private LocalDateTime fecha;
     private Double precio;
     private Integer horas;
-    private Usuario usuario;
+    private Cliente cliente;
     private Cancha cancha;
 
 
-    public Turno(LocalDateTime fecha, Double precio, Integer horas, Usuario usuario, Cancha cancha) {
+    public Turno(LocalDateTime fecha, Double precio, Integer horas, Cliente cliente, Cancha cancha) {
         this.fecha = fecha;
         this.precio = precio;
         this.horas = horas;
-        this.usuario = usuario;
+        this.cliente = cliente;
         this.cancha = cancha;
     }
 
@@ -57,12 +59,12 @@ public class Turno {
         this.horas = horas;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public Cancha getCancha() {
