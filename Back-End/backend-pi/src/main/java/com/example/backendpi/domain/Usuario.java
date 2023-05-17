@@ -1,9 +1,12 @@
 package com.example.backendpi.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
-public abstract class Usuario {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Usuario {
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String password;

@@ -1,6 +1,7 @@
 package com.example.backendpi.domain;
 
 import javax.persistence.Entity;
+import java.time.LocalTime;
 
 @Entity
 public class Cancha {
@@ -8,13 +9,21 @@ public class Cancha {
     private Deporte deporte;
     private Domicilio domicilio;
     private Double precioxhora;
+    private String telefono;
     private Prestador prestador;
 
-    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, Prestador prestador) {
+    private LocalTime fechaApertura;
+
+    private LocalTime fechaCierre;
+
+    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Prestador prestador, LocalTime fechaApertura, LocalTime fechaCierre) {
         this.deporte = deporte;
         this.domicilio = domicilio;
         this.precioxhora = precioxhora;
+        this.telefono = telefono;
         this.prestador = prestador;
+        this.fechaApertura = fechaApertura;
+        this.fechaCierre = fechaCierre;
     }
 
     public Long getId() {
@@ -55,5 +64,29 @@ public class Cancha {
 
     public void setPrestador(Prestador prestador) {
         this.prestador = prestador;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public LocalTime getFechaApertura() {
+        return fechaApertura;
+    }
+
+    public void setFechaApertura(LocalTime fechaApertura) {
+        this.fechaApertura = fechaApertura;
+    }
+
+    public LocalTime getFechaCierre() {
+        return fechaCierre;
+    }
+
+    public void setFechaCierre(LocalTime fechaCierre) {
+        this.fechaCierre = fechaCierre;
     }
 }

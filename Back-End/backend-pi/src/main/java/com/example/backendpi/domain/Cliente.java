@@ -1,19 +1,29 @@
 package com.example.backendpi.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import java.util.ArrayList;
+import java.util.List;
+@Entity
 public class Cliente extends Usuario{
-    private Domicilio domicilio;
-    private String nombre;
-    private String dni;
-    private String telefono;
-    private Turno turno;
 
-    public Cliente(String email, String password, Rol rol, Domicilio domicilio, String nombre, String dni, String telefono, Turno turno) {
+    private Domicilio domicilio;
+
+    private String nombre;
+
+    private String dni;
+
+    private String telefono;
+
+    private List<Turno> turnoList;
+
+    public Cliente(String email, String password, Rol rol, Domicilio domicilio, String nombre, String dni, String telefono) {
         super(email, password, rol);
         this.domicilio = domicilio;
         this.nombre = nombre;
         this.dni = dni;
         this.telefono = telefono;
-        this.turno = turno;
+        turnoList = new ArrayList<>();
     }
 
     public Domicilio getDomicilio() {
@@ -48,12 +58,11 @@ public class Cliente extends Usuario{
         this.telefono = telefono;
     }
 
-    public Turno getTurno() {
-        return turno;
+    public List<Turno> getTurnoList() {
+        return turnoList;
     }
 
-    public void setTurno(Turno turno) {
-        this.turno = turno;
+    public void setTurnoList(List<Turno> turnoList) {
+        this.turnoList = turnoList;
     }
-
 }

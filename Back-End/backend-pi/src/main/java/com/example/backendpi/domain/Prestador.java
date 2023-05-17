@@ -1,8 +1,10 @@
 package com.example.backendpi.domain;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Prestador extends Usuario{
     private String nombre;
     private Domicilio domicilio;
