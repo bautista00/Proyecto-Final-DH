@@ -8,7 +8,9 @@ const Header = () => {
       <Logo href="/" />
       <ButtonsContainer>
         <Button title="Crear cuenta" />
-        <Button title="Iniciar sesíon" />
+        <a href="/CreateProduct">
+          <Button title="Iniciar sesíon" />
+        </a>
       </ButtonsContainer>
     </HeaderContainer>
   );
