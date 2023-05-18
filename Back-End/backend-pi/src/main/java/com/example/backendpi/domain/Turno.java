@@ -2,17 +2,26 @@ package com.example.backendpi.domain;
 
 import com.example.backendpi.service.ClienteService;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "turnos")
 public class Turno {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDateTime fecha;
+
     private Double precio;
+
     private Integer horas;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "cancha_id", referencedColumnName = "id")
     private Cancha cancha;
 
 

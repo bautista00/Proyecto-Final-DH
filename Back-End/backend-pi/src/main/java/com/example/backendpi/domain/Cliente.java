@@ -1,27 +1,32 @@
 package com.example.backendpi.domain;
 
-public class Cliente extends Usuario{
-    private Domicilio domicilio;
-    private String nombre;
-    private String dni;
-    private String telefono;
-    private Turno turno;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
-    public Cliente(String email, String password, Rol rol, Domicilio domicilio, String nombre, String dni, String telefono, Turno turno) {
-        super(email, password, rol);
-        this.domicilio = domicilio;
+@Entity
+public class Cliente extends Usuario{
+
+    private String nombre;
+
+    private String dni;
+
+    private String telefono;
+
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Turno> turnoList = new HashSet<>();
+
+    public Cliente(String email, String password, Rol rol, Domicilio domicilio, String nombre, String dni, String telefono) {
+        super(email, password, rol, domicilio);
         this.nombre = nombre;
         this.dni = dni;
         this.telefono = telefono;
-        this.turno = turno;
+
     }
 
-    public Domicilio getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(Domicilio domicilio) {
-        this.domicilio = domicilio;
+    public Cliente() {
     }
 
     public String getNombre() {
@@ -48,12 +53,5 @@ public class Cliente extends Usuario{
         this.telefono = telefono;
     }
 
-    public Turno getTurno() {
-        return turno;
-    }
-
-    public void setTurno(Turno turno) {
-        this.turno = turno;
-    }
 
 }

@@ -1,6 +1,5 @@
 package com.example.backendpi.repository;
 
-import com.example.backendpi.domain.Admin;
 import com.example.backendpi.domain.Turno;
 import org.springframework.data.jpa.repository.JpaRepository;
 
