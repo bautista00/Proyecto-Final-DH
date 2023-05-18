@@ -1,0 +1,105 @@
+[
+  {
+    "id": "1",
+    "name": "Canchas Sarmiento",
+    "kindOfSport": "Futbol ",
+    "location": "Cali, Colombia.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": "Baños, Asador, Wifi",
+    "contact": "1109808231.",
+    "price": "18000.",
+    "image": "/images/futbolRecommended.jpg",
+    "description": "Cancha de futbol"
+  },
+
+  {
+    "id": "2",
+    "name": "Canchas Montessori",
+    "kindOfSport": "Tenis ",
+    "location": "Cali, Colombia.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": "Baños, Asador, Wifi",
+    "contact": "1109808231.",
+    "price": "14000.",
+    "image": "/images/tenisRecommended.jpg",
+    "description": "Cancha de tenis"
+  },
+
+  {
+    "id": "3",
+    "name": "Canchas Quality Sport",
+    "kindOfSport": "Basquetbol ",
+    "location": "Cali, Colombia.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": "Baños, Asador, Wifi",
+    "contact": "1109808231.",
+    "price": "12000.",
+    "image": "/images/basquetbolRecommended.jpg",
+    "description": "Cancha de Basquetbol"
+  },
+
+  {
+    "id": "4",
+    "name": "Canchas Panamericanas",
+    "kindOfSport": "Voleibol ",
+    "location": "Cali, Colombia.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": "Baños, Asador, Wifi",
+    "contact": "1109808231.",
+    "price": "19000.",
+    "image": "/images/voleibolRecommended.jpg",
+    "description": "Cancha de Voleibol"
+  },
+
+  {
+    "id": "5",
+    "name": "Ankor Futbol.",
+    "kindOfSport": "Futbol 7.",
+    "location": "San martin 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": "Baños, Asador, Wifi.",
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/canchaFutbol7.png",
+    "description": "Cancha de futbol"
+  },
+
+  {
+    "id": "6",
+    "name": "Tenis Migueletes.",
+    "kindOfSport": "Tenis.",
+    "location": "Migueletes 654, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo de 09:00hs a 20:30hs.",
+    "services": "Vestuario dama y caballero, Confiteria, Wifi.",
+    "contact": "1108602242.",
+    "price": "5000",
+    "image": "/images/clubTenis.jpg",
+    "description": "Cancha de Tenis"
+  },
+
+  {
+    "id": "7",
+    "name": "Pick and Roll Basket.",
+    "kindOfSport": "Basket.",
+    "location": "Av.Libertador 1500, Buenos Aires, Capital.",
+    "schedule": "De martes a domingo de 11:00hs a 23:30hs.",
+    "services": "Vestuario dama y caballero.",
+    "contact": "1108903321.",
+    "price": "17000.",
+    "image": "/images/canchaBasket.png",
+    "description": "Cancha de Basket"
+  },
+
+  {
+    "id": "8",
+    "name": "Pilar Tenis.",
+    "kindOfSport": "Tenis.",
+    "location": "3 de Febrero 1500, Buenos Aires, Provincia.",
+    "schedule": "De martes a domingo de 09:00hs a 23:30hs.",
+    "services": "Vestuario dama y caballero, Confiteria.",
+    "contact": "1127903577.",
+    "price": "8500.",
+    "image": "/images/canchaPadel.png",
+    "description": "Cancha de Tenis"
+  }
+]

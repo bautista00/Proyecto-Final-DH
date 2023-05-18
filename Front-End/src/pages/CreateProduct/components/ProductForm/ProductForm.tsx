@@ -3,13 +3,14 @@ import {
   Button,
   Cascader,
   DatePicker,
-  Form,
   Input,
   InputNumber,
   Select,
   Switch,
   TreeSelect,
+  Typography,
   Upload,
+  notification,
 } from "antd";
 import React from "react";
 import {
@@ -18,29 +19,92 @@ import {
   ProductFormContainer,
   ProductFormInputContainer,
 } from "./styled";
+import { NotificationPlacement } from "antd/es/notification/interface";
+import { useForm } from "react-hook-form";
 
-const { RangePicker } = DatePicker;
-const { TextArea } = Input;
-
-const normFile = (e: any) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
+interface Inputs {
+  name: string;
+  price: string;
+  location: string;
+  kindOfSport: string;
+}
 
 const ProductForm: React.FC = () => {
+  const [api, contextHolder] = notification.useNotification();
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const { RangePicker } = DatePicker;
+  const { TextArea } = Input;
+
+  const normFile = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
+
+  const openNotification = (
+    placement: NotificationPlacement,
+    type: "error" | "success" = "success"
+  ) => {
+    if (type === "error") {
+      api.error({
+        message: `Producto existente`,
+        description: "Ya existe un producto con ese nombre.",
+        placement,
+      });
+    } else {
+      api.info({
+        message: `Producto registrado`,
+        description: "Su producto fue registrado correctamente.",
+        placement,
+      });
+    }
+  };
+
+  const onSubmit = (values: Inputs) => {
+    fetch("../data/data.json")
+      .then((response) => response.json())
+      .then((data) => {
+        const existingProduct = data.find(
+          (product: any) => product.name === values.name
+        );
+
+        if (!existingProduct) {
+          openNotification("top");
+          return;
+        }
+
+        openNotification("top", "error");
+      });
+  };
+
   return (
     <ProductFormContainer>
-      <CustomForm
-        layout="vertical"
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 14 }}
-        style={{ maxWidth: 600 }}
-      >
+      {contextHolder}
+      <CustomForm onSubmit={handleSubmit(onSubmit)}>
         <ProductFormInputContainer>
           <CustomFormItem label="Nombre o Empresa">
-            <Input />
+            <Input
+              status={errors.name ? "error" : ""}
+              {...register("name", {
+                required: {
+                  value: true,
+                  message: "Por favor ingrese el nombre o empresa",
+                },
+                onChange: (e) => setValue("name", e.target.value),
+              })}
+            />
+            {errors.name && (
+              <Typography.Text type="danger">
+                {errors.name?.message}
+              </Typography.Text>
+            )}
           </CustomFormItem>
           <CustomFormItem label="Categoria:">
             <Select>
@@ -126,7 +190,7 @@ const ProductForm: React.FC = () => {
         </CustomFormItem>
 
         <CustomFormItem>
-          <Button>Confirmar</Button>
+          <Button htmlType="submit">Confirmar</Button>
           <Button>Cancelar</Button>
         </CustomFormItem>
       </CustomForm>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Avatar, Card } from "antd";
 import {
   RecommendedCardImage,
@@ -6,90 +6,49 @@ import {
   RecommendedContainer,
   RecommendedTitle,
 } from "./styled";
+import { Link } from "react-router-dom";
 
 const { Meta } = Card;
 
-const Recommended: React.FC = () => (
-  <RecommendedContainer>
-    <RecommendedTitle>Recomendaciones</RecommendedTitle>
-    <RecommendedCardsContainer>
-      <Card
-        hoverable
-        style={{ width: 300 }}
-        cover={
-          <RecommendedCardImage
-            src="images/futbolRecommended.jpg"
-            alt="Futbol"
-          />
-        }
-      >
-        <Meta
-          avatar={
-            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-          }
-          title="Canchas Sarmiento"
-          description="Cancha de futbol "
-        />
-      </Card>
+const Recommended: React.FC = () => {
+  const [cardData, setCardData] = useState([]);
 
-      <Card
-        hoverable
-        style={{ width: 300 }}
-        cover={
-          <RecommendedCardImage
-            src="images/tenisRecommended.jpg"
-            alt="Tenis "
-          />
-        }
-      >
-        <Meta
-          avatar={
-            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-          }
-          title="Canchas Montessori"
-          description="Cancha de tenis "
-        />
-      </Card>
+  useEffect(() => {
+    fetch("data/data.json")
+      .then((response) => response.json())
+      .then((data) => setCardData(data));
+  }, []);
 
-      <Card
-        hoverable
-        style={{ width: 300 }}
-        cover={
-          <RecommendedCardImage
-            src="images/basquetbolRecommended.jpg"
-            alt="Basquetbol "
-          />
-        }
-      >
-        <Meta
-          avatar={
-            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-          }
-          title="Canchas Quality Sport"
-          description="Cancha de basquetbol "
-        />
-      </Card>
+  const getRandomCards = (count: number) => {
+    const shuffledData = [...cardData].sort(() => Math.random() - 0.5);
+    return shuffledData.slice(0, count);
+  };
 
-      <Card
-        hoverable
-        style={{ width: 300 }}
-        cover={
-          <RecommendedCardImage
-            src="images/voleibolRecommended.jpg"
-            alt="Voleibol "
-          />
-        }
-      >
-        <Meta
-          avatar={
-            <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
-          }
-          title="Canchas Panamericanas"
-          description="Cancha de voleibol"
-        />
-      </Card>
-    </RecommendedCardsContainer>
-  </RecommendedContainer>
-);
+  return (
+    <RecommendedContainer>
+      <RecommendedTitle>Recomendaciones</RecommendedTitle>
+      <RecommendedCardsContainer>
+        {getRandomCards(4).map((card: any) => (
+          <Link to={`/Detail/${card.id}`}>
+            <Card
+              hoverable
+              key={card.id}
+              style={{ width: 300 }}
+              cover={<RecommendedCardImage src={card.image} alt="Futbol" />}
+            >
+              <Meta
+                avatar={
+                  <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel" />
+                }
+                title={card.name}
+                description={card.description}
+              />
+            </Card>
+          </Link>
+        ))}
+      </RecommendedCardsContainer>
+    </RecommendedContainer>
+  );
+};
 
 export default Recommended;
