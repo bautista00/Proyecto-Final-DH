@@ -18,8 +18,10 @@ public class Turno {
 
     private Integer horas;
     @ManyToOne
-    @JoinColumn (name = "cliente_id")
+    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
     private Cliente cliente;
+    @ManyToOne
+    @JoinColumn(name = "cancha_id", referencedColumnName = "id")
     private Cancha cancha;
 
 

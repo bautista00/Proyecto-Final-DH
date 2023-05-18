@@ -1,22 +1,33 @@
 package com.example.backendpi.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.time.LocalTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Cancha {
+
+    @Id
     private Long id;
     private Deporte deporte;
+    @OneToOne
+    @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;
     private Double precioxhora;
     private String telefono;
+    @ManyToOne
+    @JoinColumn(name = "prestador_id", referencedColumnName = "id")
     private Prestador prestador;
 
     private LocalTime fechaApertura;
 
     private LocalTime fechaCierre;
 
-    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Prestador prestador, LocalTime fechaApertura, LocalTime fechaCierre) {
+    @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Turno> turnoList = new HashSet<>();
+
+    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Prestador prestador, LocalTime fechaApertura, LocalTime fechaCierre, Set<Turno> turnoList) {
         this.deporte = deporte;
         this.domicilio = domicilio;
         this.precioxhora = precioxhora;
@@ -24,6 +35,10 @@ public class Cancha {
         this.prestador = prestador;
         this.fechaApertura = fechaApertura;
         this.fechaCierre = fechaCierre;
+        this.turnoList = turnoList;
+    }
+
+    public Cancha() {
     }
 
     public Long getId() {
@@ -88,5 +103,13 @@ public class Cancha {
 
     public void setFechaCierre(LocalTime fechaCierre) {
         this.fechaCierre = fechaCierre;
+    }
+
+    public Set<Turno> getTurnoList() {
+        return turnoList;
+    }
+
+    public void setTurnoList(Set<Turno> turnoList) {
+        this.turnoList = turnoList;
     }
 }

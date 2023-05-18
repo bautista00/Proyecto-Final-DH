@@ -12,10 +12,18 @@ public class Usuario {
     private String password;
     private Rol rol;
 
-    public Usuario(String email, String password, Rol rol) {
+    @OneToOne
+    @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
+    private Domicilio domicilio;
+
+    public Usuario(String email, String password, Rol rol, Domicilio domicilio) {
         this.email = email;
         this.password = password;
         this.rol = rol;
+        this.domicilio = domicilio;
+    }
+
+    public Usuario() {
     }
 
     public Long getId() {
@@ -48,5 +56,13 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public Domicilio getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
     }
 }

@@ -1,15 +1,19 @@
 package com.example.backendpi.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Domicilio {
+    @Id
     private Long id;
     private String calle;
     private String numero;
     private String localidad;
     private String provincia;
-
+    @OneToOne(mappedBy = "domicilio")
     private Usuario usuario;
 
     public Domicilio(String calle, String numero, String localidad, String provincia, Usuario usuario) {

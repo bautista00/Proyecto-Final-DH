@@ -1,27 +1,30 @@
 package com.example.backendpi.domain;
 
-import javax.persistence.Entity;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Prestador extends Usuario{
     private String nombre;
-    private Domicilio domicilio;
+
     private String cuil;
     private String telefono;
     private Integer CBU;
-    private List<Cancha> canchaList;
+    @OneToMany(mappedBy = "prestador", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Cancha> canchaList = new HashSet<>();
 
 
-    public Prestador(String email, String password, Rol rol, String nombre, Domicilio domicilio, String cuil, String telefono, Integer CBU) {
-        super(email, password, rol);
+    public Prestador(String email, String password, Rol rol, Domicilio domicilio, String nombre, String cuil, String telefono, Integer CBU, Set<Cancha> canchaList) {
+        super(email, password, rol, domicilio);
         this.nombre = nombre;
-        this.domicilio = domicilio;
         this.cuil = cuil;
         this.telefono = telefono;
         this.CBU = CBU;
-        this.canchaList = new ArrayList<>();
+        this.canchaList = canchaList;
+    }
+
+    public Prestador() {
     }
 
     public String getNombre() {
@@ -30,14 +33,6 @@ public class Prestador extends Usuario{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Domicilio getDomicilio() {
-        return domicilio;
-    }
-
-    public void setDomicilio(Domicilio domicilio) {
-        this.domicilio = domicilio;
     }
 
     public String getCuil() {
@@ -64,11 +59,11 @@ public class Prestador extends Usuario{
         this.CBU = CBU;
     }
 
-    public List<Cancha> getCanchaList() {
+    public Set<Cancha> getCanchaList() {
         return canchaList;
     }
 
-    public void setCanchaList(List<Cancha> canchaList) {
+    public void setCanchaList(Set<Cancha> canchaList) {
         this.canchaList = canchaList;
     }
 }
