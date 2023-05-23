@@ -1,6 +1,5 @@
 package com.example.backendpi.service;
 
-import com.example.backendpi.domain.Cliente;
 import com.example.backendpi.domain.Domicilio;
 import com.example.backendpi.repository.DomicilioRepository;
 import org.springframework.stereotype.Service;

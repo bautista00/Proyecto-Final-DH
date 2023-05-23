@@ -1,10 +1,9 @@
 package com.example.backendpi.controller;
 
-import com.example.backendpi.domain.Prestador;
 import com.example.backendpi.domain.Turno;
 import com.example.backendpi.service.CanchaService;
-import com.example.backendpi.service.ClienteService;
 import com.example.backendpi.service.TurnoService;
+import com.example.backendpi.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +16,19 @@ import java.util.Optional;
 @RequestMapping("/turnos")
 public class TurnoController {
     private TurnoService turnoService;
-    private ClienteService clienteService;
+    private UsuarioService usuarioService;
     private CanchaService canchaService;
 
     @Autowired
-    public TurnoController(TurnoService turnoService, ClienteService clienteService, CanchaService canchaService) {
+    public TurnoController(TurnoService turnoService, UsuarioService usuarioService, CanchaService canchaService) {
         this.turnoService = turnoService;
-        this.clienteService = clienteService;
+        this.usuarioService = usuarioService;
         this.canchaService = canchaService;
     }
 
     @PostMapping
     public ResponseEntity<Turno> agregarTurno(@RequestBody Turno turno){
-        if(canchaService.buscarXId(turno.getCancha().getId()).isPresent() && clienteService.buscarXId(turno.getCliente().getId()).isPresent()){
+        if(canchaService.buscarXId(turno.getCancha().getId()).isPresent() && usuarioService.buscarXId(turno.getCliente().getId()).isPresent()){
         return ResponseEntity.ok(turnoService.guardar(turno));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

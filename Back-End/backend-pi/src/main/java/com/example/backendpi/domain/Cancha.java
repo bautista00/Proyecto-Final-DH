@@ -1,6 +1,7 @@
 package com.example.backendpi.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,24 +18,25 @@ public class Cancha {
     private Double precioxhora;
     private String telefono;
     @ManyToOne
-    @JoinColumn(name = "prestador_id", referencedColumnName = "id")
-    private Prestador prestador;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
 
-    private LocalTime fechaApertura;
+    private LocalTime horaApertura;
 
-    private LocalTime fechaCierre;
+    private LocalTime horaCierre;
+
 
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
 
-    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Prestador prestador, LocalTime fechaApertura, LocalTime fechaCierre, Set<Turno> turnoList) {
+    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Usuario usuario, LocalTime fechaApertura, LocalTime fechaCierre, Set<Turno> turnoList) {
         this.deporte = deporte;
         this.domicilio = domicilio;
         this.precioxhora = precioxhora;
         this.telefono = telefono;
-        this.prestador = prestador;
-        this.fechaApertura = fechaApertura;
-        this.fechaCierre = fechaCierre;
+        this.usuario = usuario;
+        this.horaApertura = fechaApertura;
+        this.horaCierre = fechaCierre;
         this.turnoList = turnoList;
     }
 
@@ -73,12 +75,12 @@ public class Cancha {
         this.precioxhora = precioxhora;
     }
 
-    public Prestador getPrestador() {
-        return prestador;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getTelefono() {
@@ -89,20 +91,20 @@ public class Cancha {
         this.telefono = telefono;
     }
 
-    public LocalTime getFechaApertura() {
-        return fechaApertura;
+    public LocalTime getHoraApertura() {
+        return horaApertura;
     }
 
-    public void setFechaApertura(LocalTime fechaApertura) {
-        this.fechaApertura = fechaApertura;
+    public void setHoraApertura(LocalTime fechaApertura) {
+        this.horaApertura = fechaApertura;
     }
 
-    public LocalTime getFechaCierre() {
-        return fechaCierre;
+    public LocalTime getHoraCierre() {
+        return horaCierre;
     }
 
-    public void setFechaCierre(LocalTime fechaCierre) {
-        this.fechaCierre = fechaCierre;
+    public void setHoraCierre(LocalTime fechaCierre) {
+        this.horaCierre = fechaCierre;
     }
 
     public Set<Turno> getTurnoList() {

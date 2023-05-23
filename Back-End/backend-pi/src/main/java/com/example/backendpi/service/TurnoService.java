@@ -1,6 +1,5 @@
 package com.example.backendpi.service;
 
-import com.example.backendpi.domain.Cliente;
 import com.example.backendpi.domain.Turno;
 import com.example.backendpi.repository.TurnoRepository;
 import org.springframework.stereotype.Service;

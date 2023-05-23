@@ -1,9 +1,6 @@
 package com.example.backendpi.domain;
 
-import com.example.backendpi.service.ClienteService;
-
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,18 +15,18 @@ public class Turno {
 
     private Integer horas;
     @ManyToOne
-    @JoinColumn(name = "cliente_id", referencedColumnName = "id")
-    private Cliente cliente;
+    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
+    private Usuario usuario;
     @ManyToOne
     @JoinColumn(name = "cancha_id", referencedColumnName = "id")
     private Cancha cancha;
 
 
-    public Turno(LocalDateTime fecha, Double precio, Integer horas, Cliente cliente, Cancha cancha) {
+    public Turno(LocalDateTime fecha, Double precio, Integer horas, Usuario usuario, Cancha cancha) {
         this.fecha = fecha;
         this.precio = precio;
         this.horas = horas;
-        this.cliente = cliente;
+        this.usuario = usuario;
         this.cancha = cancha;
     }
 
@@ -68,12 +65,12 @@ public class Turno {
         this.horas = horas;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Cancha getCancha() {

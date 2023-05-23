@@ -1,6 +1,5 @@
 package com.example.backendpi.controller;
 
-import com.example.backendpi.domain.Cliente;
 import com.example.backendpi.domain.Domicilio;
 import com.example.backendpi.service.DomicilioService;
 import org.springframework.beans.factory.annotation.Autowired;

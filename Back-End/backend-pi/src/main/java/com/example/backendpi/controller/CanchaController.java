@@ -2,7 +2,6 @@ package com.example.backendpi.controller;
 
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.service.CanchaService;
-import com.example.backendpi.service.PrestadorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import java.util.Optional;
 public class CanchaController {
     private CanchaService canchaService;
     private PrestadorService prestadorService;
+
 
     @Autowired
     public CanchaController(CanchaService canchaService, PrestadorService prestadorService) {
