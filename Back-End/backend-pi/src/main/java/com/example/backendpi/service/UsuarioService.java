@@ -32,6 +32,24 @@ public class UsuarioService implements UserDetailsService {
         }
     }
 
+    public Usuario guardarUsuario(Usuario usuario){
+        return usuarioRepository.save(usuario);
+    }
+
+    public Optional<Usuario> buscarUsuario(Long id){
+        return usuarioRepository.findById(id);
+    }
+
+    public void borrarUsuario(Long id){
+        if(usuarioRepository.findById(id).isPresent()){
+            usuarioRepository.deleteById(id);
+        }
+    }
+    
+    public List<Usuario> buscarUsuarios(){
+        return usuarioRepository.findAll();
+    }
+
     public ClienteGuardar convertirUsuarioACLienteGuardar(Usuario usuario){
         ClienteGuardar clienteGuardar = new ClienteGuardar();
         clienteGuardar.setId(usuario.getId());
