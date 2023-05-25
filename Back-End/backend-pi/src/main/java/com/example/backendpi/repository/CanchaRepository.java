@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CanchaRepository extends JpaRepository<Cancha, Long> {
-    List<Cancha> findByDeporteAndBarrio(Deporte Deporte, String Barrio);
+//    List<Cancha> findByDeporteAndBarrio(Deporte Deporte, String Barrio);
 
 
 }

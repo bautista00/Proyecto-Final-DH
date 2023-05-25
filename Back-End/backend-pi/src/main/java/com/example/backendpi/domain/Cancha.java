@@ -12,6 +12,7 @@ import java.util.Set;
 public class Cancha {
 
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     private Deporte deporte;
     @OneToOne
@@ -27,9 +28,9 @@ public class Cancha {
 
     private LocalTime horaCierre;
 
-    @OneToMany
-    @JoinColumn(name="servicio_id",referencedColumnName = "id")
-    private List<Servicios> serviciosList;
+//    @OneToMany
+//    @JoinColumn(name="servicio_id",referencedColumnName = "id")
+//    private List<Servicios> serviciosList;
 
 
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -43,7 +44,7 @@ public class Cancha {
         this.usuario = usuario;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
-        this.serviciosList = new ArrayList<>();
+//        this.serviciosList = new ArrayList<>();
         this.turnoList = turnoList;
     }
 
@@ -122,11 +123,11 @@ public class Cancha {
         this.turnoList = turnoList;
     }
 
-    public List<Servicios> getServiciosList() {
-        return serviciosList;
-    }
-
-    public void setServiciosList(List<Servicios> serviciosList) {
-        this.serviciosList = serviciosList;
-    }
+//    public List<Servicios> getServiciosList() {
+//        return serviciosList;
+//    }
+//
+//    public void setServiciosList(List<Servicios> serviciosList) {
+//        this.serviciosList = serviciosList;
+//    }
 }
