@@ -3,7 +3,9 @@ package com.example.backendpi.domain;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,13 +27,15 @@ public class Cancha {
 
     private LocalTime horaCierre;
 
-    private Servicios servicios;
+    @OneToMany
+    @JoinColumn(name="servicio_id",referencedColumnName = "id")
+    private List<Servicios> serviciosList;
 
 
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
 
-    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Usuario usuario, LocalTime horaApertura, LocalTime horaCierre, Servicios servicios, Set<Turno> turnoList) {
+    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Usuario usuario, LocalTime horaApertura, LocalTime horaCierre, Set<Turno> turnoList) {
         this.deporte = deporte;
         this.domicilio = domicilio;
         this.precioxhora = precioxhora;
@@ -39,7 +43,7 @@ public class Cancha {
         this.usuario = usuario;
         this.horaApertura = horaApertura;
         this.horaCierre = horaCierre;
-        this.servicios = servicios;
+        this.serviciosList = new ArrayList<>();
         this.turnoList = turnoList;
     }
 
@@ -116,5 +120,13 @@ public class Cancha {
 
     public void setTurnoList(Set<Turno> turnoList) {
         this.turnoList = turnoList;
+    }
+
+    public List<Servicios> getServiciosList() {
+        return serviciosList;
+    }
+
+    public void setServiciosList(List<Servicios> serviciosList) {
+        this.serviciosList = serviciosList;
     }
 }

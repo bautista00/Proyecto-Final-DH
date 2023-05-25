@@ -21,6 +21,7 @@ public class Usuario implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Rol> setUserRol = new HashSet<>();
     private String nombre;
+    private String apellido;
     private String telefono;
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
@@ -30,11 +31,11 @@ public class Usuario implements UserDetails {
     private Set<Cancha> canchaList = new HashSet<>();
 
 
-    public Usuario(String email, String password, String nombre, String telefono,Rol... userRols) {
+    public Usuario(String email, String password, String nombre,String apellido ,Rol... userRols) {
         this.email = email;
         this.password = password;
         this.nombre = nombre;
-        this.telefono = telefono;
+        this.apellido=apellido;
         if (setUserRol!=null){
             setUserRol.addAll(Arrays.asList(userRols));
         }
@@ -168,5 +169,13 @@ public class Usuario implements UserDetails {
 
     public void setCanchaList(Set<Cancha> canchaList) {
         this.canchaList = canchaList;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 }
