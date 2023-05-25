@@ -3,13 +3,31 @@ stages:
   - test
   - deploy
 
-build-backend:
+build_backend:
   stage: build
-  image: maven:latest
+  image: maven:3.8.7-openjdk-17
   script:
-    - cd backend
+    - cd Back-End
+    - cd backend-pi
     - echo "Building app..."
+    - mvn package
     - echo "Compile complete."
+  artifacts:
+    paths:
+      - backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar
+
+build_frontend:
+  stage: build
+  image: node:latest
+  script:
+    - echo "Building the app"
+    - cd Front-End
+    - npm --force install
+    - CI=false npm run build
+    - echo "Finished building the app."
+  artifacts:
+    paths:
+      - ./Front-End/dist/
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
