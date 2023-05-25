@@ -2,6 +2,7 @@ package com.example.backendpi.controller;
 
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.service.CanchaService;
+import com.example.backendpi.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,18 +15,18 @@ import java.util.Optional;
 @RequestMapping("/canchas")
 public class CanchaController {
     private CanchaService canchaService;
-    private PrestadorService prestadorService;
+    private UsuarioService usuarioService;
 
 
     @Autowired
-    public CanchaController(CanchaService canchaService, PrestadorService prestadorService) {
+    public CanchaController(CanchaService canchaService, UsuarioService usuarioService) {
         this.canchaService = canchaService;
-        this.prestadorService = prestadorService;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping
     public ResponseEntity<Cancha> agregarCancha(@RequestBody Cancha cancha){
-        if(prestadorService.buscarXId(cancha.getPrestador().getId()).isPresent()){
+        if(usuarioService.buscarUsuario(cancha.getUsuario().getId()).isPresent()){
             return ResponseEntity.ok(canchaService.guardar(cancha));
         }
         else {

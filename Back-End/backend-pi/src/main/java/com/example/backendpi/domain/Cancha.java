@@ -25,18 +25,21 @@ public class Cancha {
 
     private LocalTime horaCierre;
 
+    private Servicios servicios;
+
 
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
 
-    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Usuario usuario, LocalTime fechaApertura, LocalTime fechaCierre, Set<Turno> turnoList) {
+    public Cancha(Deporte deporte, Domicilio domicilio, Double precioxhora, String telefono, Usuario usuario, LocalTime horaApertura, LocalTime horaCierre, Servicios servicios, Set<Turno> turnoList) {
         this.deporte = deporte;
         this.domicilio = domicilio;
         this.precioxhora = precioxhora;
         this.telefono = telefono;
         this.usuario = usuario;
-        this.horaApertura = fechaApertura;
-        this.horaCierre = fechaCierre;
+        this.horaApertura = horaApertura;
+        this.horaCierre = horaCierre;
+        this.servicios = servicios;
         this.turnoList = turnoList;
     }
 

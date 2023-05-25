@@ -28,7 +28,7 @@ public class TurnoController {
 
     @PostMapping
     public ResponseEntity<Turno> agregarTurno(@RequestBody Turno turno){
-        if(canchaService.buscarXId(turno.getCancha().getId()).isPresent() && usuarioService.buscarXId(turno.getCliente().getId()).isPresent()){
+        if(canchaService.buscarXId(turno.getCancha().getId()).isPresent() && usuarioService.buscarUsuario(turno.getUsuario().getId()).isPresent()){
         return ResponseEntity.ok(turnoService.guardar(turno));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
