@@ -12,6 +12,8 @@ build_backend:
     - echo "Building app..."
     - mvn package
     - echo "Compile complete."
+  refs:
+    - develop
   artifacts:
     paths:
       - backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar
@@ -25,6 +27,8 @@ build_frontend:
     - npm --force install
     - CI=false npm run build
     - echo "Finished building the app."
+  refs:
+    - develop
   artifacts:
     paths:
       - ./Front-End/dist/
