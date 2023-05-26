@@ -1,6 +1,13 @@
-# Equipo 3
+# Equipo 3 - Proyecto Integrador "Field Rent"
 
-
+#### Integrantes del equipo:
+* Aracelly Peña Gonzalez
+* Bautista Quesada
+* Estefania Escarria Garcia
+* Franco Delgado
+* Lorenzo Gazzani
+* Sebastián Alejo Markoja
+* Tobias Rodriguez Chab
 
 ## Getting started
 
