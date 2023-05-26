@@ -54,9 +54,6 @@ deploy_frontend:
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
       - aws configure list
       - aws s3 sync /builds/ctd/hispanos/proyecto-integrador-1/proyecto-integrador-0523/0822ft-c1/equipo-3/Front-End/dist s3://bucket-fieldrent-front
-   rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: always 
 
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
