@@ -30,6 +30,8 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Cancha> canchaList = new HashSet<>();
 
+    
+
 
     public Usuario(String email, String password, String nombre,String apellido ,Rol... userRols) {
         this.email = email;
