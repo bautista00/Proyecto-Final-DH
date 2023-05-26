@@ -30,14 +30,21 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Cancha> canchaList = new HashSet<>();
 
+<<<<<<< HEAD
     
 
+=======
+    @OneToOne
+    @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
+    private Domicilio domicilio;
+>>>>>>> 99de77ec36a419e9b2f61511fbab958a8d1cfebe
 
-    public Usuario(String email, String password, String nombre,String apellido ,Rol... userRols) {
+    public Usuario(String email, String password, String nombre, String apellido , Domicilio domicilio, Rol... userRols) {
         this.email = email;
         this.password = password;
         this.nombre = nombre;
         this.apellido=apellido;
+        this.domicilio=domicilio;
         if (setUserRol!=null){
             setUserRol.addAll(Arrays.asList(userRols));
         }
@@ -179,5 +186,13 @@ public class Usuario implements UserDetails {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public Domicilio getDomicilio() {
+        return domicilio;
+    }
+
+    public void setDomicilio(Domicilio domicilio) {
+        this.domicilio = domicilio;
     }
 }

@@ -14,7 +14,7 @@ import org.springframework.http.HttpHeaders;
 import java.util.List;
 
 @RestController
-@RequestMapping("/S3")
+@RequestMapping("/s3")
 public class UploadFileController {
 
 
