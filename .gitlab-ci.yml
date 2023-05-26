@@ -50,8 +50,10 @@ deploy_frontend:
    script:
       - cd Front-End/dist
       - pip install awscli   
-      - aws configure set AWS_ACCESS_KEY_ID $AWS_ACCESS_KEY_ID
-      - aws configure set AWS_SECRET_ACCESS_KEY $AWS_SECRET_ACCESS_KEY
+      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+      - echo "Set aws_access_key_id"
+      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      - echo "Set aws_secret_access_key"
       - aws configure list
       - aws s3 sync ./Front-End/dist/ s3://bucket-fieldrent-front --acl public-read
 
