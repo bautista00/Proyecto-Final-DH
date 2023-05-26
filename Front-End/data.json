@@ -1,0 +1,52 @@
+
+    [{
+        "id": "1",
+        "name":"Ankor Futbol",
+        "kindOfSport":"Futbol",
+        "location":"San martin 444, Buenos Aires, Capital.",
+        "schedule":"De lunes a domingo 12:00hs a 23:00hs.",
+        "services":"[Baños, Asador, Wifi]",
+        "contact":"1109808231.",
+        "price":"15000.",
+        "image": "/images/canchaFutbol7.png"
+       },
+
+       {
+        "id":"2",
+        "name":"Tenis Migueletes",
+        "kindOfSport":"Tenis",
+        "location":"Migueletes 654, Buenos Aires, Capital.",
+        "schedule":"De lunes a domingo de 09:00hs a 20:30hs.",
+        "services":["Vestuarios", "Confiteria", "Wifi"],
+        "contact":"1108602242.",
+        "price":"5000",
+        "image":"/images/clubTenis.jpg"
+       },
+
+       {
+        "id":"3",
+        "name":"Pick and Roll Basket",
+        "kindOfSport":"Basket",
+        "location":"Av.Libertador 1500, Buenos Aires, Capital.",
+        "schedule":"De martes a domingo de 11:00hs a 23:30hs.",
+        "services":"[Vestuarios, Wifi]",
+        "contact":"1108903321.",
+        "price":"17000.",
+        "image":"/images/canchaBasket.png"
+       },
+      
+       {
+        "id":"4",
+        "name":"Pilar Padel",
+        "kindOfSport":"Padel",
+        "location":"3 de Febrero 1500, Buenos Aires, Provincia.",
+        "schedule":"De martes a domingo de 09:00hs a 23:30hs.",
+        "services":"[Vestuarios, Confiteria]",
+        "contact":"1127903577.",
+        "price":"8500.",
+        "image":"/images/canchaPadel.png"
+        
+       }] 
+       
+
+  
