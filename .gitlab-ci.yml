@@ -51,7 +51,7 @@ deploy_frontend:
       - cd Front-End/dist
       - pip install awscli  
       - echo "awscli installed"
-      - echo $AWS_ACCESS_KEY_ID
+      - echo "$AWS_ACCESS_KEY_ID"
       - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
       - echo "Set aws_access_key_id"
       - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
