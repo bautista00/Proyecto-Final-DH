@@ -62,12 +62,10 @@ deploy_frontend:
 deploy_backend:
   stage: deploy
   needs: [build_backend]
-  image: alpine:3.11 
+  image: amazon/aws-cli 
   only :
     refs:
       - main
-  before_script:
-    - apk add --no-cache aws-cli
   script:
     - echo "Deploy started..."    
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
