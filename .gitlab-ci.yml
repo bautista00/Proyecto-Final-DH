@@ -14,7 +14,7 @@ build_backend:
     - echo "Compile complete."
   artifacts:
     paths:
-      - backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar
+      - Back-End/backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar
 
 build_frontend:
   stage: build
@@ -77,6 +77,6 @@ deploy_backend:
   script:
     - echo "Deploy started..."
     - ssh -i ~/.ssh/id_rsa ubuntu@$DEPLOY_SERVER_IP "sudo systemctl stop apache2.service"
-    - scp -i ~/.ssh/id_rsa ./backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar ubuntu@$DEPLOY_SERVER_IP:~/fieldrent/
+    - scp -i ~/.ssh/id_rsa Back-End/backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar ubuntu@$DEPLOY_SERVER_IP:~/fieldrent/
     - ssh -i ~/.ssh/id_rsa ubuntu@$DEPLOY_SERVER_IP "sudo systemctl start apache2.service"
     - echo "Finished deploying the app."
