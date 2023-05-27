@@ -67,8 +67,7 @@ deploy_backend:
     refs:
       - main
   before_script:
-    - pip3 install --upgrade pip
-    - pip3 install awscli
+    - pip install awscli
   script:
     - echo "Deploy started..."    
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
