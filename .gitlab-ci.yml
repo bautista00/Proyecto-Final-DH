@@ -62,20 +62,21 @@ deploy_frontend:
 deploy_backend:
   stage: deploy
   needs: [build_backend]
-  image: python:latest
-  only :
-    refs:
-      - main
+  image: alpine:3.11
+  before_script:
+    - apk update && apk add openssh-client bash
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - touch ~/.ssh/config
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - ssh-keyscan -H "$DEPLOY_SERVER_IP" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
     - echo "Deploy started..."
-    - pip install awscli  
-    - echo "awscli installed"
-    - echo "$AWS_ACCESS_KEY_ID" 
-    - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-    - echo "Set aws_access_key_id"
-    - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-    - echo "Set aws_secret_access_key"
-    - ssh -i $SSH_ACCESS_KEY ubuntu@$DEPLOY_SERVER_IP "sudo systemctl stop apache2.service"
-    - scp Back-End/backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar ubuntu@$DEPLOY_SERVER_IP:~/fieldrent/
-    - ssh ubuntu@$DEPLOY_SERVER_IP "sudo systemctl start apache2.service"
+    - ssh -i ~/.ssh/id_rsa ubuntu@$DEPLOY_SERVER_IP "sudo systemctl stop apache2.service"
+    - scp -i ~/.ssh/id_rsa Back-End/backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar ubuntu@$DEPLOY_SERVER_IP:~/fieldrent/
+    - ssh -i ~/.ssh/id_rsa ubuntu@$DEPLOY_SERVER_IP "sudo systemctl start apache2.service"
     - echo "Finished deploying the app."
