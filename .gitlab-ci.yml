@@ -67,7 +67,7 @@ deploy_backend:
     refs:
       - main
   before_script:
-    - pip install awscli
+    - apk add --no-cache aws-cli
   script:
     - echo "Deploy started..."    
     - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
