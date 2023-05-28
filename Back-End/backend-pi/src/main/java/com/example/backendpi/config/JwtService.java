@@ -36,7 +36,10 @@ public class JwtService {
                 .signWith(getSignIngKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+    public String generateToken(UserDetails userDetails){
 
+        return generateToken(new HashMap<>(),userDetails);
+    }
     public boolean validacionToken(String token,UserDetails userDetails){
         final String username=extraerUsername(token);
         return (username.equals(userDetails.getUsername())) && !tokenExpirado(token);
@@ -56,9 +59,7 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(),userDetails);
-    }
+
 
     private Claims extraerLosClaims(String token){
         return Jwts

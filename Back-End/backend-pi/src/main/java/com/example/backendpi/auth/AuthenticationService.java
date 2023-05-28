@@ -1,13 +1,18 @@
 package com.example.backendpi.auth;
 
 import com.example.backendpi.config.JwtService;
+import com.example.backendpi.domain.Rol;
+import com.example.backendpi.domain.Usuario;
 import com.example.backendpi.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import javax.management.relation.Role;
 
 @Service
 @RequiredArgsConstructor
@@ -19,12 +24,12 @@ public class AuthenticationService {
     private final AuthenticationManager manager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
+        var user = Usuario.builder()
                 .nombre(request.getNombre())
                 .apellido(request.getApellido())
                 .email(request.getEmail())
                 .password(encoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .rol(Rol.ROLE_USER)
                 .build();
         repository.save(user);
         var jwtToken=jwtService.generateToken(user);
@@ -33,7 +38,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponse authenticate(AuthenticationRequest request){
         manager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

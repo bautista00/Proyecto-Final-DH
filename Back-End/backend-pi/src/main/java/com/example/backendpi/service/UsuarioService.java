@@ -12,10 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-<<<<<<< HEAD
-=======
 
->>>>>>> 99de77ec36a419e9b2f61511fbab958a8d1cfebe
 @Service
 public class UsuarioService implements UserDetailsService {
 
