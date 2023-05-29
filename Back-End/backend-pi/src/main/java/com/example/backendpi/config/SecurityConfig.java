@@ -25,7 +25,7 @@ public class SecurityConfig{
                .csrf()
                .disable()
                .authorizeHttpRequests()
-               .antMatchers("/auth/**")
+               .requestMatchers("/auth/**")
                .permitAll()
                .anyRequest()
                .authenticated()
@@ -39,4 +39,3 @@ public class SecurityConfig{
        return http.build();
    }
 }
-//CHEQUEAR DE Q EL ANTMATCHER SEA CORRECTO
