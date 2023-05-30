@@ -14,7 +14,7 @@ build_backend:
     - echo "Compile complete."
   artifacts:
     paths:
-      - Back-End/backend-pi/target/backend-pi.0.0.1-SNAPSHOT.jar
+      - /builds/ctd/hispanos/proyecto-integrador-1/proyecto-integrador-0523/0822ft-c1/equipo-3/Back-End/backend-pi/target/backend-pi-0.0.1-SNAPSHOT.jar
 
 build_frontend:
   stage: build
