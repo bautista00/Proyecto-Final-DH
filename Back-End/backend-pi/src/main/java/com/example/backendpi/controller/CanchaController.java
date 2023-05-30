@@ -2,7 +2,7 @@ package com.example.backendpi.controller;
 
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.service.CanchaService;
-import com.example.backendpi.service.UsuarioService;
+import com.example.backendpi.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,24 +15,24 @@ import java.util.Optional;
 @RequestMapping("/canchas")
 public class CanchaController {
     private CanchaService canchaService;
-    private UsuarioService usuarioService;
+    private UserServiceImpl usuarioServiceImpl;
 
 
     @Autowired
-    public CanchaController(CanchaService canchaService, UsuarioService usuarioService) {
+    public CanchaController(CanchaService canchaService, UserServiceImpl usuarioServiceImpl) {
         this.canchaService = canchaService;
-        this.usuarioService = usuarioService;
+        this.usuarioServiceImpl = usuarioServiceImpl;
     }
 
-    @PostMapping
-    public ResponseEntity<Cancha> agregarCancha(@RequestBody Cancha cancha){
-        if(usuarioService.buscarUsuario(cancha.getUsuario().getId()).isPresent()){
-            return ResponseEntity.ok(canchaService.guardar(cancha));
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
+//    @PostMapping
+//    public ResponseEntity<Cancha> agregarCancha(@RequestBody Cancha cancha){
+//        if(usuarioServiceImpl.buscarUsuario(cancha.getUser().getId()).isPresent()){
+//            return ResponseEntity.ok(canchaService.guardar(cancha));
+//        }
+//        else {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//        }
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity <Cancha> buscarCancha(@PathVariable Long id){

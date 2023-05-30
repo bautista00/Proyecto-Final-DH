@@ -25,8 +25,8 @@ public class Cancha {
     private Double precioxhora;
     private String telefono;
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    private Usuario usuario;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     private LocalTime horaApertura;
 

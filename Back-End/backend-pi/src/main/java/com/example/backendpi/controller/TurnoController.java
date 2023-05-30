@@ -3,7 +3,7 @@ package com.example.backendpi.controller;
 import com.example.backendpi.domain.Turno;
 import com.example.backendpi.service.CanchaService;
 import com.example.backendpi.service.TurnoService;
-import com.example.backendpi.service.UsuarioService;
+import com.example.backendpi.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,23 +16,23 @@ import java.util.Optional;
 @RequestMapping("/turnos")
 public class TurnoController {
     private TurnoService turnoService;
-    private UsuarioService usuarioService;
+    private UserServiceImpl usuarioServiceImpl;
     private CanchaService canchaService;
 
     @Autowired
-    public TurnoController(TurnoService turnoService, UsuarioService usuarioService, CanchaService canchaService) {
+    public TurnoController(TurnoService turnoService, UserServiceImpl usuarioServiceImpl, CanchaService canchaService) {
         this.turnoService = turnoService;
-        this.usuarioService = usuarioService;
+        this.usuarioServiceImpl = usuarioServiceImpl;
         this.canchaService = canchaService;
     }
 
-    @PostMapping
-    public ResponseEntity<Turno> agregarTurno(@RequestBody Turno turno){
-        if(canchaService.buscarXId(turno.getCancha().getId()).isPresent() && usuarioService.buscarUsuario(turno.getUsuario().getId()).isPresent()){
-        return ResponseEntity.ok(turnoService.guardar(turno));
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+//    @PostMapping
+//    public ResponseEntity<Turno> agregarTurno(@RequestBody Turno turno){
+//        if(canchaService.buscarXId(turno.getCancha().getId()).isPresent() && usuarioServiceImpl.buscarUsuario(turno.getUser().getId()).isPresent()){
+//        return ResponseEntity.ok(turnoService.guardar(turno));
+//        }
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+//    }
 
     @GetMapping("/{id}")
     public ResponseEntity <Turno> buscarTurno(@PathVariable Long id){
