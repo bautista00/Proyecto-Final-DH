@@ -10,7 +10,7 @@ build_backend:
     - cd Back-End
     - cd backend-pi
     - echo "Building app..."
-    - mvn clean install
+    - mvn clean package
     - echo "Compile complete."
   artifacts:
     paths:
