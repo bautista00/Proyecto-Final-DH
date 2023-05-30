@@ -5,7 +5,7 @@ stages:
 
 build_backend:
   stage: build
-  image: maven:3.8.7-openjdk-17
+  image: maven:3.8-openjdk-17
   script:
     - cd Back-End
     - cd backend-pi
