@@ -15,6 +15,9 @@ build_backend:
   artifacts:
     paths:
       - $JAR_PATH
+  rules:
+    - changes:
+        - Back-End/**/*
 
 build_frontend:
   stage: build
@@ -28,6 +31,9 @@ build_frontend:
   artifacts:
     paths:
       - ./Front-End/dist/
+  rules:
+    - changes:
+        - Front-End/**/*
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
@@ -58,6 +64,9 @@ deploy_frontend:
       - echo "Set aws_secret_access_key"
       - aws configure list
       - aws s3 sync $AWS_S3_FRONT
+   rules:
+    - changes:
+        - FrontEnd/**/*
 
 deploy_backend:
   stage: deploy
@@ -80,3 +89,6 @@ deploy_backend:
     - scp -i ~/.ssh/id_rsa $JAR_PATH ubuntu@$DEPLOY_SERVER_IP:~/fieldrent/
     - ssh -i ~/.ssh/id_rsa ubuntu@$DEPLOY_SERVER_IP "sudo systemctl start fieldrent.service"
     - echo "Finished deploying the app."
+  rules:
+    - changes:
+        - Back-End/**/*
