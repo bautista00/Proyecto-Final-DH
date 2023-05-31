@@ -18,7 +18,13 @@ public class SignUpRequest {
     private String username;
 
     @NotEmpty
-    @Length(min = 4,max = 50)
+    @Length(min = 8,max = 50)
     private String password;
+    @NotEmpty
+    @Length(min = 1,max = 50)
+    private String nombre;
+    @NotEmpty
+    @Length(min = 1,max = 50)
+    private String apellido;
 
 }

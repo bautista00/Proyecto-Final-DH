@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UserDetails userDetails = userRepository.getFirstByName(userName);
+        UserDetails userDetails = userRepository.getFirstByEmail(userName);
         if (userDetails ==null){
             throw new UsernameNotFoundException(userName);
         }
@@ -41,8 +41,10 @@ public class UserServiceImpl implements UserService {
     public UserDetails createUser(SignUpRequest signUpRequest) {
         try{
             return userRepository.save(User.builder()
-                    .name(signUpRequest.getUsername())
+                    .email(signUpRequest.getUsername())
                     .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                    .name(signUpRequest.getNombre())
+                    .apellido(signUpRequest.getApellido())
                     .role(USER)
                     .build());
         }catch (DataIntegrityViolationException e){
