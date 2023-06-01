@@ -1,5 +1,6 @@
 package com.example.backendpi.dto;
 
+import com.example.backendpi.domain.Domicilio;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,4 +28,14 @@ public class SignUpRequest {
     @Length(min = 1,max = 50)
     private String apellido;
 
+
+    private String cbu;
+
+
+    private String cuil;
+
+//    private Domicilio domicilio;
+
+
+    private String telefono;
 }

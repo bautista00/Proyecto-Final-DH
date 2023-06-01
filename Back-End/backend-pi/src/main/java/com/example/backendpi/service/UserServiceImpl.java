@@ -1,5 +1,6 @@
 package com.example.backendpi.service;
 
+import com.amazonaws.services.backup.model.MissingParameterValueException;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.PageResponseDTO;
 import com.example.backendpi.dto.SignUpRequest;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.ErrorResponseException;
 
+import static com.example.backendpi.domain.Role.ADMIN;
 import static com.example.backendpi.domain.Role.USER;
 
 @Service
@@ -40,13 +42,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails createUser(SignUpRequest signUpRequest) {
         try{
-            return userRepository.save(User.builder()
-                    .email(signUpRequest.getUsername())
-                    .password(passwordEncoder.encode(signUpRequest.getPassword()))
-                    .name(signUpRequest.getNombre())
-                    .apellido(signUpRequest.getApellido())
-                    .role(USER)
-                    .build());
+            if(signUpRequest.getCbu() != null && signUpRequest.getCuil() != null && signUpRequest.getTelefono() != null){
+                return userRepository.save(User.builder()
+                        .email(signUpRequest.getUsername())
+                        .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                        .name(signUpRequest.getNombre())
+                        .apellido(signUpRequest.getApellido())
+                        .cbu(signUpRequest.getCbu())
+                        .cuil(signUpRequest.getCuil())
+                        .telefono(signUpRequest.getTelefono())
+                        .role(ADMIN)
+                        .build());
+            } else if (signUpRequest.getCuil() == null && signUpRequest.getCuil() == null  && signUpRequest.getTelefono() == null) {
+                return userRepository.save(User.builder()
+                        .email(signUpRequest.getUsername())
+                        .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                        .name(signUpRequest.getNombre())
+                        .apellido(signUpRequest.getApellido())
+                        .role(USER)
+                        .build());
+            }else {
+               throw new MissingParameterValueException("Faltan llenar algunos campos");
+            }
+
         }catch (DataIntegrityViolationException e){
             throw new ErrorResponseException(HttpStatus.CONFLICT,
                     ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
