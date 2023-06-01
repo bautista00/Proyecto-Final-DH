@@ -36,23 +36,12 @@ public class CanchaController {
 
     @GetMapping("/{id}")
     public ResponseEntity <Cancha> buscarCancha(@PathVariable Long id){
-        Optional<Cancha> optionalCancha= canchaService.buscarXId(id);
-        if(optionalCancha.isPresent()){
-            return ResponseEntity.ok(optionalCancha.get());
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+        return null;
     }
 
     @GetMapping("/todos")
     public ResponseEntity<List<Cancha>> buscarTodos(){
-        if(canchaService.buscarTodos().size()>0) {
-            return ResponseEntity.ok(canchaService.buscarTodos());
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+      return null;
     }
 
 
@@ -64,7 +53,7 @@ public class CanchaController {
 
     @PutMapping
     public ResponseEntity<Cancha> actualizarCancha(@RequestBody Cancha cancha){
-        return ResponseEntity.ok(canchaService.actualizar(cancha));
+        return null;
     }
 
 }

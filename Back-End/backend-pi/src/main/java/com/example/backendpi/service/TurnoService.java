@@ -1,39 +1,23 @@
 package com.example.backendpi.service;
 
 import com.example.backendpi.domain.Turno;
+import com.example.backendpi.dto.TurnoDTO;
 import com.example.backendpi.repository.TurnoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class TurnoService {
-    private TurnoRepository turnoRepository;
 
-    public TurnoService(TurnoRepository turnoRepository) {
-        this.turnoRepository = turnoRepository;
-    }
+public interface TurnoService {
 
-    public Turno guardar(Turno turno){
-        return turnoRepository.save(turno);
-    }
 
-    public Optional<Turno> buscarXId(Long id){
-        return turnoRepository.findById(id);
-    }
+    public Turno guardar(TurnoDTO turnoDTO);
 
-    public void borrarXId(Long id){
-        turnoRepository.deleteById(id);
-    }
+    public Optional<TurnoDTO> buscarXId(Long id);
 
-    public List<Turno> buscarTodos(){
-        return turnoRepository.findAll();
-    }
-    public Turno actualizar(Turno turno){
-        if (turnoRepository.findById(turno.getId()).isPresent()){
-            turnoRepository.save(turno);
-        }
-        return  turno;
-    }
+    public void borrarXId(Long id);
+
+    public List<TurnoDTO> buscarTodos();
+    public TurnoDTO actualizar(TurnoDTO turnoDTO);
 }
