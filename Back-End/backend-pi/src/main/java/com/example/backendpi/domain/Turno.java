@@ -20,8 +20,8 @@ public class Turno {
 
     private Integer horas;
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    private Usuario usuario;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
     @ManyToOne
     @JoinColumn(name = "cancha_id", referencedColumnName = "id")
     private Cancha cancha;

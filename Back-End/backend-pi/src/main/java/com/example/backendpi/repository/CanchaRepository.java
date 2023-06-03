@@ -9,5 +9,4 @@ import java.util.List;
 public interface CanchaRepository extends JpaRepository<Cancha, Long> {
 //    List<Cancha> findByDeporteAndBarrio(Deporte Deporte, String Barrio);
 
-
 }

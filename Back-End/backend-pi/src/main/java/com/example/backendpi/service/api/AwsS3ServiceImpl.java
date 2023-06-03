@@ -1,11 +1,10 @@
-package com.example.backendpi.service;
+package com.example.backendpi.service.api;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
-import com.example.backendpi.service.api.AwsS3Service;
 
 
 import org.slf4j.Logger;

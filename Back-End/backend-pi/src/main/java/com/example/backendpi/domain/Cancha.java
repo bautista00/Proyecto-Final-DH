@@ -24,15 +24,12 @@ public class Cancha {
     private Domicilio domicilio;
     private Double precioxhora;
     private String telefono;
+    private String nombre;
     @ManyToOne
-    @JoinColumn(name = "usuario_id", referencedColumnName = "id")
-    private Usuario usuario;
-
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User owner;
     private LocalTime horaApertura;
-
     private LocalTime horaCierre;
-
-
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
 

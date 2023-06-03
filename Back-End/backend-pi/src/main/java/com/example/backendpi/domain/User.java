@@ -16,22 +16,23 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Usuario implements UserDetails {
+@Table (name = "Users")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private Rol rol;
-    private String nombre;
+    private Role role;
+    private String name;
     private String apellido;
     private String telefono;
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
     private String cuil;
-    private Integer CBU;
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private String cbu;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Cancha> canchaList = new HashSet<>();
 
     @OneToOne
@@ -41,7 +42,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       return List.of(new SimpleGrantedAuthority(rol.name()));
+        return Collections.singletonList(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override
