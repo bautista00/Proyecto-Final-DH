@@ -5,7 +5,7 @@ stages:
 
 build_backend:
   stage: build
-  image: maven:3.8-openjdk-17
+  image: maven:3.8-openjdk-18
   script:
     - cd Back-End
     - cd backend-pi
@@ -72,7 +72,7 @@ deploy_frontend:
       - aws s3 sync $AWS_S3_FRONT
    rules:
     - changes:
-        - FrontEnd/**/*
+        - Front-End/**/*
 
 deploy_backend:
   stage: deploy
