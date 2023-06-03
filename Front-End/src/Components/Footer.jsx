@@ -3,8 +3,9 @@ import React from 'react'
 const Footer = () => {
   return (
     <div className='divFooter'>
-        <i><img src="images\logoCopyrighttrue.png" alt="logoFooter" /></i>
-        <p>Field Rent 2023</p>
+        <img src="/images/fieldRentlogo.png" alt="isologotipo" className='logoFooter'/>
+        <p>Field Rent 2023 -</p>
+        <p>Todos los derechos reservados</p>  
     </div>
   )
 }

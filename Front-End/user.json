@@ -1,12 +1,25 @@
-[{
-    "id": "1",
-    "email":"tobo@gmail.com",
-    "password": "asdasdasd",
-    "rol": "USER"
-   },
-   {
-    "id": "2",
-    "email":"tobi@gmail.com",
-    "password": "asdasdasd",
-    "rol": "ADMIN"
-   }]
+[
+  {
+    "id": 1,
+    "name": "Juan",
+    "lastname": "Dominguez",
+    "email": "tobiass@gmail.com",
+    "password": "123123123",
+    "phone": "1234565489",
+    "country": "Colombia",
+    "city": "Cali",
+    "role": "Administrador"
+  },
+
+  {
+    "id": 2,
+    "name": "Tobias",
+    "lastname": "Chab",
+    "email": "tobias@gmail.com",
+    "password": "123123123",
+    "phone": "",
+    "country": "",
+    "city": "",
+    "role": "Usuario"
+  }
+]

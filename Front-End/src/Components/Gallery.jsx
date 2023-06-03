@@ -14,7 +14,7 @@ const Gallery = ({images}) => {
   
     return (
       <div className='gallery'>
-        <button onClick={openModal}>Ver más</button>
+        <button onClick={openModal}>Ver Galeria</button>
         {isOpen && (
           <div className="modalBox">
             <div className="modalContent">

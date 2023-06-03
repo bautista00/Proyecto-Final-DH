@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../Components/Card";
+import RecommendedCard from "../Components/RecommendedCard";
 import { useContextGlobal } from "../Components/utils/GlobalContext";
 
 const Recommended = () => {
@@ -11,16 +11,16 @@ const Recommended = () => {
     };
   
     const renderCards = () => {
-      const randomCards = getRandomCards(4);
+      const randomCards = getRandomCards(8);
       return randomCards.map((card, index) => (
-        <Card key={index} id={card.id} name={card.name} location={card.location} image={card.image}
-        />
+        <RecommendedCard key={index} id={card.id} name={card.name} location={card.location} image={card.image}/>
       ));
     };
   return (
-    <div className="card-title">
+    <div className="card-title-recommended">
+
         <h2>Recomendados</h2>
-        <div className="card-container">
+        <div className="card-container-recommended">
           {renderCards()}
         </div>
     </div>

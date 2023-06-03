@@ -1,11 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom"
-const Card = ({name,location, image, id, sport}) => {
+const Card = ({image, sport}) => {
     return (
     <div className="card">
-       <h3>{name}{sport}</h3>
-        <p>{location}</p>
-        <Link to={`/Detail/${id}`}> <img src={image} alt="imagenCancha" /></Link> 
+        <Link to={`/Filtered/${sport}`}> <img src={image} alt="imagenCancha" /></Link>
+        <h3>{sport}</h3>
     </div>
   )
 }
