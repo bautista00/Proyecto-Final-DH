@@ -1,6 +1,7 @@
 package com.example.backendpi.service;
 
 import com.example.backendpi.domain.Cancha;
+import com.example.backendpi.domain.Deporte;
 import com.example.backendpi.dto.CanchaDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,8 @@ public interface CanchaService {
 
     public List<CanchaDTO> buscarTodos();
     public CanchaDTO actualizar(CanchaDTO canchaDTO);
+
+    public List<CanchaDTO> buscarXDeporte(Deporte deporte);
+
+    public List<CanchaDTO> buscarPorOwner(String token);
 }

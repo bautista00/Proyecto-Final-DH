@@ -8,6 +8,7 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
     @Override
     public Cancha convert(CanchaDTO source) {
         Cancha cancha = new Cancha();
+        cancha.setId(source.getId());
         cancha.setDomicilio(source.getDomicilio());
         cancha.setNombre(source.getNombre());
         cancha.setDeporte(source.getDeporte());

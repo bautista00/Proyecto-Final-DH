@@ -14,6 +14,7 @@ import java.time.LocalTime;
     @AllArgsConstructor
     @Builder
     public class CanchaDTO {
+        private Long id;
         private Deporte deporte;
         private Domicilio domicilio;
         private Double precio;

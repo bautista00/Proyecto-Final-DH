@@ -36,33 +36,23 @@ public class TurnoController {
 
     @GetMapping("/{id}")
     public ResponseEntity <Turno> buscarTurno(@PathVariable Long id){
-        Optional<Turno> optionalTurno= turnoService.buscarXId(id);
-        if(optionalTurno.isPresent()){
-            return ResponseEntity.ok(optionalTurno.get());
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+      return null;
 
     }
 
     @GetMapping("/todos")
     public ResponseEntity<List<Turno>> buscarTodos(){
-        if(turnoService.buscarTodos().size()>0) {
-            return ResponseEntity.ok(turnoService.buscarTodos());
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+      return null;
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarTurno(@PathVariable Long id){
-        turnoService.borrarXId(id);
-        return ResponseEntity.ok("Se elimino el turno con el id: "+id);
+       return null;
     }
 
     @PutMapping
     public ResponseEntity<Turno> actualizarTurno(@RequestBody Turno turno){
-        return ResponseEntity.ok(turnoService.actualizar(turno));
+        return null;
     }
 }
