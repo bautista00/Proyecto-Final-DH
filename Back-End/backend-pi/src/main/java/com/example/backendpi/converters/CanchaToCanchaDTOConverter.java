@@ -17,6 +17,7 @@ public class CanchaToCanchaDTOConverter implements Converter<Cancha, CanchaDTO> 
         canchaDTO.setTelefono(source.getTelefono());
         canchaDTO.setHoraApertura(source.getHoraApertura());
         canchaDTO.setHoraCierre(source.getHoraCierre());
+        canchaDTO.setCriteriosSet(source.getCriteriosSet());
         return canchaDTO;
     }
 }

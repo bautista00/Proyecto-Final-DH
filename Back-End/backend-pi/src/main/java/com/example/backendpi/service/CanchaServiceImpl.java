@@ -35,6 +35,7 @@ public class CanchaServiceImpl implements CanchaService{
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
         cancha.setOwner(userRepository.findByEmail(jwtService.extractUserName(token)));
         cancha.setTurnoList(new HashSet<>());
+        cancha.setPuntuacion(0);
         return canchaRepository.save(cancha);
     }
 

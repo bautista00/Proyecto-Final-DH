@@ -18,6 +18,8 @@ public class Cancha {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
+    @OneToMany
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
     @OneToOne
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
@@ -32,5 +34,8 @@ public class Cancha {
     private LocalTime horaCierre;
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
+    @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Criterios> criteriosSet=new HashSet<>();
+    private Integer puntuacion;
 
 }
