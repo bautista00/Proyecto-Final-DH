@@ -18,7 +18,7 @@ public class Cancha {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private Deporte deporte;
+    private Categoria categoria;
     @OneToOne
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;

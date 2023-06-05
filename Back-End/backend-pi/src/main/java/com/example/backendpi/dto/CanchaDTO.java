@@ -1,6 +1,6 @@
 package com.example.backendpi.dto;
 
-import com.example.backendpi.domain.Deporte;
+import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.domain.Domicilio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ import java.time.LocalTime;
     @Builder
     public class CanchaDTO {
         private Long id;
-        private Deporte deporte;
+        private Categoria categoria;
         private Domicilio domicilio;
         private Double precio;
         private String telefono;

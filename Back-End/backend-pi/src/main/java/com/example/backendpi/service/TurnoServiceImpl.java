@@ -7,6 +7,7 @@ import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Turno;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.TurnoDTO;
+import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.TurnoRepository;
 import com.example.backendpi.repository.UserRepository;
@@ -27,11 +28,11 @@ public class TurnoServiceImpl implements TurnoService{
     private final CanchaService canchaService;
 
     @Override
-    public TurnoDTO guardar(TurnoDTO turnoDTO) {
+    public TurnoDTO guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
         if (canchaService.buscarXId(turnoDTO.getIdCancha()).isPresent() && userRepository.findById(turnoDTO.getIdUser()).isPresent()){
             return turnoToTurnoDTOConverter.convert(turnoRepository.save(turnoDTOToTurnoConverter.convert(turnoDTO)));
         }else {
-            throw new NotFoundException("F");
+            throw new ResourceNotFoundException("No se pudo guardar correctamente el turno seleccionado");
         }
     }
 
@@ -45,7 +46,7 @@ public class TurnoServiceImpl implements TurnoService{
        if( turnoRepository.findById(id).isPresent()){
            turnoRepository.deleteById(id);
        }else {
-           throw new NotFoundException("No se encontro rey de reyes");
+           throw new NotFoundException("No se pudo borrar el turno seleccionado");
        }
     }
 
@@ -61,36 +62,36 @@ public class TurnoServiceImpl implements TurnoService{
             }
             return turnoDTOS;
         }else{
-            throw new NotFoundException("No hay lista xd");
+            throw new NotFoundException("No se encontro una lista de turnos");
         }
     }
 
     @Override
-    public TurnoDTO actualizar(TurnoDTO turnoDTO) {
+    public TurnoDTO actualizar(TurnoDTO turnoDTO) throws ResourceNotFoundException{
         if(userRepository.findById(turnoDTO.getIdUser()).isPresent() && canchaService.buscarXId(turnoDTO.getIdCancha()).isPresent()){
             return turnoToTurnoDTOConverter.convert(turnoRepository.save(turnoDTOToTurnoConverter.convert(turnoDTO)));
         }else {
-            throw new NotFoundException("Esto no lo arreglo yo");
+            throw new ResourceNotFoundException("No se pudo actualizar correctamente el turno");
         }
     }
 
     @Override
-    public TurnoDTO buscarPorCliente(User user) {
+    public TurnoDTO buscarPorCliente(User user) throws ResourceNotFoundException{
         if(turnoRepository.findByUser(user) != null){
         return turnoRepository.findByUser(user);
         }else {
-            throw new NotFoundException("Esto lo arregla otro");
+            throw new ResourceNotFoundException("No se encontro un turno asocioado a este cliente llamado: " + user.getName());
         }
     }
 
     @Override
-    public List<TurnoDTO> buscarPorCancha(Cancha cancha) {
+    public List<TurnoDTO> buscarPorCancha(Cancha cancha) throws ResourceNotFoundException{
         List<TurnoDTO> turnoDTOS = turnoRepository.findByCancha(cancha);
         if (turnoDTOS.size()>0){
             return turnoDTOS;
         }
         else {
-            throw new NotFoundException("Lista 404");
+            throw new ResourceNotFoundException("No se encontro un turno asociado con la cancha seleccionada");
         }
     }
 }

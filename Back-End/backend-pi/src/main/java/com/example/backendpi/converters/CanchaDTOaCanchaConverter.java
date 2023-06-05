@@ -11,7 +11,7 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
         cancha.setId(source.getId());
         cancha.setDomicilio(source.getDomicilio());
         cancha.setNombre(source.getNombre());
-        cancha.setDeporte(source.getDeporte());
+        cancha.setCategoria(source.getCategoria());
         cancha.setPrecioxhora(source.getPrecio());
         cancha.setHoraApertura(source.getHoraApertura());
         cancha.setHoraCierre(source.getHoraCierre());
