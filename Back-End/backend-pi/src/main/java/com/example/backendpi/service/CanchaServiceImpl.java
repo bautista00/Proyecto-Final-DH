@@ -6,7 +6,6 @@ import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.dto.CanchaDTO;
-import com.example.backendpi.exceptions.BadRequestException;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.CanchaRepository;
@@ -14,6 +13,7 @@ import com.example.backendpi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -60,8 +60,19 @@ public class CanchaServiceImpl implements CanchaService{
     }
 
     @Override
-    public List<CanchaDTO> buscarTodos() {
-        return null;
+    public List<CanchaDTO> buscarTodos() throws NotFoundException{
+      if (canchaRepository.findAll().size()>0){
+          List<CanchaDTO> canchaDTOS = new ArrayList<>();
+          List<Cancha> canchasList = canchaRepository.findAll();
+          if (canchasList.size()>0){
+              for (Cancha cancha: canchasList){
+                  canchaDTOS.add(canchaToCanchaDTOConverter.convert(cancha));
+              }
+          }
+          return canchaDTOS;
+      }else {
+          throw new NotFoundException("No se encontro una lista de canchas");
+      }
     }
 
     @Override
@@ -84,7 +95,6 @@ public class CanchaServiceImpl implements CanchaService{
         else {
             throw new ResourceNotFoundException("No existe la categoria buscadad");
         }
-
     }
 
     @Override
@@ -96,6 +106,5 @@ public class CanchaServiceImpl implements CanchaService{
             throw new ResourceNotFoundException("No existen las canchas buscadas por el propietario");
         }
     }
-
 
 }

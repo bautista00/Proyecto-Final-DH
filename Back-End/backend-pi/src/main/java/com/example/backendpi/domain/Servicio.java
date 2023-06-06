@@ -22,5 +22,4 @@ public class Servicio {
     private String nombre;
     private String descripcion;
     private String url;
-
 }

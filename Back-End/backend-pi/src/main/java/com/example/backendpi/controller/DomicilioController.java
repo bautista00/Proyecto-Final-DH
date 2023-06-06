@@ -15,7 +15,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class DomicilioController {
 
-    private DomicilioService domicilioService;
+    private final DomicilioService domicilioService;
 
 
     @PostMapping

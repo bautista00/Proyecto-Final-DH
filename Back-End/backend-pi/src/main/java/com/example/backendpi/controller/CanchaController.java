@@ -22,12 +22,12 @@ public class CanchaController {
     private final CanchaService canchaService;
 
 
-    @PostMapping("/AgregarProducto")
+    @PostMapping("/CreateProduct")
     public ResponseEntity<Cancha> agregarCancha(@RequestBody CanchaDTO canchaDTO, @PathVariable String token){
         return ResponseEntity.ok(canchaService.guardar(canchaDTO,token));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/Detail/{id}")
     public ResponseEntity<Optional<CanchaDTO>> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
        return ResponseEntity.ok(canchaService.buscarXId(id));
     }
@@ -47,14 +47,14 @@ public class CanchaController {
 //    }
 
 
-    @DeleteMapping
+    @DeleteMapping("/DeleteProduct/{id}")
     public ResponseEntity<String> borrarCancha (@PathVariable Long id) throws ResourceNotFoundException {
         canchaService.borrarXId(id);
        return ResponseEntity.ok("La cancha con id " +id+ " se ha eliminado correctamente");
     }
 
 
-    @PutMapping
+    @PutMapping("/CreateProduct/update")
     public ResponseEntity<CanchaDTO> actualizarCancha(@RequestBody CanchaDTO canchaDTO) throws ResourceNotFoundException {
         return ResponseEntity.ok(canchaService.actualizar(canchaDTO));
      }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,5 +38,7 @@ public class Cancha {
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Criterios> criteriosSet=new HashSet<>();
     private Integer puntuacion;
-
+    @OneToMany
+    @JoinColumn(name = "urls_id", referencedColumnName = "id")
+    private List<String> urlsList;
 }

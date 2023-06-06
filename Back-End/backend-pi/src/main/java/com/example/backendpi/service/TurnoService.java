@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface TurnoService {
 
 
-    public TurnoDTO guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException;
+    public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException;
 
     public Optional<TurnoDTO> buscarXId(Long id)throws ResourceNotFoundException;
 

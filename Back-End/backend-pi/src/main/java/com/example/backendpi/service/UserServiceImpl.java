@@ -5,6 +5,8 @@ import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.PageResponseDTO;
 import com.example.backendpi.dto.SignUpRequest;
 import com.example.backendpi.dto.UserDTO;
+import com.example.backendpi.exceptions.ResourceNotFoundException;
+import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
@@ -27,8 +29,12 @@ import static com.example.backendpi.domain.Role.USER;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
     private final PasswordEncoder passwordEncoder;
+
     private final ConversionService conversionService;
+
+    private final JwtService jwtService;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -83,6 +89,16 @@ public class UserServiceImpl implements UserService {
                 , userPage.getTotalPages());
     }
 
+    @Override
+    public User getUser(String token) throws ResourceNotFoundException {
+        User user = userRepository.findByEmail(jwtService.extractUserName(token));
+        if(user !=null){
+            return user;
+        }else {
+            throw new ResourceNotFoundException("No se encontro el usuario");
+        }
+//        LOLO MOGOLICO :(
+    }
 
 
 }

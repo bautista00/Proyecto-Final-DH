@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -25,4 +26,5 @@ import java.util.Set;
         private LocalTime horaApertura;
         private LocalTime horaCierre;
         private Set<Criterios> criteriosSet;
+        private List<String> urls;
 }

@@ -9,11 +9,13 @@ import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.TurnoDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
+import com.example.backendpi.repository.CanchaRepository;
 import com.example.backendpi.repository.TurnoRepository;
 import com.example.backendpi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,23 +28,33 @@ public class TurnoServiceImpl implements TurnoService{
     private final TurnoToTurnoDTOConverter turnoToTurnoDTOConverter;
     private final TurnoDTOToTurnoConverter turnoDTOToTurnoConverter;
     private final CanchaService canchaService;
+    private final CanchaRepository canchaRepository;
 
     @Override
-    public TurnoDTO guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
+    public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
         if (canchaService.buscarXId(turnoDTO.getIdCancha()).isPresent() && userRepository.findById(turnoDTO.getIdUser()).isPresent()){
-            return turnoToTurnoDTOConverter.convert(turnoRepository.save(turnoDTOToTurnoConverter.convert(turnoDTO)));
+            Turno turno = turnoDTOToTurnoConverter.convert(turnoDTO);
+            turno.setUser(userRepository.findById(turnoDTO.getIdUser()).get());
+            turno.setCancha(canchaRepository.findById(turnoDTO.getIdCancha()).get());
+            return (turnoRepository.save(turno));
         }else {
             throw new ResourceNotFoundException("No se pudo guardar correctamente el turno seleccionado");
         }
     }
 
     @Override
-    public Optional<TurnoDTO> buscarXId(Long id) {
-        return Optional.empty();
+    public Optional<TurnoDTO> buscarXId(Long id) throws ResourceNotFoundException {
+        Optional<Turno> turno  = turnoRepository.findById(id);
+        if(turno.isPresent()){
+            return Optional.of(turnoToTurnoDTOConverter.convert(turno.get()));
+        }else {
+            throw new ResourceNotFoundException("No existe el turno  buscado con ese id" + id);
+        }
+
     }
 
     @Override
-    public void borrarXId(Long id) {
+    public void borrarXId(Long id) throws ResourceNotFoundException{
        if( turnoRepository.findById(id).isPresent()){
            turnoRepository.deleteById(id);
        }else {
@@ -51,7 +63,7 @@ public class TurnoServiceImpl implements TurnoService{
     }
 
     @Override
-    public List<TurnoDTO> buscarTodos() {
+    public List<TurnoDTO> buscarTodos() throws ResourceNotFoundException{
         if(turnoRepository.findAll().size()>0){
             List<TurnoDTO> turnoDTOS= new ArrayList<>();
             List<Turno> turnos= turnoRepository.findAll();
