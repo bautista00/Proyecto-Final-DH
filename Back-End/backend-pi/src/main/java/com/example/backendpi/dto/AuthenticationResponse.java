@@ -1,5 +1,8 @@
 package com.example.backendpi.dto;
 
+import com.example.backendpi.domain.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +15,7 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
 
     private String jwt;
+    @Enumerated(EnumType.STRING)
+    private Role rol;
 
 }

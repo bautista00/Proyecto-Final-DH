@@ -17,32 +17,39 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
+    try{
+      const ec2InstanceIP = '3.19.232.248';
+      const ec2InstancePort = 8080;
+      const endpoint = `http://${ec2InstanceIP}:${ec2InstancePort}/api/login`;
 
-    const ec2InstanceIP = '3.19.232.248';
-    const ec2InstancePort = 8080;
-    const endpoint = `http://${ec2InstanceIP}:${ec2InstancePort}/api/login`;
-
-    const requestData = {
+      const requestData = {
       // Los datos que deseas enviar en la solicitud
       username:email,
       password:password
       };
 
-    axios.post(endpoint, requestData, {headers:{"Content-Type":"application/json"}})
+      await axios.post(endpoint, requestData, {headers:{"Content-Type":"application/json"}})
       .then(response => {
         console.log('Response:', response.data);
-        setJwt(response.data)
+        setJwt(response.data.jwt)
+        console.log(jwt)
       })
     
-    if(jwt){
-      window.localStorage.setItem("jwt",jwt)
-      setPassword("")
-      setEmail("")
-      setError("")
-      window.location.href = "/"
+      if(jwt){
+        window.localStorage.setItem("jwt",jwt)
+        setPassword("")
+        setEmail("")
+        setError("")
+        window.location.href = "/"
+      }
+
+    }catch(e){
+      console.log(e)
     }
+
+    
   };
 
   return (
