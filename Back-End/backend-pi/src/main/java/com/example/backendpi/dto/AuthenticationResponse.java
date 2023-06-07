@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
 
     private String jwt;
-    @Enumerated(EnumType.STRING)
-    private Role rol;
+    private String rol;
 
 }

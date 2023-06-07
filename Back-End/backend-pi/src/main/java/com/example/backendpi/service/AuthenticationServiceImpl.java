@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .jwt(jwt)
-                .rol(userService.getUser(jwt).getRole())
+                .rol(userService.getUser(jwt).getRole().name())
                 .build();
     }
 
