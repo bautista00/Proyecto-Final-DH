@@ -19,7 +19,6 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const axios = require('axios');
 
     const ec2InstanceIP = '3.19.232.248';
     const ec2InstancePort = 8080;
