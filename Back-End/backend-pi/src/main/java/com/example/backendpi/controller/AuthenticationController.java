@@ -24,18 +24,13 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    @Operation(summary = "Login with user and password and returns JWT token", responses = {
-            @ApiResponse(responseCode = "200",description = "Successful Operation", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Authentication Failure", content = @Content)})
-    @PostMapping("/api/login")
+
+    @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody @Valid @NonNull LoginRequest loginRequest) throws ResourceNotFoundException {
         return authenticationService.login(loginRequest);
     }
 
-    @Operation(summary = "Sign up and returns JWT token", responses = {
-            @ApiResponse(responseCode = "200",description = "Successful Operation", content = @Content),
-            @ApiResponse(responseCode = "409", description = "User already exists", content = @Content)})
-    @PostMapping("/api/sign-up")
+    @PostMapping("/sign-up")
     public AuthenticationResponse signUp(@RequestBody @Valid @NonNull SignUpRequest signUpRequest) {
         return authenticationService.signUp(signUpRequest);
     }

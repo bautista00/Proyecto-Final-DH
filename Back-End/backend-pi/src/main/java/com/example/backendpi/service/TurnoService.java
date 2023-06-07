@@ -17,13 +17,13 @@ public interface TurnoService {
 
     public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException;
 
-    public Optional<TurnoDTO> buscarXId(Long id)throws ResourceNotFoundException;
+//    public Optional<TurnoDTO> buscarXId(Long id)throws ResourceNotFoundException;
 
     public void borrarXId(Long id)throws ResourceNotFoundException;
 
-    public List<TurnoDTO> buscarTodos()throws ResourceNotFoundException;
+//    public List<TurnoDTO> buscarTodos()throws ResourceNotFoundException;
 
-    public TurnoDTO actualizar(TurnoDTO turnoDTO)throws ResourceNotFoundException;
+//    public TurnoDTO actualizar(TurnoDTO turnoDTO)throws ResourceNotFoundException;
 
     public TurnoDTO buscarPorCliente(User user)throws ResourceNotFoundException;
 

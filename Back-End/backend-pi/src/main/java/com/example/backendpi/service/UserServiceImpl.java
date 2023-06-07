@@ -8,6 +8,7 @@ import com.example.backendpi.dto.UserDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -47,8 +48,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails createUser(SignUpRequest signUpRequest) {
-        try{
-            if(signUpRequest.getCbu() != null && signUpRequest.getCuil() != null && signUpRequest.getTelefono() != null){
+        if(userRepository.findByEmail(signUpRequest.getUsername())==null) {
+
+            if (signUpRequest.getCbu() != null && signUpRequest.getCuil() != null && signUpRequest.getTelefono() != null) {
                 return userRepository.save(User.builder()
                         .email(signUpRequest.getUsername())
                         .password(passwordEncoder.encode(signUpRequest.getPassword()))
@@ -59,7 +61,7 @@ public class UserServiceImpl implements UserService {
                         .telefono(signUpRequest.getTelefono())
                         .role(ADMIN)
                         .build());
-            } else if (signUpRequest.getCuil() == null && signUpRequest.getCuil() == null  && signUpRequest.getTelefono() == null) {
+            } else if (signUpRequest.getCuil() == null && signUpRequest.getCuil() == null && signUpRequest.getTelefono() == null) {
                 return userRepository.save(User.builder()
                         .email(signUpRequest.getUsername())
                         .password(passwordEncoder.encode(signUpRequest.getPassword()))
@@ -67,15 +69,12 @@ public class UserServiceImpl implements UserService {
                         .apellido(signUpRequest.getApellido())
                         .role(USER)
                         .build());
-            }else {
-               throw new MissingParameterValueException("Faltan llenar algunos campos");
+            } else {
+                throw new MissingParameterValueException("Faltan llenar algunos campos");
             }
 
-        }catch (DataIntegrityViolationException e){
-            throw new ErrorResponseException(HttpStatus.CONFLICT,
-                    ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
-                            "User already exist"),e);
         }
+        throw new EntityExistsException();
     }
 
     @Override
