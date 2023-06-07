@@ -5,6 +5,7 @@ import com.example.backendpi.dto.LoginRequest;
 import com.example.backendpi.dto.SignUpRequest;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
+import com.example.backendpi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     @Override
     public AuthenticationResponse login(LoginRequest loginRequest) throws ResourceNotFoundException {
@@ -32,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         return AuthenticationResponse.builder()
                 .jwt(jwt)
-                .rol(userService.getUser(jwt).getRole().name())
+                .rol(userRepository.findByEmail(loginRequest.getUsername()).getRole().name())
                 .build();
     }
 
