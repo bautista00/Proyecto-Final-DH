@@ -34,10 +34,10 @@ public class User implements UserDetails {
     private String cbu;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Cancha> canchaList = new HashSet<>();
-
     @OneToOne
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;
+    private String url;
 
 
     @Override

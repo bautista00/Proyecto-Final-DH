@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,7 +19,9 @@ public class Cancha {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    private Deporte deporte;
+    @OneToMany
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+    private Categoria categoria;
     @OneToOne
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;
@@ -32,5 +35,10 @@ public class Cancha {
     private LocalTime horaCierre;
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Turno> turnoList = new HashSet<>();
-
+    @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Criterios> criteriosSet=new HashSet<>();
+    private Integer puntuacion;
+    @OneToMany
+    @JoinColumn(name = "urls_id", referencedColumnName = "id")
+    private List<String> urlsList;
 }

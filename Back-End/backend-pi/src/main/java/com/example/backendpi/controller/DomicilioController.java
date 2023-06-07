@@ -2,7 +2,7 @@ package com.example.backendpi.controller;
 
 import com.example.backendpi.domain.Domicilio;
 import com.example.backendpi.service.DomicilioService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +12,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/domicilios")
+@AllArgsConstructor
 public class DomicilioController {
-    private DomicilioService domicilioService;
-    @Autowired
-    public DomicilioController(DomicilioService domicilioService) {
-        this.domicilioService = domicilioService;
-    }
+
+    private final DomicilioService domicilioService;
+
 
     @PostMapping
     public ResponseEntity<Domicilio> agregarDomicilio(@RequestBody Domicilio domicilio){
@@ -49,7 +48,7 @@ public class DomicilioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarDomicilio(@PathVariable Long id){
         domicilioService.borrarXId(id);
-        return ResponseEntity.ok("Se elimino el domicilio con el id: "+id);
+        return ResponseEntity.ok("Se elimino el domicilio con el id: " +id);
     }
 
     @PutMapping

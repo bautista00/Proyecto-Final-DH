@@ -9,13 +9,16 @@ public class CanchaToCanchaDTOConverter implements Converter<Cancha, CanchaDTO> 
     @Override
     public CanchaDTO convert(Cancha source) {
         CanchaDTO  canchaDTO = new CanchaDTO();
-        canchaDTO.setDeporte(source.getDeporte());
+        canchaDTO.setId(source.getId());
+        canchaDTO.setCategoria(source.getCategoria());
         canchaDTO.setPrecio(source.getPrecioxhora());
         canchaDTO.setDomicilio(source.getDomicilio());
         canchaDTO.setNombre(source.getNombre());
         canchaDTO.setTelefono(source.getTelefono());
         canchaDTO.setHoraApertura(source.getHoraApertura());
         canchaDTO.setHoraCierre(source.getHoraCierre());
+        canchaDTO.setCriteriosSet(source.getCriteriosSet());
+        canchaDTO.setUrls(source.getUrlsList());
         return canchaDTO;
     }
 }

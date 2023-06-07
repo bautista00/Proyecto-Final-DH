@@ -1,8 +1,10 @@
 package com.example.backendpi.controller;
 
+import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.PageResponseDTO;
 import com.example.backendpi.dto.UserDTO;
 import com.example.backendpi.dto.UserPageDTO;
+import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -16,25 +18,24 @@ import lombok.AllArgsConstructor;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @AllArgsConstructor
-@Tag(name = "UserController (Este es solo para mostrar ejemplo de DTO y paginado)")
 public class UserController {
 
     private final UserService userService;
 
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Get page of users",
-            parameters = { @Parameter(in = ParameterIn.QUERY, name = "page", description = "Page"),
-                    @Parameter(in = ParameterIn.QUERY, name = "size", description = "Size") },
-            responses = {
-                    @ApiResponse(responseCode = "200",description = "Successful Operation",
-                            content = @Content(mediaType = "application/json",
-                                    schema = @Schema(implementation = UserPageDTO.class)))})
-    @GetMapping("/api/users")
-    public PageResponseDTO<UserDTO> getUsers(@PageableDefault(size = 10,page = 0) @ParameterObject Pageable pageable) {
-        return userService.getUsers(pageable);
+//    @GetMapping("/api/users")
+//    public PageResponseDTO<UserDTO> getUsers(@PageableDefault(size = 10,page = 0) @ParameterObject Pageable pageable) {
+//        return userService.getUsers(pageable);
+//    }
+
+    @GetMapping("/Account")
+    public ResponseEntity<User> getUser (@PathVariable String token) throws ResourceNotFoundException{
+        return ResponseEntity.ok(userService.getUser(token));
     }
 }
