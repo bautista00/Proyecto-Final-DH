@@ -30,7 +30,7 @@ const Login = () => {
       password:password
 };
 
-axios.post(endpoint, requestData)
+axios.post(endpoint, requestData, {headers:{"Content-Type":"application/json"}})
   .then(response => {
     console.log('Response:', response.data);
   })
