@@ -33,7 +33,7 @@ public class CanchaServiceImpl implements CanchaService{
     @Override
     public Cancha guardar(CanchaDTO canchaDTO,String token) {
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
-        cancha.setOwner(userRepository.findByEmail(jwtService.extractUserName(token)));
+        cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         cancha.setTurnoList(new HashSet<>());
         cancha.setPuntuacion(0);
         return canchaRepository.save(cancha);
@@ -98,9 +98,9 @@ public class CanchaServiceImpl implements CanchaService{
     }
 
     @Override
-    public List<CanchaDTO> buscarPorOwner(String token) throws ResourceNotFoundException {
-        if(canchaRepository.findByOwner(jwtService.extractUserName(token)).size()>0) {
-            List<CanchaDTO> canchaDTOS = canchaRepository.findByOwner(jwtService.extractUserName(token));
+    public List<CanchaDTO> buscarPorUser(String token) throws ResourceNotFoundException {
+        if(canchaRepository.findByUserEmail(jwtService.extractUserName(token)).size()>0) {
+            List<CanchaDTO> canchaDTOS = canchaRepository.findByUserEmail(jwtService.extractUserName(token));
             return canchaDTOS;
         }else {
             throw new ResourceNotFoundException("No existen las canchas buscadas por el propietario");
