@@ -6,7 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [data, setData] = useState([]);
+  const [jwt, setJwt] = useState();
 
   
   const handleEmailChange = (e) => {
@@ -28,15 +28,21 @@ const Login = () => {
       // Los datos que deseas enviar en la solicitud
       username:email,
       password:password
-};
+      };
 
-axios.post(endpoint, requestData, {headers:{"Content-Type":"application/json"}})
-  .then(response => {
-    console.log('Response:', response.data);
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+    axios.post(endpoint, requestData, {headers:{"Content-Type":"application/json"}})
+      .then(response => {
+        console.log('Response:', response.data);
+        setJwt(response.data)
+      })
+    
+    if(jwt){
+      window.localStorage.setItem("jwt",jwt)
+      setPassword("")
+      setEmail("")
+      setError("")
+      window.location.href = "/"
+    }
   };
 
   return (
