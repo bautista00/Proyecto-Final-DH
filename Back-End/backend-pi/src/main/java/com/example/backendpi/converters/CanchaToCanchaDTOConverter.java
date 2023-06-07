@@ -3,8 +3,9 @@ package com.example.backendpi.converters;
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.dto.CanchaDTO;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class CanchaToCanchaDTOConverter implements Converter<Cancha, CanchaDTO> {
     @Override
     public CanchaDTO convert(Cancha source) {

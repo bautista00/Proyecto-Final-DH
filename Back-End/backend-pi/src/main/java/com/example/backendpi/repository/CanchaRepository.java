@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface CanchaRepository extends JpaRepository<Cancha, Long> {
     List<CanchaDTO> findByCategoria(Categoria categoria);
-    List<CanchaDTO> findByOwner(String token);
+    List<CanchaDTO> findByUserEmail(String token);
 }

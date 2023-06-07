@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
         }else {
             throw new ResourceNotFoundException("No se encontro el usuario");
         }
-//        LOLO MOGOLICO :(
+//
     }
 
 

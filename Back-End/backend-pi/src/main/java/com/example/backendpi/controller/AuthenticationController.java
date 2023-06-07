@@ -3,6 +3,7 @@ package com.example.backendpi.controller;
 import com.example.backendpi.dto.AuthenticationResponse;
 import com.example.backendpi.dto.LoginRequest;
 import com.example.backendpi.dto.SignUpRequest;
+import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.service.AuthenticationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -27,7 +28,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "200",description = "Successful Operation", content = @Content),
             @ApiResponse(responseCode = "401", description = "Authentication Failure", content = @Content)})
     @PostMapping("/api/login")
-    public AuthenticationResponse login(@RequestBody @Valid @NonNull LoginRequest loginRequest) {
+    public AuthenticationResponse login(@RequestBody @Valid @NonNull LoginRequest loginRequest) throws ResourceNotFoundException {
         return authenticationService.login(loginRequest);
     }
 

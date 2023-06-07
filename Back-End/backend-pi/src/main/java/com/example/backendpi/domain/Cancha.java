@@ -19,7 +19,7 @@ public class Cancha {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
     @OneToOne
@@ -30,7 +30,7 @@ public class Cancha {
     private String nombre;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User owner;
+    private User user;
     private LocalTime horaApertura;
     private LocalTime horaCierre;
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -38,7 +38,6 @@ public class Cancha {
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Criterios> criteriosSet=new HashSet<>();
     private Integer puntuacion;
-    @OneToMany
-    @JoinColumn(name = "urls_id", referencedColumnName = "id")
+
     private List<String> urlsList;
 }

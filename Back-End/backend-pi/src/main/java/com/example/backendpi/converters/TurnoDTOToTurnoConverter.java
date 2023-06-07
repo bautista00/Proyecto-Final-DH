@@ -5,7 +5,9 @@ import com.example.backendpi.domain.Turno;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.TurnoDTO;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TurnoDTOToTurnoConverter implements Converter<TurnoDTO, Turno> {
     @Override
     public Turno convert(TurnoDTO source) {
