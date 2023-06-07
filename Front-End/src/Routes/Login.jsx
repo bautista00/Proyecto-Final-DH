@@ -8,10 +8,7 @@ const Login = () => {
   const [error, setError] = useState("");
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    axios.get("user.json").then((response) => setData(response.data));
-  }, []);
-
+  
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -22,21 +19,25 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const axios = require('axios');
 
-    const user = data.find(
-      (user) => user.email === email && user.password === password
-    );
+    const ec2InstanceIP = '3.19.232.248';
+    const ec2InstancePort = 8080;
+    const endpoint = `http://${ec2InstanceIP}:${ec2InstancePort}/api/login`;
 
-    if (email == user.email && password == user.password) {
-      setError("");
-      setEmail("");
-      setPassword("");
-      localStorage.setItem("auth", JSON.stringify(true));
-      localStorage.setItem("userId", JSON.stringify(user.id));
-      window.location.href = "/";
-    } else {
-      setError("Intentalo de nuevo");
-    }
+    const requestData = {
+      // Los datos que deseas enviar en la solicitud
+      username:email,
+      password:password
+};
+
+axios.post(endpoint, requestData)
+  .then(response => {
+    console.log('Response:', response.data);
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
   };
 
   return (
