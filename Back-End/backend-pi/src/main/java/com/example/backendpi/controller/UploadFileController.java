@@ -1,17 +1,12 @@
 package com.example.backendpi.controller;
 
-import com.example.backendpi.service.api.AwsS3Service;
+import com.example.backendpi.service.AwsS3Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-
-import java.util.List;
 
 @RestController
 @RequestMapping
@@ -20,6 +15,8 @@ public class UploadFileController {
 
     @Autowired
     private AwsS3Service awss3Service;
+
+
 
     @PostMapping("/all/uploadfile")
     public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) {
@@ -30,10 +27,11 @@ public class UploadFileController {
     }
 
 
-    @GetMapping("/getallfiles")
-    public ResponseEntity<List<String>> listFiles() {
-        return new ResponseEntity<List<String>>(awss3Service.getObjectsFromS3(), HttpStatus.OK);
-    }
+
+//    @GetMapping("/getallfiles")
+//    public ResponseEntity<List<String>> listFiles() {
+//        return new ResponseEntity<List<String>>(awss3Service.getObjectsFromS3(), HttpStatus.OK);
+//    }
 
 //    @GetMapping("/download")
 //    public ResponseEntity<Resource> download(@RequestParam("key") String key) {

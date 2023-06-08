@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,6 +39,6 @@ public class Cancha {
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Criterios> criteriosSet=new HashSet<>();
     private Integer puntuacion;
+    private List<String> imgList = new ArrayList<>();
 
-    private List<String> imgList;
 }

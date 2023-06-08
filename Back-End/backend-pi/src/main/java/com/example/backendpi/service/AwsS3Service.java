@@ -1,4 +1,4 @@
-package com.example.backendpi.service.api;
+package com.example.backendpi.service;
 
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,8 +1,15 @@
-package com.example.backendpi.service.api;
+package com.example.backendpi.service;
 
+import com.amazonaws.services.codecommit.model.File;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,6 +38,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     @Value("${aws.s3.bucket}")
     private String bucketName;
 
+
     @Override
     public void uploadFile(MultipartFile file, String newFileName) {
         try {
@@ -43,7 +50,8 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         }
     }
 
-    @Override
+
+        @Override
     public List<String> getObjectsFromS3() {
         ListObjectsV2Result result = amazonS3.listObjectsV2(bucketName);
         List<S3ObjectSummary> objects = result.getObjectSummaries();
