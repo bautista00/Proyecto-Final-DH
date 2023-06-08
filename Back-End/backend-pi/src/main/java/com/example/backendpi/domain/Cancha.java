@@ -39,5 +39,5 @@ public class Cancha {
     private Set<Criterios> criteriosSet=new HashSet<>();
     private Integer puntuacion;
 
-    private List<String> urlsList;
+    private List<String> imgList;
 }

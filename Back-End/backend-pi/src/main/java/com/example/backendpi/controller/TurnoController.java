@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/turnos")
+@RequestMapping
 public class TurnoController {
 
     private final TurnoService turnoService;
@@ -29,7 +29,7 @@ public class TurnoController {
     private final UserRepository userRepository;
 
 
-    @PostMapping("/user/create")
+    @PostMapping("/user/createturno")
     public ResponseEntity<Turno> agregarTurno(@RequestBody TurnoDTO turno) throws ResourceNotFoundException {
         if(canchaService.buscarXId(turno.getIdCancha()).isPresent() && userRepository.findById(turno.getIdUser()).isPresent()){
         return ResponseEntity.ok(turnoService.guardar(turno));
@@ -37,18 +37,18 @@ public class TurnoController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @DeleteMapping("/all/delete/{id}")
+    @DeleteMapping("/all/deleteturno/{id}")
     public ResponseEntity<String> eliminarTurno(@PathVariable Long id) throws ResourceNotFoundException {
         turnoService.borrarXId(id);
         return ResponseEntity.ok("Se elimino el turno con ese id" + id);
     }
 
-    @GetMapping("/user/findxuser")
+    @GetMapping("/user/findxuserturnos")
     public ResponseEntity<TurnoDTO> buscarPorUser(@RequestBody User user) throws ResourceNotFoundException{
        return ResponseEntity.ok(turnoService.buscarPorCliente(user));
     }
 
-    @GetMapping("/admin/findxcanchas")
+    @GetMapping("/admin/findxcanchasturnos")
     public ResponseEntity<List<TurnoDTO>> buscarPorCanchas (@RequestBody Cancha cancha) throws ResourceNotFoundException{
         return ResponseEntity.ok(turnoService.buscarPorCancha(cancha));
     }

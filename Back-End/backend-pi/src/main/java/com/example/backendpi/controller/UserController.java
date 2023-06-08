@@ -20,7 +20,7 @@ public class UserController {
 //        return userService.getUsers(pageable);
 //    }
 
-    @GetMapping("/all/account")
+    @GetMapping("/all/getusers")
     public ResponseEntity<User> getUser (@PathVariable String token) throws ResourceNotFoundException{
         return ResponseEntity.ok(userService.getUser(token));
     }

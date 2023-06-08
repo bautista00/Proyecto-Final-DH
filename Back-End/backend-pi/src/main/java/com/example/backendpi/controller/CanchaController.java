@@ -10,54 +10,56 @@ import com.example.backendpi.service.CanchaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/canchas")
+@RequestMapping
 @AllArgsConstructor
 public class CanchaController {
 
     private final CanchaService canchaService;
+    private final UploadFileController uploadFileController;
 
 
-    @PostMapping("/admin/create")
+    @PostMapping("/admin/addcancha")
     public ResponseEntity<Cancha> agregarCancha(@RequestBody CanchaDTO canchaDTO, @PathVariable String token){
         return ResponseEntity.ok(canchaService.guardar(canchaDTO,token));
     }
 
-    @GetMapping("/detail/{id}")
+    @GetMapping("/detailcancha/{id}")
     public ResponseEntity<Optional<CanchaDTO>> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
        return ResponseEntity.ok(canchaService.buscarXId(id));
     }
 
-    @GetMapping("/listall")
+    @GetMapping("/listallcanchas")
     public ResponseEntity<List<CanchaDTO>> buscarTodos (){
         return ResponseEntity.ok(canchaService.buscarTodos());
     }
 
-    @GetMapping("/listxsport")
+    @GetMapping("/listxsportcanchas")
     public ResponseEntity<List<CanchaDTO>> buscarXDeporte (@RequestBody Categoria categoria)throws ResourceNotFoundException{
         return ResponseEntity.ok(canchaService.buscarXCategoria(categoria));
     }
 
 
-    @GetMapping("/admin/listxowner")
+    @GetMapping("/admin/listxownercanchas")
     public ResponseEntity<List<CanchaDTO>> buscarXOwner (@PathVariable String token) throws ResourceNotFoundException {
         return ResponseEntity.ok(canchaService.buscarPorUser(token));
     }
 
 
-    @DeleteMapping("/admin/delete/{id}")
+    @DeleteMapping("/admin/deletecancha/{id}")
     public ResponseEntity<String> borrarCancha (@PathVariable Long id) throws ResourceNotFoundException {
         canchaService.borrarXId(id);
        return ResponseEntity.ok("La cancha con id " +id+ " se ha eliminado correctamente");
     }
 
 
-    @PutMapping("/admin/update")
+    @PutMapping("/admin/updatecancha")
     public ResponseEntity<CanchaDTO> actualizarCancha(@RequestBody CanchaDTO canchaDTO) throws ResourceNotFoundException {
         return ResponseEntity.ok(canchaService.actualizar(canchaDTO));
      }

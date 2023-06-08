@@ -35,14 +35,11 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     private String bucketName;
 
     @Override
-    public void uploadFile(MultipartFile file) {
-        File mainFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        try (FileOutputStream stream = new FileOutputStream(mainFile)) {
-            stream.write(file.getBytes());
-            String newFileName = System.currentTimeMillis() + "_" + mainFile.getName();
-            LOGGER.info("Se sube archivo con el nombre... " + newFileName);
-            PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, mainFile);
+    public void uploadFile(MultipartFile file, String newFileName) {
+        try {
+            PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, file.getInputStream(), null);
             amazonS3.putObject(request);
+            LOGGER.info("Se sube archivo con el nombre... " + newFileName);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }

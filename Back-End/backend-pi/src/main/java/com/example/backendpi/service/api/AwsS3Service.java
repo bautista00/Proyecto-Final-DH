@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface AwsS3Service {
 
-    void uploadFile(MultipartFile file);
+    void uploadFile(MultipartFile file, String newFileName);
 
     List<String> getObjectsFromS3();
 

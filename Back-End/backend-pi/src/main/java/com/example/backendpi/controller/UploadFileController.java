@@ -14,21 +14,23 @@ import org.springframework.http.HttpHeaders;
 import java.util.List;
 
 @RestController
-@RequestMapping("/s3")
+@RequestMapping
 public class UploadFileController {
 
 
     @Autowired
     private AwsS3Service awss3Service;
 
-    @PostMapping("/all/upload")
+    @PostMapping("/all/uploadfile")
     public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) {
-        awss3Service.uploadFile(file);
-        String response = "El archivo "+file.getOriginalFilename()+" fue subido exitosamente al bucket S3";
-        return new ResponseEntity<String>(response, HttpStatus.OK);
+        String newFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+        awss3Service.uploadFile(file, newFileName);
+        String response = "El archivo " + file.getOriginalFilename() + " fue subido exitosamente al bucket S3";
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/list")
+
+    @GetMapping("/getallfiles")
     public ResponseEntity<List<String>> listFiles() {
         return new ResponseEntity<List<String>>(awss3Service.getObjectsFromS3(), HttpStatus.OK);
     }

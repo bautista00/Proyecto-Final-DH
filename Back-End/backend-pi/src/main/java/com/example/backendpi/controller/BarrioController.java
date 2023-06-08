@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/barrios")
+@RequestMapping
 @AllArgsConstructor
 public class BarrioController {
 
     private final BarrioService barrioService;
 
-    @PostMapping("/god/add")
+    @PostMapping("/god/addbarrios")
     public ResponseEntity<Barrio> agregarBarrio(@RequestBody Barrio barrio) throws EntityExistsException {
         return ResponseEntity.ok(barrioService.guardar(barrio));
     }
 
-    @GetMapping("/listall")
+    @GetMapping("/listallbarrios")
     public ResponseEntity<List<Barrio>> buscarTodos () throws ResourceNotFoundException {
         return ResponseEntity.ok(barrioService.buscarTodos());
     }
 
-    @DeleteMapping("/god/delete/{id}")
+    @DeleteMapping("/god/deletebarrio/{id}")
     public ResponseEntity<String> eliminarBarrio(@PathVariable Long id)throws ResourceNotFoundException{
         barrioService.borrarXId(id);
         return ResponseEntity.ok("Se elimino el barrio con el id: " +id);
