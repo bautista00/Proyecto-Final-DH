@@ -26,8 +26,8 @@ public class CanchaController {
 
 
     @PostMapping("/admin/addcancha")
-    public ResponseEntity<Cancha> agregarCancha(@RequestBody CanchaDTO canchaDTO, @PathVariable String token){
-        return ResponseEntity.ok(canchaService.guardar(canchaDTO,token));
+    public ResponseEntity<Cancha> agregarCancha(@RequestBody CanchaDTO canchaDTO, @RequestPart(value = "file", required = false) MultipartFile imagen, @PathVariable String token){
+        return ResponseEntity.ok(canchaService.guardar(canchaDTO,token, imagen));
     }
 
     @GetMapping("/detailcancha/{id}")

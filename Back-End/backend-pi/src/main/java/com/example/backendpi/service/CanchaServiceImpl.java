@@ -33,11 +33,19 @@ public class CanchaServiceImpl implements CanchaService{
 
 
     @Override
-    public Cancha guardar(CanchaDTO canchaDTO, String token) {
+    public Cancha guardar(CanchaDTO canchaDTO, String token, MultipartFile imagen) {
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
         cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         cancha.setTurnoList(new HashSet<>());
         cancha.setPuntuacion(0);
+
+        if (imagen != null && !imagen.isEmpty()) {
+            String newFileName = System.currentTimeMillis() + "_" + imagen.getOriginalFilename();
+            awsS3Service.uploadFile(imagen, newFileName);
+            String imageUrl = awsS3Service.generateImageUrl(newFileName);
+            cancha.getImgList().add(imageUrl);
+        }
+
         return canchaRepository.save(cancha);
     }
 

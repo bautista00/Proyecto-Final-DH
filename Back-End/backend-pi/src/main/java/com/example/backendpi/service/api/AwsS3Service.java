@@ -13,4 +13,5 @@ public interface AwsS3Service {
 
     InputStream downloadFile(String key);
 
+    String generateImageUrl(String fileName);
 }

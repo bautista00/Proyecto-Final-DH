@@ -1,10 +1,7 @@
 package com.example.backendpi.service.api;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.ListObjectsV2Result;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
+import com.amazonaws.services.s3.model.*;
 
 
 import org.slf4j.Logger;
@@ -18,6 +15,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import java.util.Objects;
@@ -56,6 +54,19 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     public InputStream downloadFile(String key) {
         S3Object object = amazonS3.getObject(bucketName, key);
         return object.getObjectContent();
+    }
+
+    public String generateImageUrl(String fileName) {
+
+        GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
+
+        ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
+                .withCacheControl("No-cache")
+                .withContentDisposition("attachment; filename=" + fileName);
+        generatePresignedUrlRequest.setResponseHeaders(responseHeaders);
+
+        URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+        return url.toString();
     }
 
 }
