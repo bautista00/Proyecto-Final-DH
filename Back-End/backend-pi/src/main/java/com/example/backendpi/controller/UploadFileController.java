@@ -19,11 +19,9 @@ public class UploadFileController {
 
 
     @PostMapping("/all/uploadfile")
-    public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) {
-        String newFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        awss3Service.uploadFile(file, newFileName);
-        String response = "El archivo " + file.getOriginalFilename() + " fue subido exitosamente al bucket S3";
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) throws Exception {
+        awss3Service.uploadFile(file);
+        return new ResponseEntity<>("El archivo " + file.getOriginalFilename() + " fue subido exitosamente al bucket S3", HttpStatus.OK);
     }
 
 

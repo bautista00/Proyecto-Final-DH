@@ -32,11 +32,12 @@ public class CanchaServiceImpl implements CanchaService{
 
 
     @Override
-    public Cancha guardar(CanchaDTO canchaDTO,String token) {
+    public Cancha guardar(CanchaDTO canchaDTO,String token, MultipartFile file) throws Exception {
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
         cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         cancha.setTurnoList(new HashSet<>());
         cancha.setPuntuacion(0);
+        cancha.getImgList().add(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
         return canchaRepository.save(cancha);
     }
 

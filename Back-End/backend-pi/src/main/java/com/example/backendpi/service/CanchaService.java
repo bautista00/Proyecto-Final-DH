@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface CanchaService {
 
 
-    public Cancha guardar(CanchaDTO canchaDTO, String token);
+    public Cancha guardar(CanchaDTO canchaDTO, String token, MultipartFile file) throws Exception;
 
     public Optional<CanchaDTO> buscarXId(Long id) throws ResourceNotFoundException;
 

@@ -7,25 +7,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import java.util.Objects;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
-import java.util.List;
 
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class AwsS3ServiceImpl implements AwsS3Service {
@@ -40,14 +30,17 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
 
     @Override
-    public void uploadFile(MultipartFile file, String newFileName) {
+    public String uploadFile(MultipartFile file) throws Exception {
         try {
+            String newFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
             PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, file.getInputStream(), null);
             amazonS3.putObject(request);
             LOGGER.info("Se sube archivo con el nombre... " + newFileName);
+            return newFileName;
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
+        throw new Exception("algo pijeo");
     }
 
 

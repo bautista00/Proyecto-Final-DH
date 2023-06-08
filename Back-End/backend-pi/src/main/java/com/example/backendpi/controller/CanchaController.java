@@ -22,12 +22,11 @@ import java.util.Optional;
 public class CanchaController {
 
     private final CanchaService canchaService;
-    private final UploadFileController uploadFileController;
 
 
     @PostMapping("/admin/addcancha/{token}")
-    public ResponseEntity<Cancha> agregarCancha(@RequestBody CanchaDTO canchaDTO, @PathVariable String token){
-        return ResponseEntity.ok(canchaService.guardar(canchaDTO,token));
+    public ResponseEntity<Cancha> agregarCancha(@RequestBody CanchaDTO canchaDTO, @PathVariable String token,@RequestPart(value="file") MultipartFile file) throws Exception {
+        return ResponseEntity.ok(canchaService.guardar(canchaDTO,token, file));
     }
 
     @GetMapping("/detailcancha/{id}")
