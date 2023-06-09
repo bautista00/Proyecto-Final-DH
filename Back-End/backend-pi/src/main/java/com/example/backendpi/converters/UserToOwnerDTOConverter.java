@@ -3,7 +3,9 @@ package com.example.backendpi.converters;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.OwnerDTO;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserToOwnerDTOConverter implements Converter<User, OwnerDTO> {
     @Override
     public OwnerDTO convert(User source) {
