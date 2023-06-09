@@ -39,6 +39,7 @@ public class Cancha {
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Criterios> criteriosSet=new HashSet<>();
     private Integer puntuacion;
-    private List<String> imgList = new ArrayList<>();
+    @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Images> imgList = new ArrayList<>();
 
 }

@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
-    private String userName;
-    private String role;
+public class ImagesDTO {
+    private Long id;
+    private String url;
+    private Long cancha_id;
 }

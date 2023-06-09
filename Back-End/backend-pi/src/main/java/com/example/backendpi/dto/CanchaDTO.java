@@ -3,6 +3,7 @@ package com.example.backendpi.dto;
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.domain.Criterios;
 import com.example.backendpi.domain.Domicilio;
+import com.example.backendpi.domain.Images;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,5 +27,5 @@ import java.util.Set;
         private LocalTime horaApertura;
         private LocalTime horaCierre;
         private Set<Criterios> criteriosSet;
-        private List<String> urls;
+        private List<ImagesDTO> imagesDTOSList;
 }

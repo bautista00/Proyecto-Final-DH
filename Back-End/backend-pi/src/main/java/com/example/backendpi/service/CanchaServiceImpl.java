@@ -5,15 +5,16 @@ import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
 import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Categoria;
+import com.example.backendpi.domain.Images;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.CanchaRepository;
+import com.example.backendpi.repository.ImagesRepository;
 import com.example.backendpi.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +29,7 @@ public class CanchaServiceImpl implements CanchaService{
     private final CanchaDTOaCanchaConverter canchaDTOaCanchaConverter;
     private final CanchaToCanchaDTOConverter canchaToCanchaDTOConverter;
     private final AwsS3Service awsS3Service ;
+    private final ImagesRepository imagesRepository;
 
 
 
@@ -37,8 +39,13 @@ public class CanchaServiceImpl implements CanchaService{
         cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         cancha.setTurnoList(new HashSet<>());
         cancha.setPuntuacion(0);
-        cancha.getImgList().add(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
-        return canchaRepository.save(cancha);
+        Images images = new Images();
+        images.setCancha(cancha);
+        images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
+
+        canchaRepository.save(cancha);
+        imagesRepository.save(images);
+        return cancha;
     }
 
     @Override
@@ -49,7 +56,6 @@ public class CanchaServiceImpl implements CanchaService{
         }else {
             throw new ResourceNotFoundException("No existe la cancha buscada con ese id" + id);
         }
-
     }
 
     @Override
