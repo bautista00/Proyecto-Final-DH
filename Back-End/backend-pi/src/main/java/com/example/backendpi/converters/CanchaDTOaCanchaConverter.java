@@ -5,6 +5,9 @@ import com.example.backendpi.dto.CanchaDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 @Component
 public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
     @Override
@@ -19,7 +22,6 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
         cancha.setHoraCierre(source.getHoraCierre());
         cancha.setTelefono(source.getTelefono());
         cancha.setCriteriosSet(source.getCriteriosSet());
-        cancha.setUrlsList(source.getUrls());
         return cancha;
     }
 }

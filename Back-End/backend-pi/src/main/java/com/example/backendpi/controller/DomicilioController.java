@@ -18,41 +18,41 @@ public class DomicilioController {
     private final DomicilioService domicilioService;
 
 
-    @PostMapping
-    public ResponseEntity<Domicilio> agregarDomicilio(@RequestBody Domicilio domicilio){
-        return ResponseEntity.ok(domicilioService.guardar(domicilio));
-    }
+//    @PostMapping("/")
+//    public ResponseEntity<Domicilio> agregarDomicilio(@RequestBody Domicilio domicilio){
+//        return ResponseEntity.ok(domicilioService.guardar(domicilio));
+//    }
 
-    @GetMapping("/{id}")
-    public ResponseEntity <Domicilio> buscarDomicilio(@PathVariable Long id){
-        Optional<Domicilio> optionalDomicilio= domicilioService.buscarXId(id);
-        if(optionalDomicilio.isPresent()){
-            return ResponseEntity.ok(optionalDomicilio.get());
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-    @GetMapping("/todos")
-    public ResponseEntity<List<Domicilio>> buscarTodos(){
-        if(domicilioService.buscarTodos().size()>0) {
-            return ResponseEntity.ok(domicilioService.buscarTodos());
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
-
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarDomicilio(@PathVariable Long id){
-        domicilioService.borrarXId(id);
-        return ResponseEntity.ok("Se elimino el domicilio con el id: " +id);
-    }
-
-    @PutMapping
-    public ResponseEntity<Domicilio> actualizarDomicilio(@RequestBody Domicilio domicilio){
-        return ResponseEntity.ok(domicilioService.actualizar(domicilio));
-    }
+//    @GetMapping("/")
+//    public ResponseEntity <Domicilio> buscarDomicilio(@PathVariable Long id){
+//        Optional<Domicilio> optionalDomicilio= domicilioService.buscarXId(id);
+//        if(optionalDomicilio.isPresent()){
+//            return ResponseEntity.ok(optionalDomicilio.get());
+//        }
+//        else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//    }
+//
+//    @GetMapping("/")
+//    public ResponseEntity<List<Domicilio>> buscarTodos(){
+//        if(domicilioService.buscarTodos().size()>0) {
+//            return ResponseEntity.ok(domicilioService.buscarTodos());
+//        }
+//        else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//    }
+//
+//
+//    @DeleteMapping("/DeleteDomicilio/{id}")
+//    public ResponseEntity<String> eliminarDomicilio(@PathVariable Long id){
+//        domicilioService.borrarXId(id);
+//        return ResponseEntity.ok("Se elimino el domicilio con el id: " +id);
+//    }
+//
+//    @PutMapping("/")
+//    public ResponseEntity<Domicilio> actualizarDomicilio(@RequestBody Domicilio domicilio){
+//        return ResponseEntity.ok(domicilioService.actualizar(domicilio));
+//    }
 }

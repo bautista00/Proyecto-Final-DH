@@ -36,22 +36,15 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeHttpRequestsCustomizer -> authorizeHttpRequestsCustomizer
-                                .requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/sign-up").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/hello/user")
-                                .hasAnyAuthority(USER.name(), ADMIN.name())
-                                .requestMatchers(HttpMethod.GET, "/hello/admin").hasAuthority(ADMIN.name())
-                                .requestMatchers(HttpMethod.GET, "/swagger-ui/").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/v3/api-docs/").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/users").hasAuthority(ADMIN.name())
-                                .anyRequest().authenticated())
+                                .requestMatchers("/admin/**").hasAuthority(ADMIN.name())
+                                .requestMatchers("/user/**").hasAuthority(USER.name())
+                                .requestMatchers("/all/**").hasAnyAuthority(ADMIN.name(),USER.name())
+                                .anyRequest().permitAll())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
-    
-//    darle los permisos al bucket para que pueda funcionar "/s3/**" en un matchers 
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();

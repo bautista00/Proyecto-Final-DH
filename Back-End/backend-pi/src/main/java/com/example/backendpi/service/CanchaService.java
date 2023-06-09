@@ -4,6 +4,7 @@ import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ import java.util.Optional;
 public interface CanchaService {
 
 
-    public Cancha guardar(CanchaDTO canchaDTO,String email);
+    public Cancha guardar(CanchaDTO canchaDTO, String token, MultipartFile file) throws Exception;
 
     public Optional<CanchaDTO> buscarXId(Long id) throws ResourceNotFoundException;
 

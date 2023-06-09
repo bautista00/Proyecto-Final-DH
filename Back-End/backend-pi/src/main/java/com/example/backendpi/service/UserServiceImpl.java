@@ -1,25 +1,25 @@
 package com.example.backendpi.service;
 
 import com.amazonaws.services.backup.model.MissingParameterValueException;
+import com.example.backendpi.converters.UserToClientDTOConverter;
+import com.example.backendpi.converters.UserToOwnerDTOConverter;
 import com.example.backendpi.domain.User;
+import com.example.backendpi.dto.OwnerDTO;
 import com.example.backendpi.dto.PageResponseDTO;
 import com.example.backendpi.dto.SignUpRequest;
-import com.example.backendpi.dto.UserDTO;
+import com.example.backendpi.dto.ClientDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponseException;
 
 import static com.example.backendpi.domain.Role.ADMIN;
 import static com.example.backendpi.domain.Role.USER;
@@ -36,6 +36,11 @@ public class UserServiceImpl implements UserService {
 
     private final JwtService jwtService;
 
+    private final UserToClientDTOConverter userToClientDTOConverter;
+
+    private final UserToOwnerDTOConverter userToOwnerDTOConverter;
+
+
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         UserDetails userDetails = userRepository.getFirstByEmail(userName);
@@ -47,8 +52,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails createUser(SignUpRequest signUpRequest) {
-        try{
-            if(signUpRequest.getCbu() != null && signUpRequest.getCuil() != null && signUpRequest.getTelefono() != null){
+        if(userRepository.findByEmail(signUpRequest.getUsername())==null) {
+
+            if (signUpRequest.getCbu() != null && signUpRequest.getCuil() != null && signUpRequest.getTelefono() != null) {
                 return userRepository.save(User.builder()
                         .email(signUpRequest.getUsername())
                         .password(passwordEncoder.encode(signUpRequest.getPassword()))
@@ -59,7 +65,7 @@ public class UserServiceImpl implements UserService {
                         .telefono(signUpRequest.getTelefono())
                         .role(ADMIN)
                         .build());
-            } else if (signUpRequest.getCuil() == null && signUpRequest.getCuil() == null  && signUpRequest.getTelefono() == null) {
+            } else if (signUpRequest.getCuil() == null && signUpRequest.getCuil() == null && signUpRequest.getTelefono() == null) {
                 return userRepository.save(User.builder()
                         .email(signUpRequest.getUsername())
                         .password(passwordEncoder.encode(signUpRequest.getPassword()))
@@ -67,33 +73,44 @@ public class UserServiceImpl implements UserService {
                         .apellido(signUpRequest.getApellido())
                         .role(USER)
                         .build());
-            }else {
-               throw new MissingParameterValueException("Faltan llenar algunos campos");
+            } else {
+                throw new MissingParameterValueException("Faltan llenar algunos campos");
             }
 
-        }catch (DataIntegrityViolationException e){
-            throw new ErrorResponseException(HttpStatus.CONFLICT,
-                    ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
-                            "User already exist"),e);
         }
+        throw new EntityExistsException();
     }
 
     @Override
-    public PageResponseDTO<UserDTO> getUsers(Pageable pageable) {
+    public PageResponseDTO<ClientDTO> getUsers(Pageable pageable) {
 
         Page<User> userPage = userRepository.findAll(pageable);
         return new PageResponseDTO<>(
                 userPage.getContent().stream()
-                        .map(user -> conversionService.convert(user, UserDTO.class)).toList()
+                        .map(user -> conversionService.convert(user, ClientDTO.class)).toList()
                 , userPage.getPageable()
                 , userPage.getTotalPages());
     }
 
     @Override
-    public User getUser(String token) throws ResourceNotFoundException {
+    public OwnerDTO getOwner(String token) throws ResourceNotFoundException {
         User user = userRepository.findByEmail(jwtService.extractUserName(token));
         if(user !=null){
-            return user;
+            OwnerDTO ownerDTO = userToOwnerDTOConverter.convert(user);
+            return ownerDTO;
+        }else {
+            throw new ResourceNotFoundException("No se encontro el usuario");
+        }
+//
+    }
+
+
+    @Override
+    public ClientDTO getClient(String token) throws ResourceNotFoundException {
+        User user = userRepository.findByEmail(jwtService.extractUserName(token));
+        if(user !=null){
+            ClientDTO clientDTO = userToClientDTOConverter.convert(user);
+            return clientDTO;
         }else {
             throw new ResourceNotFoundException("No se encontro el usuario");
         }

@@ -5,22 +5,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Domicilio {
+public class Barrio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String calle;
-    private String numero;
-    @ManyToOne
-    @JoinColumn(name ="barrio_id",referencedColumnName = "id")
-    private Barrio barrio;
-    private String provincia;
-    @OneToOne(mappedBy = "domicilio")
-    private User user;
-
+    private String nombre;
+    @OneToMany(mappedBy = "barrio",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<Domicilio> domicilioList;
 }
