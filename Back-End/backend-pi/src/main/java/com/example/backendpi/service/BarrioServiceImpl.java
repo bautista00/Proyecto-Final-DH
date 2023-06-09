@@ -1,12 +1,12 @@
 package com.example.backendpi.service;
 
 import com.example.backendpi.domain.Barrio;
-import com.example.backendpi.domain.Domicilio;
+
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.repository.BarrioRepository;
 import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;

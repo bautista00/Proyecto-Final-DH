@@ -1,5 +1,6 @@
 package com.example.backendpi;
 
+import com.example.backendpi.domain.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -10,9 +11,9 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 
 @SpringBootApplication
 public class BackendPiApplication {
+
 	public static void main(String[] args) {
 		SpringApplication.run(BackendPiApplication.class, args);
 	}
-
 
 }

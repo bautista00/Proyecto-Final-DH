@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,5 +18,5 @@ public class Barrio {
     private Long id;
     private String nombre;
     @OneToMany(mappedBy = "barrio",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Domicilio> domicilioList;
+    private List<Domicilio> domicilioList = new ArrayList<>();
 }

@@ -73,7 +73,8 @@ public class UserServiceImpl implements UserService {
                         .apellido(signUpRequest.getApellido())
                         .role(USER)
                         .build());
-            } else {
+            }
+            else {
                 throw new MissingParameterValueException("Faltan llenar algunos campos");
             }
 
