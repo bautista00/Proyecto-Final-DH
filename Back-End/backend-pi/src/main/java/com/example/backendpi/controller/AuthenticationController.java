@@ -12,10 +12,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.NonNull;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
@@ -33,6 +32,16 @@ public class AuthenticationController {
     @PostMapping("/sign-up")
     public AuthenticationResponse signUp(@RequestBody @Valid @NonNull SignUpRequest signUpRequest) {
         return authenticationService.signUp(signUpRequest);
+    }
+
+    @GetMapping("/verify/{token}")
+    public ResponseEntity<String> verifyEmail(@PathVariable String token) {
+        boolean verified = authenticationService.verifyUser(token);
+        if (verified) {
+            return ResponseEntity.ok("Email verification successful.");
+        } else {
+            return ResponseEntity.badRequest().body("Invalid verification token.");
+        }
     }
 
 }

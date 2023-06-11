@@ -4,5 +4,5 @@ import com.example.backendpi.domain.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CategoriaRepository extends JpaRepository <Categoria, Long> {
-    Categoria findByName (String nombre);
+    Categoria findByNombre (String nombre);
 }

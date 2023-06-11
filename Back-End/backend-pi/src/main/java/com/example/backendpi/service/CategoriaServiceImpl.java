@@ -19,7 +19,7 @@ public class CategoriaServiceImpl implements CategoriaService{
 
     @Override
     public Categoria agregarCategoria(Categoria categoria) throws EntityExistsException {
-        if (categoriaRepository.findByName(categoria.getNombre()) == null){
+        if (categoriaRepository.findByNombre(categoria.getNombre()) == null){
                 return categoriaRepository.save(categoria);
         }
         throw new EntityExistsException("La categoria ya existe");
