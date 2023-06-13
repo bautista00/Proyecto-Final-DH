@@ -1,0 +1,290 @@
+[
+  {
+    "id": "1",
+    "name": "Ankor Futbol",
+    "kindOfSport": "Futbol",
+    "location": "San martin 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/canchaFutbol7.png",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+
+  {
+    "id": "2",
+    "name": "Tenis Migueletes",
+    "kindOfSport": "Tenis",
+    "location": "Migueletes 654, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo de 09:00hs a 20:30hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1108602242.",
+    "price": "5000",
+    "image": "/images/clubTenis.jpg",
+    "description": "Bienvenido a Tenis Migueletes, te esperamos para disfrutar del tenis en un entorno excepcional. Nuestro complejo cuenta con modernas canchas de tenis en un ambiente acogedor y profesional. Ven y descubre un lugar donde la pasión por el tenis se encuentra con la comodidad y la diversión. ¡Te esperamos en Tenis Migueletes para jugar y disfrutar al máximo!"
+  },
+
+  {
+    "id": "3",
+    "name": "Pick and Roll Basket",
+    "kindOfSport": "Basket",
+    "location": "Av.Libertador 1500, Buenos Aires, Capital.",
+    "schedule": "De martes a domingo de 11:00hs a 23:30hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1108903321.",
+    "price": "17000.",
+    "image": "/images/canchaBasket.png",
+    "description": "Bienvenido a Pick and Roll Basket, el lugar perfecto para los amantes del baloncesto. Nuestro complejo cuenta con canchas de baloncesto de primer nivel, diseñadas para brindar una experiencia excepcional. Ven y muestra tus habilidades, organiza partidos emocionantes y vive la emoción del baloncesto en Pick and Roll Basket. Prepárate para hacer jugadas inolvidables y disfrutar con amigos, te esperamos!"
+  },
+
+  {
+    "id": "4",
+    "name": "Pilar Padel",
+    "kindOfSport": "Padel",
+    "location": "3 de Febrero 1500, Buenos Aires, Provincia.",
+    "schedule": "De martes a domingo de 09:00hs a 23:30hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1127903577.",
+    "price": "8500.",
+    "image": "/images/canchaPadel.png",
+    "description": "Esto es Pilar Padel, el distinguido complejo que se erige como el destino por excelencia para los apasionados del pádel en Argentina. Nuestras instalaciones ofrecen un entorno de primera categoría, diseñado meticulosamente para brindar una experiencia sobresaliente en este deporte tan apasionante. Con canchas de pádel de muy buena calidad y equipamiento moderno, Pilar Padel se posiciona como el escenario idóneo para competir, perfeccionar sus habilidades o simplemente disfrutar de momentos gratos con amigos y familiares. Acompáñenos y experimente la emoción inigualable del pádel en Pilar Padel, donde convergen la diversión y la competencia en una armonía perfecta. Nos complace enormemente recibirle y ofrecerle una experiencia única en el fascinante mundo del pádel."
+  },
+  {
+    "id": "5",
+    "name": "Merentiel Futbol",
+    "kindOfSport": "Futbol",
+    "location": "San martin 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha2.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "6",
+    "name": "Messi Futbol",
+    "kindOfSport": "Futbol",
+    "location": "San martin 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha3.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "7",
+    "name": "Straqualursi Futbol",
+    "kindOfSport": "Futbol",
+    "location": "San martin 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha4.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "8",
+    "name": "El chino luna Futbol",
+    "kindOfSport": "Futbol",
+    "location": "San martin 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha5.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "9",
+    "name": "Discoteka Futbol",
+    "kindOfSport": "Futbol",
+    "location": "San martin 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha6.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "10",
+    "name": "Lavolpe Futbol",
+    "kindOfSport": "Futbol",
+    "location": "Bicentenario 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha7.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "11",
+    "name": "De pecho Futbol",
+    "kindOfSport": "Futbol",
+    "location": "Bicentenario 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha8.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "12",
+    "name": "Distinto Futbol",
+    "kindOfSport": "Futbol",
+    "location": "Bicentenario 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha9.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "13",
+    "name": "Meceta Futbol",
+    "kindOfSport": "Futbol",
+    "location": "Bicentenario 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha10.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "14",
+    "name": "Cuadrado Futbol",
+    "kindOfSport": "Futbol",
+    "location": "Bicentenario 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha11.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  },
+  {
+    "id": "15",
+    "name": "La esquina Futbol",
+    "kindOfSport": "Futbol",
+    "location": "Bicentenario 444, Buenos Aires, Capital.",
+    "schedule": "De lunes a domingo 12:00hs a 23:00hs.",
+    "services": [
+      { "name": "Vestuarios", "icon": "fa-solid fa-person-booth" },
+      { "name": "Duchas", "icon": "fa-solid fa-shower" },
+      { "name": "Confiteria", "icon": "fa-solid fa-burger" },
+      { "name": "Bar", "icon": "fa-solid fa-martini-glass" },
+      { "name": "Wifi", "icon": "fa-solid fa-wifi" },
+      { "name": "Estacionamiento", "icon": "fa-solid fa-square-parking" }
+    ],
+    "contact": "1109808231.",
+    "price": "15000.",
+    "image": "/images/cancha12.jpg",
+    "description": "Bienvenido a nuestras canchas de Fútbol, el destino ideal para los amantes del fútbol en busca de emociones y competencia. Ubicado en un entorno moderno y vibrante, nuestras canchas de Fútbol es un complejo de canchas de fútbol diseñado para ofrecer una experiencia excepcional a jugadores de todas las edades y niveles. Nuestras instalaciones cuentan con un conjunto de canchas de césped artificial de última generación, que ofrecen un rendimiento óptimo y una superficie de juego consistente durante todo el año. Cada cancha está meticulosamente cuidada y cumple con los estándares internacionales, brindando un escenario perfecto para disfrutar del deporte más apasionante del mundo. ¡Vení a jugar con nosotros!"
+  }
+]

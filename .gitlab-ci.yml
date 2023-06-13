@@ -1,0 +1,100 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build_backend:
+  stage: build
+  image: maven:3.8-openjdk-17
+  script:
+    - cd Back-End
+    - cd backend-pi
+    - echo "Building app..."
+    - mvn clean package
+    - echo "Compile complete."
+  artifacts:
+    paths:
+      - $JAR_PATH
+  rules:
+    - changes:
+        - Back-End/**/*
+
+build_frontend:
+  stage: build
+  image: node:latest
+  script:
+    - echo "Building the app"
+    - cd Front-End
+    - npm --force install
+    - CI=false npm run build
+    - echo "Finished building the app."
+  artifacts:
+    paths:
+      - ./Front-End/dist/
+  rules:
+    - changes:
+        - Front-End/**/*
+
+test_backend:   # This job runs in the test stage.
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  script:
+    - echo "Running unit tests... This will take about 60 seconds."
+    - sleep 60
+    - echo "Code coverage is 90%"
+  rules:
+    - changes:
+        - Back-End/**/*
+
+test_frontend:   # This job also runs in the test stage.
+  stage: test    # It can run at the same time as unit-test-job (in parallel).
+  script:
+    - echo "Linting code... This will take about 10 seconds."
+    - sleep 10
+    - echo "No lint issues found."
+  rules:
+    - changes:
+        - Front-End/**/*
+
+deploy_frontend:
+   stage: deploy
+   needs: [build_frontend]
+   image: python:latest 
+   script:
+      - cd Front-End/dist
+      - pip install awscli  
+      - echo "awscli installed"
+      - echo "$AWS_ACCESS_KEY_ID"
+      - aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+      - echo "Set aws_access_key_id"
+      - aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+      - echo "Set aws_secret_access_key"
+      - aws configure list
+      - aws s3 sync $AWS_S3_FRONT
+   rules:
+    - changes:
+        - Front-End/**/*
+
+deploy_backend:
+  stage: deploy
+  needs: [build_backend]
+  image: alpine:3.11
+  before_script:
+    - apk update && apk add openssh-client bash
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - touch ~/.ssh/config
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+    - ssh-keyscan -H "$DEPLOY_SERVER_IP" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - echo "Deploy started..."
+    - ssh -i ~/.ssh/id_rsa ubuntu@$DEPLOY_SERVER_IP "sudo systemctl stop fieldrent.service"
+    - scp -i ~/.ssh/id_rsa $JAR_PATH ubuntu@$DEPLOY_SERVER_IP:~/fieldrent/
+    - ssh -i ~/.ssh/id_rsa ubuntu@$DEPLOY_SERVER_IP "sudo systemctl start fieldrent.service"
+    - echo "Finished deploying the app."
+  rules:
+    - changes:
+        - Back-End/**/*

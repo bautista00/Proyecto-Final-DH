@@ -1,0 +1,23 @@
+[{
+    "id": "1",
+    "name":"Futbol",
+    "image": "/images/canchaFutbol7.png"
+   },
+
+   {
+    "id": "2",
+    "name":"Tenis",
+    "image": "/images/clubTenis.jpg"
+   },
+
+   {
+    "id": "3",
+    "name":"Padel",
+    "image": "/images/canchaPadel.png"
+   },
+  
+   {
+    "id": "4",
+    "name":"Basket",
+    "image": "/images/canchaBasket.png"
+   }] 
