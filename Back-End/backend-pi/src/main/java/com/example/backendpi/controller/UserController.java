@@ -7,6 +7,7 @@ import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,12 @@ public class UserController {
     @GetMapping("/user/getclient")
     public ResponseEntity<ClientDTO> getClient (@PathVariable String token) throws ResourceNotFoundException{
         return ResponseEntity.ok(userService.getClient(token));
+    }
+
+    @DeleteMapping("/god/deleteClient")
+    public ResponseEntity<String> borrarUsuario(@PathVariable Long id) throws ResourceNotFoundException{
+        userService.borrarCliente(id);
+        return ResponseEntity.ok("Se borro el usuario con id "+ id);
     }
 
 }

@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static com.example.backendpi.domain.Role.ADMIN;
@@ -122,6 +123,14 @@ public class UserServiceImpl implements UserService {
             throw new ResourceNotFoundException("No se encontro el usuario");
         }
 //
+    }
+
+    public void borrarCliente(Long id) throws ResourceNotFoundException{
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            userRepository.deleteById(id);
+        }
+        else throw new ResourceNotFoundException("No se encontro el usuario");
     }
 
 
