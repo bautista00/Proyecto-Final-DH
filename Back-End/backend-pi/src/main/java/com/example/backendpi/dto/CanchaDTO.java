@@ -1,9 +1,6 @@
 package com.example.backendpi.dto;
 
-import com.example.backendpi.domain.Categoria;
-import com.example.backendpi.domain.Criterios;
-import com.example.backendpi.domain.Domicilio;
-import com.example.backendpi.domain.Images;
+import com.example.backendpi.domain.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +23,8 @@ import java.util.Set;
         private String nombre;
         private LocalTime horaApertura;
         private LocalTime horaCierre;
-        private Set<Criterios> criteriosSet;
+        private List<Criterios> criteriosList;
         private List<ImagesDTO> imagesDTOSList;
+        private List<ValoracionDTO> valoracionList;
+        private Double promedio;
 }

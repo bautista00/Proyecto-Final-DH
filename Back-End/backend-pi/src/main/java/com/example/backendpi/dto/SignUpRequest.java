@@ -38,4 +38,5 @@ public class SignUpRequest {
 
 
     private String telefono;
+    private boolean verified;
 }

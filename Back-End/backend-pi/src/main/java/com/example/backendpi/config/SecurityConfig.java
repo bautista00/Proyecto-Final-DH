@@ -4,7 +4,6 @@ import com.example.backendpi.jwt.JwtRequestFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,13 +17,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
-import static com.example.backendpi.domain.Role.ADMIN;
-import static com.example.backendpi.domain.Role.USER;
+import static com.example.backendpi.domain.Role.*;
 
 @Configuration
 @EnableWebSecurity
 @AllArgsConstructor
-//@EnableMethodSecurity
 public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
@@ -36,9 +33,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeHttpRequestsCustomizer -> authorizeHttpRequestsCustomizer
-                                .requestMatchers("/admin/**").hasAuthority(ADMIN.name())
-                                .requestMatchers("/user/**").hasAuthority(USER.name())
-                                .requestMatchers("/all/**").hasAnyAuthority(ADMIN.name(),USER.name())
+                                .requestMatchers("/admin/**").hasAnyAuthority(ADMIN.name(),GOD.name())
+                                .requestMatchers("/user/**").hasAnyAuthority(USER.name(), GOD.name())
+                                .requestMatchers("/all/**").hasAnyAuthority(ADMIN.name(),USER.name(), GOD.name())
+                                .requestMatchers("god/**").hasAuthority(GOD.name())
                                 .anyRequest().permitAll())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

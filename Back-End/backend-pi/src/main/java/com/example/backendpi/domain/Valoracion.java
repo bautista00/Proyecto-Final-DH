@@ -4,22 +4,19 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.ArrayList;
-import java.util.List;
 
-
-@Data
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Categoria {
+public class Valoracion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nombre;
-    private String url;
     private String descripcion;
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Cancha> canchaList= new ArrayList<>();
-
+    private Double puntuacion;
+    @ManyToOne
+    @JoinColumn(name = "cancha_id",referencedColumnName = "id")
+    private Cancha cancha;
 }

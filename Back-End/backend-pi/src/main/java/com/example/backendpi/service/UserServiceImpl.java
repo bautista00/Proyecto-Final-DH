@@ -21,6 +21,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import static com.example.backendpi.domain.Role.ADMIN;
 import static com.example.backendpi.domain.Role.USER;
 
@@ -64,6 +67,8 @@ public class UserServiceImpl implements UserService {
                         .cuil(signUpRequest.getCuil())
                         .telefono(signUpRequest.getTelefono())
                         .role(ADMIN)
+                        .tokenEmail(UUID.randomUUID().toString())
+                        .verified(false)
                         .build());
             } else if (signUpRequest.getCuil() == null && signUpRequest.getCuil() == null && signUpRequest.getTelefono() == null) {
                 return userRepository.save(User.builder()
@@ -72,8 +77,11 @@ public class UserServiceImpl implements UserService {
                         .name(signUpRequest.getNombre())
                         .apellido(signUpRequest.getApellido())
                         .role(USER)
+                        .tokenEmail(UUID.randomUUID().toString())
+                        .verified(false)
                         .build());
-            } else {
+            }
+            else {
                 throw new MissingParameterValueException("Faltan llenar algunos campos");
             }
 
@@ -116,6 +124,15 @@ public class UserServiceImpl implements UserService {
         }
 //
     }
+
+    public void borrarCliente(Long id) throws ResourceNotFoundException{
+        Optional<User> user = userRepository.findById(id);
+        if(user.isPresent()){
+            userRepository.deleteById(id);
+        }
+        else throw new ResourceNotFoundException("No se encontro el usuario");
+    }
+
 
 
 }

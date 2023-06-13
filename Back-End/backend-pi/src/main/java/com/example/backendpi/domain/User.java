@@ -38,6 +38,8 @@ public class User implements UserDetails {
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;
     private String url;
+    private String tokenEmail;
+    private Boolean verified;
 
 
     @Override

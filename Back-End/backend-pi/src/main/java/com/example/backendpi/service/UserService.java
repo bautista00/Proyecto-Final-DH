@@ -20,6 +20,8 @@ public interface UserService extends UserDetailsService {
 
     ClientDTO getClient(String token)throws ResourceNotFoundException;
 
+    void borrarCliente(Long id) throws ResourceNotFoundException;
+
 
 
 
