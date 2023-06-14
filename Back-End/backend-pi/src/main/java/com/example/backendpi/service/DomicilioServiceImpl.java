@@ -1,6 +1,7 @@
 package com.example.backendpi.service;
 
 import com.example.backendpi.domain.Domicilio;
+import com.example.backendpi.repository.BarrioRepository;
 import com.example.backendpi.repository.DomicilioRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,10 +12,14 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class DomicilioServiceImpl implements DomicilioService{
-    private DomicilioRepository domicilioRepository;
 
+    private final DomicilioRepository domicilioRepository;
+    private final BarrioRepository barrioRepository;
 
     public Domicilio guardar(Domicilio domicilio){
+        if (barrioRepository.findByNombre(domicilio.getBarrio().getNombre()) != null){
+            domicilio.setBarrio(barrioRepository.findByNombre(domicilio.getBarrio().getNombre()));
+        }
         return domicilioRepository.save(domicilio);
     }
 

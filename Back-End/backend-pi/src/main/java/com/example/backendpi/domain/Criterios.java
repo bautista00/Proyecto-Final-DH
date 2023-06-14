@@ -1,5 +1,6 @@
 package com.example.backendpi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +18,7 @@ public class Criterios {
     private CriterioTitulo criterioTitulo;
     @ManyToOne
     @JoinColumn(name = "cancha_id", referencedColumnName = "id")
+    @JsonIgnore
     private Cancha cancha;
 
 }

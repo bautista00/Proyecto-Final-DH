@@ -1,5 +1,6 @@
 package com.example.backendpi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Domicilio {
     private Barrio barrio;
     private String provincia;
     @OneToOne(mappedBy = "domicilio")
+    @JsonIgnore
     private User user;
 
 }

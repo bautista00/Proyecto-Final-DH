@@ -1,5 +1,6 @@
 package com.example.backendpi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,9 +22,11 @@ public class Turno {
     private Integer horas;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
     @ManyToOne
     @JoinColumn(name = "cancha_id", referencedColumnName = "id")
+    @JsonIgnore
     private Cancha cancha;
 
 }

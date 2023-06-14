@@ -1,6 +1,7 @@
 package com.example.backendpi.service;
 
 import com.example.backendpi.domain.Cancha;
+
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
@@ -25,4 +26,6 @@ public interface CanchaService {
     public List<CanchaDTO> buscarXCategoria(Categoria categoria)throws ResourceNotFoundException;
 
     public List<CanchaDTO> buscarPorUser(String token)throws ResourceNotFoundException;
+
+
 }

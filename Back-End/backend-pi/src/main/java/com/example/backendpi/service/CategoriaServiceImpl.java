@@ -30,10 +30,8 @@ public class CategoriaServiceImpl implements CategoriaService{
        Optional<Categoria> categoria = categoriaRepository.findById(id);
         if(categoria.isPresent()){
             categoriaRepository.deleteById(id);
-        }else {
-            throw new ResourceNotFoundException("No se encontro la categoria con id "+ id);
         }
-
+        throw new ResourceNotFoundException("No se encontro la categoria con id "+ id);
     }
 
     @Override

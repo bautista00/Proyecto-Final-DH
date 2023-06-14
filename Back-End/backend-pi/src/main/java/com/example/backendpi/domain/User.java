@@ -1,5 +1,6 @@
 package com.example.backendpi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,13 +30,16 @@ public class User implements UserDetails {
     private String apellido;
     private String telefono;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Turno> turnoList = new HashSet<>();
     private String cuil;
     private String cbu;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private Set<Cancha> canchaList = new HashSet<>();
     @OneToOne
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
+    @JsonIgnore
     private Domicilio domicilio;
     private String url;
     private String tokenEmail;

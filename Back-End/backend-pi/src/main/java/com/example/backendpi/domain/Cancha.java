@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,8 +36,9 @@ public class Cancha {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
+    @JsonFormat(pattern = "KK:mm")
     private LocalTime horaApertura;
-
+    @JsonFormat(pattern = "KK:mm")
     private LocalTime horaCierre;
 
     private Double promedioPuntuacion;

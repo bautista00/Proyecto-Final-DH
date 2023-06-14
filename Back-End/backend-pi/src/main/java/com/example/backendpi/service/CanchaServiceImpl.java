@@ -9,9 +9,7 @@ import com.example.backendpi.domain.Images;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
-import com.example.backendpi.repository.CanchaRepository;
-import com.example.backendpi.repository.ImagesRepository;
-import com.example.backendpi.repository.UserRepository;
+import com.example.backendpi.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,9 +28,9 @@ public class CanchaServiceImpl implements CanchaService{
     private final CanchaToCanchaDTOConverter canchaToCanchaDTOConverter;
     private final AwsS3Service awsS3Service ;
     private final ImagesRepository imagesRepository;
-
-
-
+    private final DomicilioService domicilioService;
+    private final CategoriaRepository categoriaRepository;
+    private final BarrioRepository barrioRepository;
     @Override
     public Cancha guardar(CanchaDTO canchaDTO,String token, MultipartFile file) throws Exception {
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
@@ -41,6 +39,11 @@ public class CanchaServiceImpl implements CanchaService{
         Images images = new Images();
         images.setCancha(cancha);
         images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
+        Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+        if(categoria!= null){
+            cancha.setCategoria(categoria);
+        }
+        domicilioService.guardar(cancha.getDomicilio());
         canchaRepository.save(cancha);
         imagesRepository.save(images);
         return cancha;
