@@ -39,9 +39,9 @@ public class CanchaServiceImpl implements CanchaService{
         Images images = new Images();
         images.setCancha(cancha);
         images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
-        Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
-        if(categoria!= null){
-            cancha.setCategoria(categoria);
+        Categoria categoriaa = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+        if(categoriaa!= null){
+            cancha.setCategoria(categoriaa);
         }
         domicilioService.guardar(cancha.getDomicilio());
         canchaRepository.save(cancha);
