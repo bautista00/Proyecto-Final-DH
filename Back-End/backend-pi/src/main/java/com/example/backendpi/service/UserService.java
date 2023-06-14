@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import java.util.List;
+
 public interface UserService extends UserDetailsService {
 
     UserDetails createUser(SignUpRequest signUpRequest);
@@ -21,6 +23,8 @@ public interface UserService extends UserDetailsService {
     ClientDTO getClient(String token)throws ResourceNotFoundException;
 
     void borrarCliente(Long id) throws ResourceNotFoundException;
+
+    List<User> listarTodos() throws ResourceNotFoundException;
 
 
 

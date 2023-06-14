@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 public class UserController {
@@ -23,7 +25,7 @@ public class UserController {
 //        return userService.getUsers(pageable);
 //    }
 
-    @GetMapping("/admin/getusers")
+    @GetMapping("/admin/getowner")
     public ResponseEntity<OwnerDTO> getUser (@PathVariable String token) throws ResourceNotFoundException{
         return ResponseEntity.ok(userService.getOwner(token));
     }
@@ -37,6 +39,11 @@ public class UserController {
     public ResponseEntity<String> borrarUsuario(@PathVariable Long id) throws ResourceNotFoundException{
         userService.borrarCliente(id);
         return ResponseEntity.ok("Se borro el usuario con id "+ id);
+    }
+
+    @GetMapping("/god/getuser")
+    public ResponseEntity<List<User>> listarUsuarios()throws ResourceNotFoundException{
+        return ResponseEntity.ok(userService.listarTodos());
     }
 
 }

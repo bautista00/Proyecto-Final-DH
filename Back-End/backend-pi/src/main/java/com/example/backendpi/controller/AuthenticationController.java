@@ -4,7 +4,10 @@ import com.example.backendpi.dto.AuthenticationResponse;
 import com.example.backendpi.dto.LoginRequest;
 import com.example.backendpi.dto.SignUpRequest;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
+import com.example.backendpi.jwt.JwtService;
+import com.example.backendpi.repository.UserRepository;
 import com.example.backendpi.service.AuthenticationService;
+import com.example.backendpi.service.EmailService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -22,6 +25,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final EmailService emailService;
+
+    private final JwtService jwtService;
+
+    private final UserRepository userRepository;
 
 
     @PostMapping("/login")
@@ -38,10 +46,12 @@ public class AuthenticationController {
     public ResponseEntity<String> verifyEmail(@PathVariable String token) {
         boolean verified = authenticationService.verifyUser(token);
         if (verified) {
+            emailService.sendCongratsEmail(userRepository.findByTokenEmail(token));
             return ResponseEntity.ok("Email verification successful.");
         } else {
             return ResponseEntity.badRequest().body("Invalid verification token.");
         }
     }
+
 
 }

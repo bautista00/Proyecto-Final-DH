@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -133,6 +134,14 @@ public class UserServiceImpl implements UserService {
         else throw new ResourceNotFoundException("No se encontro el usuario");
     }
 
+    @Override
+    public List<User> listarTodos() throws ResourceNotFoundException {
+        List<User> userList = userRepository.findAll();
+        if(userList.size()>0){
+            return userList;
+        }
+        throw new ResourceNotFoundException("No existe la lista");
+    }
 
 
 }

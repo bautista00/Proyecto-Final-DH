@@ -7,4 +7,5 @@ import org.springframework.scheduling.annotation.Async;
 public interface EmailService {
     void sendMail(String to, String subject, String body);
     void sendVerificationEmail(SignUpRequest signUpRequest);
+    public void sendCongratsEmail(User user);
 }

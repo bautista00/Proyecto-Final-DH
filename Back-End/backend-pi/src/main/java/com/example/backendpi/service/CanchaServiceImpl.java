@@ -3,18 +3,19 @@ package com.example.backendpi.service;
 import com.amazonaws.services.mq.model.NotFoundException;
 import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
 import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
+import com.example.backendpi.domain.Barrio;
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.domain.Images;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
-import com.example.backendpi.repository.CanchaRepository;
-import com.example.backendpi.repository.ImagesRepository;
-import com.example.backendpi.repository.UserRepository;
+import com.example.backendpi.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +31,9 @@ public class CanchaServiceImpl implements CanchaService{
     private final CanchaToCanchaDTOConverter canchaToCanchaDTOConverter;
     private final AwsS3Service awsS3Service ;
     private final ImagesRepository imagesRepository;
-
+    private final DomicilioService domicilioService;
+    private final CategoriaRepository categoriaRepository;
+    private final BarrioRepository barrioRepository;
 
 
     @Override
@@ -41,6 +44,11 @@ public class CanchaServiceImpl implements CanchaService{
         Images images = new Images();
         images.setCancha(cancha);
         images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
+        Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+        if(categoria != null){
+            cancha.setCategoria(categoria);
+        }
+        domicilioService.guardar(cancha.getDomicilio());
         canchaRepository.save(cancha);
         imagesRepository.save(images);
         return cancha;
@@ -112,5 +120,21 @@ public class CanchaServiceImpl implements CanchaService{
             throw new ResourceNotFoundException("No existen las canchas buscadas por el propietario");
         }
     }
+
+    @Override
+    public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException{
+        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(categoria,barrio);
+        List<CanchaDTO> canchaDTOList = new ArrayList<>();
+
+        if (canchaList.size()>0){
+            for (Cancha cancha : canchaList) {
+                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
+            }
+            return canchaDTOList;
+        }
+        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
+    }
+
+
 
 }

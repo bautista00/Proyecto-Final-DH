@@ -49,5 +49,12 @@ public class EmailServiceImpl implements EmailService {
         sendMail(signUpRequest.getUsername(), subject, body);
     }
 
+    public void sendCongratsEmail(User user){
+        String subject = "Verifiacion completa";
+        String body = "Felicitaciones tu cuenta ya fue verificada, ya podes navegar libremente en nuestra pagina.\n" +
+        "\" Con este link podras ingresar a nustra pagina http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/login";
+        sendMail(user.getEmail(),subject,body);
+    }
+
 }
 
