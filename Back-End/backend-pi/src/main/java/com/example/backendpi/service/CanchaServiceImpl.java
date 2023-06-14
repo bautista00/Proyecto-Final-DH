@@ -121,14 +121,19 @@ public class CanchaServiceImpl implements CanchaService{
         }
     }
 
-//    @Override
-//    public List<CanchaDTO> buscarFiltrada(Barrio barrio, Categoria categoria) throws ResourceNotFoundException{
-//        List<CanchaDTO> canchaDTOList = canchaRepository.FindByBarrioAndDeporte(barrio,categoria);
-//        if (canchaDTOList.size()>0){
-//            return canchaDTOList;
-//        }
-//        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
-//    }
+    @Override
+    public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException{
+        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(categoria,barrio);
+        List<CanchaDTO> canchaDTOList = new ArrayList<>();
+
+        if (canchaList.size()>0){
+            for (Cancha cancha : canchaList) {
+                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
+            }
+            return canchaDTOList;
+        }
+        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
+    }
 
 
 

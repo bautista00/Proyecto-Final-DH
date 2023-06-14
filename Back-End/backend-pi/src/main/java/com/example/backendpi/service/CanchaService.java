@@ -29,7 +29,7 @@ public interface CanchaService {
 
     public List<CanchaDTO> buscarPorUser(String token)throws ResourceNotFoundException;
 
-//    public List<CanchaDTO> buscarFiltrada(Barrio barrio, Categoria categoria) throws ResourceNotFoundException;
+   public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException;
 
 
 }

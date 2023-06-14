@@ -15,6 +15,7 @@ public interface CanchaRepository extends JpaRepository<Cancha, Long> {
     List<CanchaDTO> findByCategoria(Categoria categoria);
     List<CanchaDTO> findByUserEmail(String token);
 //    List<CanchaDTO> FindByBarrioAndDeporte(Barrio barrio, Categoria categoria);
-    @Query(value = "SELECT * FROM Cancha as ch INNER JOIN Domicilio as dom ON ch.domicilio_id = dom.id WHERE ch.categoria =:categoria AND dom.barrio = :barrio", nativeQuery = true)
-    List<CanchaDTO> findCanchasByDeporteAndBarrio(@Param("categoria") Categoria categoria, @Param("barrio") Barrio barrio );
+    @Query(value = "SELECT * FROM cancha as ch JOIN domicilio as dom ON ch.domicilio_id = dom.id JOIN barrio as br ON dom.barrio_id = br.id JOIN categoria as cat ON ch.categoria_id = cat.id WHERE cat.nombre = :categoria AND br.nombre = :barrio"
+            , nativeQuery = true)
+    List<Cancha> findCanchasByDeporteAndBarrio(@Param("categoria") String categoria, @Param("barrio") String barrio );
 }

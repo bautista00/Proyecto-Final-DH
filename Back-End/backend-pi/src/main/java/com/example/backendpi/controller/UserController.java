@@ -23,7 +23,7 @@ public class UserController {
 //        return userService.getUsers(pageable);
 //    }
 
-    @GetMapping("/admin/getusers")
+    @GetMapping("/admin/getowner")
     public ResponseEntity<OwnerDTO> getUser (@PathVariable String token) throws ResourceNotFoundException{
         return ResponseEntity.ok(userService.getOwner(token));
     }

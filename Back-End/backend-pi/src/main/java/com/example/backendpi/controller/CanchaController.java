@@ -69,10 +69,10 @@ public class CanchaController {
      }
 
 
-//     @GetMapping("/buscarFiltradas")
-//    public ResponseEntity<List<CanchaDTO>> buscarPorFiltro(Barrio barrio, Categoria categoria)throws ResourceNotFoundException{
-//        return ResponseEntity.ok(canchaService.buscarFiltrada(barrio, categoria));
-//     }
+     @GetMapping("/buscarFiltradas")
+    public ResponseEntity<List<CanchaDTO>> buscarPorFiltro(String barrio, String categoria)throws ResourceNotFoundException{
+        return ResponseEntity.ok(canchaService.buscarFiltrada(barrio, categoria));
+     }
 
 
 }
