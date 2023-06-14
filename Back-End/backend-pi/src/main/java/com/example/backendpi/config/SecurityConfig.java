@@ -33,10 +33,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         authorizeHttpRequestsCustomizer -> authorizeHttpRequestsCustomizer
-                                .requestMatchers("/admin/**").hasAnyAuthority(ADMIN.name(),GOD.name())
-                                .requestMatchers("/user/**").hasAnyAuthority(USER.name(), GOD.name())
-                                .requestMatchers("/all/**").hasAnyAuthority(ADMIN.name(),USER.name(), GOD.name())
-                                .requestMatchers("god/**").hasAuthority(GOD.name())
+//                                .requestMatchers("/admin/**").hasAnyAuthority(ADMIN.name(),GOD.name())
+//                                .requestMatchers("/user/**").hasAnyAuthority(USER.name(), GOD.name())
+//                                .requestMatchers("/all/**").hasAnyAuthority(ADMIN.name(),USER.name(), GOD.name())
+//                                .requestMatchers("god/**").hasAuthority(GOD.name())
                                 .anyRequest().permitAll())
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
