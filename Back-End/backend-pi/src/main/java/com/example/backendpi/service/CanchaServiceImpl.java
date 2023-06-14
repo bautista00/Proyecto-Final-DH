@@ -3,6 +3,7 @@ package com.example.backendpi.service;
 import com.amazonaws.services.mq.model.NotFoundException;
 import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
 import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
+import com.example.backendpi.domain.Barrio;
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.domain.Images;
@@ -13,6 +14,8 @@ import com.example.backendpi.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +34,8 @@ public class CanchaServiceImpl implements CanchaService{
     private final DomicilioService domicilioService;
     private final CategoriaRepository categoriaRepository;
     private final BarrioRepository barrioRepository;
+
+
     @Override
     public Cancha guardar(CanchaDTO canchaDTO,String token, MultipartFile file) throws Exception {
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
@@ -39,9 +44,9 @@ public class CanchaServiceImpl implements CanchaService{
         Images images = new Images();
         images.setCancha(cancha);
         images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
-        Categoria categoriaa = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
-        if(categoriaa!= null){
-            cancha.setCategoria(categoriaa);
+        Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+        if(categoria != null){
+            cancha.setCategoria(categoria);
         }
         domicilioService.guardar(cancha.getDomicilio());
         canchaRepository.save(cancha);
@@ -115,5 +120,16 @@ public class CanchaServiceImpl implements CanchaService{
             throw new ResourceNotFoundException("No existen las canchas buscadas por el propietario");
         }
     }
+
+//    @Override
+//    public List<CanchaDTO> buscarFiltrada(Barrio barrio, Categoria categoria) throws ResourceNotFoundException{
+//        List<CanchaDTO> canchaDTOList = canchaRepository.FindByBarrioAndDeporte(barrio,categoria);
+//        if (canchaDTOList.size()>0){
+//            return canchaDTOList;
+//        }
+//        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
+//    }
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.backendpi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,9 +37,10 @@ public class Cancha {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @JsonFormat(pattern = "KK:mm")
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime horaApertura;
-    @JsonFormat(pattern = "KK:mm")
+
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime horaCierre;
 
     private Double promedioPuntuacion;
@@ -54,5 +56,8 @@ public class Cancha {
 
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Images> imgList = new ArrayList<>();
+
+
+
 
 }

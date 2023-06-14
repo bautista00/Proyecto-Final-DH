@@ -5,6 +5,8 @@ import com.example.backendpi.dto.CanchaDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -26,3 +28,4 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
         return cancha;
     }
 }
+

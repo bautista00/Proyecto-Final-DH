@@ -1,6 +1,7 @@
 package com.example.backendpi.controller;
 
 
+import com.example.backendpi.domain.Barrio;
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.dto.CanchaDTO;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -65,6 +67,12 @@ public class CanchaController {
     public ResponseEntity<CanchaDTO> actualizarCancha(@RequestBody CanchaDTO canchaDTO) throws ResourceNotFoundException {
         return ResponseEntity.ok(canchaService.actualizar(canchaDTO));
      }
+
+
+//     @GetMapping("/buscarFiltradas")
+//    public ResponseEntity<List<CanchaDTO>> buscarPorFiltro(Barrio barrio, Categoria categoria)throws ResourceNotFoundException{
+//        return ResponseEntity.ok(canchaService.buscarFiltrada(barrio, categoria));
+//     }
 
 
 }
