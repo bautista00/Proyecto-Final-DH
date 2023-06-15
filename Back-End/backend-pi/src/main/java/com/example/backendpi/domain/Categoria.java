@@ -19,7 +19,6 @@ public class Categoria {
     private Long id;
     private String nombre;
     private String url;
-    private String descripcion;
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Cancha> canchaList= new ArrayList<>();
