@@ -31,7 +31,7 @@ public class TurnoController {
 
     @PostMapping("/user/createturno")
     public ResponseEntity<Turno> agregarTurno(@RequestBody TurnoDTO turno) throws ResourceNotFoundException {
-        if(canchaService.buscarXId(turno.getIdCancha()).isPresent() && userRepository.findById(turno.getIdUser()).isPresent()){
+        if(canchaService.buscarXId(turno.getIdCancha()) != null && userRepository.findById(turno.getIdUser()).isPresent()){
         return ResponseEntity.ok(turnoService.guardar(turno));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
