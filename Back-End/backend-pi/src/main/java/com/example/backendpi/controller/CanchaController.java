@@ -27,8 +27,8 @@ public class CanchaController {
     private final CanchaService canchaService;
 
 
-    @PostMapping("/admin/addcancha/{token}")
-    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @PathVariable String token,@RequestPart(value="file") MultipartFile file) throws Exception {
+    @PostMapping("/admin/addcancha")
+    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") MultipartFile file) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
         return ResponseEntity.ok(canchaService.guardar(cancha,token, file));
@@ -51,7 +51,7 @@ public class CanchaController {
 
 
     @GetMapping("/admin/listxownercanchas")
-    public ResponseEntity<List<CanchaDTO>> buscarXOwner (@PathVariable String token) throws ResourceNotFoundException {
+    public ResponseEntity<List<CanchaDTO>> buscarXOwner (@RequestParam(value = "token") String token) throws ResourceNotFoundException {
         return ResponseEntity.ok(canchaService.buscarPorUser(token));
     }
 

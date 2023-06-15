@@ -143,5 +143,18 @@ public class UserServiceImpl implements UserService {
         throw new ResourceNotFoundException("No existe la lista");
     }
 
+    @Override
+    public User getUser(String token) throws ResourceNotFoundException {
+        User user = userRepository.findByEmail(jwtService.extractUserName(token));
+        if(user !=null){
+            return user;
+        }else {
+            throw new ResourceNotFoundException("No se encontro el usuario");
+        }
+//
+    }
+
+
+
 
 }

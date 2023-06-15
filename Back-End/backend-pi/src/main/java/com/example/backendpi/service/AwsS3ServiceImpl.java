@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -60,6 +61,11 @@ public class AwsS3ServiceImpl implements AwsS3Service {
     public String generateImageUrl(String fileName) {
 
         GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
+        Date expiration = new Date();
+        long expirationMillis = expiration.getTime() + 8 * 60 * 60 * 1000;
+        expiration.setTime(expirationMillis);
+        generatePresignedUrlRequest.setExpiration(expiration);
+
 
         ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
                 .withCacheControl("No-cache")

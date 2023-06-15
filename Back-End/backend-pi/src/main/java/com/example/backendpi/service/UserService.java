@@ -26,6 +26,8 @@ public interface UserService extends UserDetailsService {
 
     List<User> listarTodos() throws ResourceNotFoundException;
 
+    User getUser(String token) throws ResourceNotFoundException;
+
 
 
 
