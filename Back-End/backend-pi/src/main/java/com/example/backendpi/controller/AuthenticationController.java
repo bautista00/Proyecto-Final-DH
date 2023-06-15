@@ -44,8 +44,8 @@ public class AuthenticationController {
 
     @GetMapping("/verify/{token}")
     public ResponseEntity<String> verifyEmail(@PathVariable String token) {
-        boolean verified = authenticationService.verifyUser(token);
-        if (verified) {
+        boolean verifiedd = authenticationService.verifyUser(token);
+        if (verifiedd) {
             emailService.sendCongratsEmail(userRepository.findByTokenEmail(token));
             return ResponseEntity.ok("Email verification successful.");
         } else {
