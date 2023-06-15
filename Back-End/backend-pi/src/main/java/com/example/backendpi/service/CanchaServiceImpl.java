@@ -55,10 +55,10 @@ public class CanchaServiceImpl implements CanchaService{
     }
 
     @Override
-    public Optional<CanchaDTO> buscarXId(Long id) throws ResourceNotFoundException{
+    public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
         Optional<Cancha> cancha  = canchaRepository.findById(id);
         if(cancha.isPresent()){
-            return Optional.of(canchaToCanchaDTOConverter.convert(cancha.get()));
+            return (canchaToCanchaDTOConverter.convert(cancha.get()));
         }else {
             throw new ResourceNotFoundException("No existe la cancha buscada con ese id" + id);
         }

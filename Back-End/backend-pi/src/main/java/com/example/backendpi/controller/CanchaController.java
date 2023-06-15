@@ -35,7 +35,7 @@ public class CanchaController {
     }
 
     @GetMapping("/detailcancha/{id}")
-    public ResponseEntity<Optional<CanchaDTO>> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<CanchaDTO> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
        return ResponseEntity.ok(canchaService.buscarXId(id));
     }
 

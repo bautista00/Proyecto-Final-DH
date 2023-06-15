@@ -33,7 +33,7 @@ public class TurnoServiceImpl implements TurnoService{
 
     @Override
     public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
-        if (canchaService.buscarXId(turnoDTO.getIdCancha()).isPresent() && userRepository.findById(turnoDTO.getIdUser()).isPresent()){
+        if (canchaService.buscarXId(turnoDTO.getIdCancha()) != null && userRepository.findById(turnoDTO.getIdUser()).isPresent()){
             Turno turno = turnoDTOToTurnoConverter.convert(turnoDTO);
             turno.setUser(userRepository.findById(turnoDTO.getIdUser()).get());
             turno.setCancha(canchaRepository.findById(turnoDTO.getIdCancha()).get());
