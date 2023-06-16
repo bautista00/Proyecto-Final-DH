@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { useContextGlobal } from './utils/GlobalContext';
-import RecommendedCard from './RecommendedCard';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useContextGlobal } from "./utils/GlobalContext";
+import RecommendedCard from "./RecommendedCard";
+import { useParams } from "react-router-dom";
+import { axiosInstance } from "../config";
 
 const FilteredComp = () => {
   const { sport } = useParams();
   const { data } = useContextGlobal();
   const [currentPage, setCurrentPage] = useState(1);
-  const cardsPerPage = 4;
+  const cardsPerPage = 8;
+
+  const [filtered, setFiltered] = useState([]);
+
+  const fetchData = async (sport) => {
+    const result = await axiosInstance.get(`/listxsportcanchas/${sport}`);
+    setFiltered(result.data);
+  };
+
+  useEffect(() => {
+    fetchData(sport);
+  }, [sport]);
 
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
@@ -52,7 +64,7 @@ const FilteredComp = () => {
         <button
           onClick={handlePreviousPage}
           disabled={currentPage === 1}
-          className={currentPage === 1 ? 'disabled' : ''}
+          className={currentPage === 1 ? "disabled" : ""}
         >
           Anterior
         </button>
@@ -61,7 +73,7 @@ const FilteredComp = () => {
             <button
               key={pageNumber}
               onClick={() => handlePageChange(pageNumber)}
-              className={currentPage === pageNumber ? 'active' : ''}
+              className={currentPage === pageNumber ? "active" : ""}
             >
               {pageNumber}
             </button>
@@ -70,7 +82,7 @@ const FilteredComp = () => {
         <button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
-          className={currentPage === totalPages ? 'disabled' : ''}
+          className={currentPage === totalPages ? "disabled" : ""}
         >
           Siguiente
         </button>
@@ -80,6 +92,3 @@ const FilteredComp = () => {
 };
 
 export default FilteredComp;
-
-
-

@@ -1,4 +1,6 @@
-import { Button, Select, Space, Table } from "antd";
+import { Button, Select, Space, Table, Form, Input } from "antd";
+import { useEffect, useState } from "react";
+import { axiosInstance } from "../config";
 
 const columns = [
   {
@@ -29,6 +31,16 @@ const columns = [
     title: "Rol",
     key: "rol",
     render: (_, record) => {
+      const handleDelete = async (id) => {
+        try {
+          const response = await axiosInstance.delete(`/god/deleteClient${id}`);
+          console.log("Response:", response.data);
+          fetchData();
+        } catch (e) {
+          console.log(e);
+        }
+      };
+
       return (
         <Space size="middle">
           <Select
@@ -48,53 +60,74 @@ const columns = [
               },
             ]}
           />
-          <a>Eliminar</a>
+          <Button onClick={() => handleDelete(record.id)}>Eliminar</Button>
         </Space>
       );
     },
   },
 ];
-const data = [
-  {
-    key: "1",
-    name: "Joaquin Presh",
-    email: "joaquinpresh@gmail.com",
-    address: "Buenos Aires, Argentina",
-    permisos: "Permisos",
-  },
-  {
-    key: "2",
-    name: "Juan david dominguez",
-    email: "juandavid@gmail.com",
-    address: "Cali, Colombia",
-    permisos: "Permisos",
-  },
 
-  {
-    key: "3",
-    name: "Alejandro Tornell",
-    email: "alejandrotornell@gmail.com",
-    address: "Buenos Aires, Argentina",
-    permisos: "Permisos",
-  },
-
-  {
-    key: "4",
-    name: "Sofia Castro",
-    email: "sofiacastro@gmail.com",
-    address: "Cali, Colombia",
-    permisos: "Permisos",
-  },
-];
+const handleSubmit = async (e) => {
+  try {
+    const requestData = {
+      rol: e.rol,
+    };
+    const response = await axiosInstance.post("", requestData);
+    console.log("Response:", response.data);
+    form.resetFields();
+    fetchData();
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const Users = () => {
+  const [users, setUsers] = useState([]);
+
+  const fetchData = async () => {
+    const result = await axiosInstance.get("/god/getallusers");
+    setUsers(result.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const [form] = Form.useForm();
   return (
     <>
+      <h1 className="tituloRol">Crear Rol</h1>
+
+      <Form
+        className="roleForm"
+        form={form}
+        layout="vertical"
+        autoComplete="on"
+        onFinish={handleSubmit}
+      >
+        <Form.Item className="labelRol" name="nombre" label="Nombre del rol">
+          <Input className="inputRol" name="rol" />
+        </Form.Item>
+
+        <Form.Item>
+          <div>
+            <Button className="buttonRol" htmlType="submit">
+              Agregar
+            </Button>
+          </div>
+        </Form.Item>
+      </Form>
+
       <div className="usersButton">
-        <Button>Guardar</Button>
-        <Button>Cancelar</Button>
+        <Button className="buttonRol">Guardar</Button>
+        <Button className="buttonRolRight">Cancelar</Button>
       </div>
-      <Table columns={columns} dataSource={data} />
+      <Table
+        className="tableRol"
+        rowKey={(record) => record.id}
+        columns={columns}
+        dataSource={users}
+      />
     </>
   );
 };

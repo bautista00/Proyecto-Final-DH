@@ -13,18 +13,45 @@ import {
   Upload,
   notification,
 } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Banner from "../Components/Banner";
+import { axiosInstance } from "../config";
 
 const CreateProduct = () => {
+  const [createProduct, setCreateProduct] = useState([]);
   const [api, contextHolder] = notification.useNotification();
+
   const {
     register,
     setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const [barrios, setBarrios] = useState([]);
+  const [provincias, setProvincias] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+  const fetchBarriosData = async () => {
+    const result = await axiosInstance.get("/listallbarrios");
+    setBarrios(result.data);
+  };
+
+  const fetchCategoriasData = async () => {
+    const result = await axiosInstance.get("/findAllCategoria/");
+    setCategorias(result.data);
+  };
+
+  useEffect(() => {
+    fetchBarriosData();
+    fetchCategoriasData();
+  }, []);
+
+  const onChange = (value) => {
+    console.log("changed", value);
+    setValue("precio", value);
+  };
 
   const { RangePicker } = DatePicker;
   const { TextArea } = Input;
@@ -52,21 +79,42 @@ const CreateProduct = () => {
     }
   };
 
-  const onSubmit = (values) => {
-    fetch("../data/data.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const existingProduct = data.find(
-          (product) => product.name === values.name
-        );
+  // const onSubmit = (values) => {
+  //   const result = await axiosInstance.get("/admin/addcancha/")
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       const existingProduct = data.find(
+  //         (product) => product.name === values.name
+  //       );
 
-        if (!existingProduct) {
-          openNotification("top");
-          return;
+  //       if (!existingProduct) {
+  //         openNotification("top");
+  //         return;
+  //       }
+
+  //       openNotification("top", "error");
+  //     });
+  // };
+
+  const onSubmit = async (e) => {
+    console.log(e);
+    /*try {
+      const requestData = {
+        canchaDTO: {
+          categoria: {
+            nombre: e.name
+          }
         }
-
-        openNotification("top", "error");
-      });
+        // pedir los campos que se necesitan
+        //addcancha: e.addcancha, // este no va
+      };
+      const response = await axiosInstance.post("/admin/addcancha", requestData);
+      console.log("Response:", response.data);
+      form.resetFields();
+      fetchData();
+    } catch (e) {
+      console.log(e);
+    }*/
   };
 
   return (
@@ -74,17 +122,17 @@ const CreateProduct = () => {
       <Banner title={"Agregar Producto"} />
       {contextHolder}
       <div className="form-container">
-        <Form className="custom-form" onSubmit={handleSubmit(onSubmit)}>
+        <Form className="custom-form" onFinish={handleSubmit(onSubmit)}>
           <div className="product-form-input-container">
             <Form.Item className="custom-form-item" label="Nombre o Empresa">
               <Input
                 status={errors.name ? "error" : ""}
-                {...register("name", {
+                {...register("nombre", {
                   required: {
                     value: true,
                     message: "Por favor ingrese el nombre o empresa",
                   },
-                  onChange: (e) => setValue("name", e.target.value),
+                  onChange: (e) => setValue("nombre", e.target.value),
                 })}
               />
               {errors.name && (
@@ -94,57 +142,47 @@ const CreateProduct = () => {
               )}
             </Form.Item>
             <Form.Item className="custom-form-item" label="Categoria:">
-              <Select>
-                <Select.Option className="inputCreate" value="Futbol">Fútbol</Select.Option>
-                <Select.Option value="Tenis">Tenis</Select.Option>
-                <Select.Option value="Baquetbol">Basquetbol</Select.Option>
-                <Select.Option value="Voleibol">Voleibol</Select.Option>
+              <Select onChange={(value) => setValue("categoria.nombre", value)}>
+                {categorias.map((categoria) => (
+                  <Select.Option key={categoria.id} value={categoria.nombre}>
+                    {categoria.nombre}
+                  </Select.Option>
+                ))}
               </Select>
             </Form.Item>
           </div>
 
           <div className="product-form-input-container">
             <Form.Item className="custom-form-item" label="Precios:">
-              <TreeSelect
-                treeData={[
-                  {
-                    title: "4 horas",
-                    value: "4 horas",
-                    children: [{ title: "$60.000", value: "$60.000" }],
-                  },
-                  {
-                    title: "6 horas",
-                    value: "6 horas",
-                    children: [{ title: "$80.000", value: "$80.000" }],
-                  },
-                ]}
+              <InputNumber
+                defaultValue={0}
+                formatter={(value) =>
+                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
+                parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
+                onChange={onChange}
               />
             </Form.Item>
-            <Form.Item className="custom-form-item" label="Dirección: ">
-              <Cascader
-                options={[
-                  {
-                    value: "Colombia",
-                    label: "Colombia",
-                    children: [
-                      {
-                        value: "Cali",
-                        label: "Cali",
-                      },
-                    ],
-                  },
-                  {
-                    value: "Argentina",
-                    label: "Argentina",
-                    children: [
-                      {
-                        value: "Buenos Aires",
-                        label: " Buenos Aires",
-                      },
-                    ],
-                  },
-                ]}
-              />
+            <Form.Item className="custom-form-item" label="Barrio: ">
+              <Select onChange={(value) => setValue("domicilio.barrio", value)}>
+                {barrios.map((barrio) => (
+                  <Select.Option key={barrio.id} value={barrio.nombre}>
+                    {barrio.nombre}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+
+            <Form.Item className="custom-form-item" label="Provincia: ">
+              <Select
+                onChange={(value) => setValue("domicilio.provincia", value)}
+              >
+                {barrios.map((barrio) => (
+                  <Select.Option key={barrio.id} value={barrio.nombre}>
+                    {barrio.nombre}
+                  </Select.Option>
+                ))}
+              </Select>
             </Form.Item>
           </div>
           <div className="product-form-input-container">
@@ -161,19 +199,17 @@ const CreateProduct = () => {
 
           <div className="product-form-input-container">
             <Form.Item className="custom-form-item" label="Descripción">
-              <TextArea placeholder="Descripción" />
-            </Form.Item>
-          </div>
-
-          <div className="product-form-input-container">
-            <Form.Item
-              className="custom-form-item"
-              label="Estado"
-              valuePropName="checked"
-              style={{fontWeight:"bold"}}
-            >
-              Activo
-              <Switch />
+              <TextArea
+                placeholder="Descripción"
+                {...register("categoria.descripcion", {
+                  required: {
+                    value: true,
+                    message: "Por favor ingrese el nombre o empresa",
+                  },
+                  onChange: (e) =>
+                    setValue("categoria.descripcion", e.target.value),
+                })}
+              />
             </Form.Item>
           </div>
 
@@ -187,7 +223,9 @@ const CreateProduct = () => {
           </div>
 
           <Form.Item className="custom-form-buttons">
-            <Button className="buttonAgregar" htmlType="submit">Agregar producto</Button>
+            <Button className="buttonAgregar" htmlType="submit">
+              Agregar producto
+            </Button>
           </Form.Item>
         </Form>
       </div>

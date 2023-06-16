@@ -39,7 +39,7 @@ const UsersPermissions = () => {
         <div className="CardRole">
           <Card
             style={{
-              width: "100%",
+              width: "50%",
             }}
             tabList={tabListNoTitle}
             activeTabKey={activeTabKey2}

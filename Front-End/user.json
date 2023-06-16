@@ -3,8 +3,8 @@
     "id": 1,
     "name": "Juan",
     "lastname": "Dominguez",
-    "email": "tobiass@gmail.com",
-    "password": "123123123",
+    "email": "juan@gmail.com",
+    "password": "123456789",
     "phone": "1234565489",
     "country": "Colombia",
     "city": "Cali",
@@ -13,13 +13,25 @@
 
   {
     "id": 2,
+    "name": "Joaquin",
+    "lastname": "Presh",
+    "email": "joaquin@gmail.com",
+    "password": "123456789",
+    "phone": "3152795885",
+    "country": "Argentina",
+    "city": "Buenos Aires",
+    "role": "Arrendador"
+  },
+
+  {
+    "id": 3,
     "name": "Tobias",
     "lastname": "Chab",
     "email": "tobias@gmail.com",
     "password": "123123123",
-    "phone": "",
-    "country": "",
-    "city": "",
+    "phone": "1324656554",
+    "country": "Argentina",
+    "city": "Buenos Aires",
     "role": "Usuario"
   }
 ]

@@ -9,6 +9,11 @@ import CommentCard from "../Components/CommentCard";
 import CommentInput from "../Components/CommentInput";
 import { Rate } from "antd";
 import PoliticCards from "../Components/PoliticCards";
+import { DateRangePicker } from "react-date-range";
+import { addDays } from "date-fns";
+import { axiosInstance } from "../config";
+import ShareAppButton from "../Components/ShareAppButton";
+import ShareProductButton from "../Components/ShareProductButton";
 
 const Detail = () => {
   const images = [
@@ -18,12 +23,34 @@ const Detail = () => {
     "/images/cancha7.jpg",
   ];
 
+  const [detail, setDetail] = useState({});
   const { id } = useParams();
   const { data } = useContextGlobal();
+
+  const [state, setState] = useState([
+    {
+      startDate: new Date(),
+      endDate: addDays(new Date(), 7),
+      key: "selection",
+    },
+  ]);
+
+  const fetchData = async (id) => {
+    const result = await axiosInstance.get(`/detailcancha/${id}`);
+    console.log(result.data);
+    setDetail(result.data);
+  };
+
+  useEffect(() => {
+    console.log(id);
+    fetchData(id);
+  }, [id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (!detail) return null;
 
   return (
     <div className="detailGeneralDiv">
@@ -31,17 +58,21 @@ const Detail = () => {
         <i className="fa-solid fa-arrow-left fa-2xl"></i>
       </a>
       <div className="detailMidDiv">
-        <h2>{data[id - 1]?.name}</h2>
+        <h2>{detail?.nombre}</h2>
         <h4> Valoraciones (3)</h4>
         <div className="locationDiv">
           <img src="/images/location.png" alt="" />
-          <p>{data[id - 1]?.location}</p>
+          <p>{detail?.domicilio?.provincia}</p>
         </div>
-        <Rate disabled defaultValue={4} style={{ color: "#fadb14", fontSize: 20, padding: 0 }}/>
+        <Rate
+          disabled
+          defaultValue={4}
+          style={{ color: "#fadb14", fontSize: 20, padding: 0 }}
+        />
       </div>
       <div className="blockImage">
         <div className="leftBlock">
-          <img src={data[id - 1]?.image} alt="" />
+          <img src={detail?.imagesDTOSList?.[0].url} alt="" />
         </div>
         <div className="rightBlock">
           <div className="semiBlock">
@@ -55,6 +86,7 @@ const Detail = () => {
           </div>
         </div>
       </div>
+      <ShareProductButton />
       <div className="detailBottomDiv">
         <div className="divLocation">
           <h2>Dónde puedes encontrarnos</h2>
@@ -65,24 +97,33 @@ const Detail = () => {
           ></iframe>
         </div>
         <div className="divInfo">
-          <h2 id="valorationSection" >Valoraciones</h2>
+          <h2 id="valorationSection">Valoraciones</h2>
           <div className="commentSection">
-            <CommentCard/>
-            <CommentCard/>
-            <CommentCard/>
-            <CommentInput/>
+            <div id="commentsBox">
+              <CommentInput />
+            </div>
           </div>
         </div>
         <div className="divInfo">
           <h2>Qué tienes que saber</h2>
           <div className="detailPolicies">
-            <PoliticCards houseRules={'Recomendamos llevar equipo e indumentaria necesaria para realizar la actividad. Te pedimos cumplir con el horario de llegada y de salida de tu reserva, y si se necesita utilizar por tiempo extra, consultar en la recepción del lugar.'} safety={'Nuestro espacio está abastecido con profesionales médicos y accesibilidad a un servicio de emergencias y traslado ante cualquier cirscunstancia que lo requiera.'} cancelation={'Si desea cancelar la reserva efectuada en el sitio, se recomienda cancelar con anticipación, siendo el tiempo límite 24hs antes de la reserva, de lo contrario se perderá lo abonado y deberá reprogramar la reserva.'} />
+            <PoliticCards
+              houseRules={
+                "Recomendamos llevar equipo e indumentaria necesaria para realizar la actividad. Te pedimos cumplir con el horario de llegada y de salida de tu reserva, y si se necesita utilizar por tiempo extra, consultar en la recepción del lugar."
+              }
+              safety={
+                "Nuestro espacio está abastecido con profesionales médicos y accesibilidad a un servicio de emergencias y traslado ante cualquier cirscunstancia que lo requiera."
+              }
+              cancelation={
+                "Si desea cancelar la reserva efectuada en el sitio, se recomienda cancelar con anticipación, siendo el tiempo límite 24hs antes de la reserva, de lo contrario se perderá lo abonado y deberá reprogramar la reserva."
+              }
+            />
           </div>
         </div>
         <div className="divInfo">
           <h2>Qué servicios ofrecemos</h2>
           <div className="allServices">
-            {data[id - 1]?.services.map((service) => (
+            {data[0]?.services.map((service) => (
               <div key={service.name} className="service-item">
                 <FontAwesomeIcon icon={service.icon} />
                 {service.name}
@@ -90,10 +131,31 @@ const Detail = () => {
             ))}
           </div>
         </div>
+
+        <div className="dateReservation">
+          <h2>Fechas disponibles</h2>
+          <div className="dateReservationContent">
+            <DateRangePicker
+              staticRanges={[]}
+              onChange={(item) => setState([item.selection])}
+              showSelectionPreview={false}
+              moveRangeOnFirstSelection={false}
+              months={2}
+              ranges={state}
+              direction="horizontal"
+            />
+
+            <div className="buttonReservation">
+              <h3>Reserva tu cancha a un click</h3>
+              <button>Reservar</button>
+            </div>
+          </div>
+        </div>
+
         <div className="divInfo">
           <h2>Descripción</h2>
           <div className="detailDescription">
-            <p>{data[id - 1]?.description}</p>
+            <p>{data[0]?.description}</p>
           </div>
         </div>
       </div>

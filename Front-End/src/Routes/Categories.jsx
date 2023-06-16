@@ -1,23 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Card from "./Card";
-import { useContextGlobal } from "./utils/GlobalContext";
-import { Link, useParams } from "react-router-dom";
-import { AutoComplete } from "antd";
-import { Select } from "antd";
-import ShareAppButton from "./ShareAppButton";
+import { useState } from "react";
 
-const Filters = () => {
-  const [selectedSport, setSelectedSport] = useState("Futbol");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedLocation, setSelectedLocation] = useState("");
+const handleSubmit = (e) => {
+  e.preventDefault();
 
+  setNombreCategoria("");
+  setImagenCategoria("");
+  setDescripcionCategoria("");
+
+  setModalVisible(false);
+};
+
+const Categories = () => {
   const [nombreCategoria, setNombreCategoria] = useState("");
   const [imagenCategoria, setImagenCategoria] = useState("");
   const [descripcionCategoria, setDescripcionCategoria] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
-  const [cont, setCont] = useState(3);
-  const { data } = useContextGlobal();
   const [deportes, setDeportes] = useState([
     {
       id: "1",
@@ -123,113 +121,53 @@ const Filters = () => {
     },
   ]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    setNombreCategoria("");
-    setImagenCategoria("");
-    setDescripcionCategoria("");
-
-    setModalVisible(false);
-  };
-
-  const handleSportChange = (value) => {
-    console.log(`selected ${value}`);
-    setSelectedSport(value);
-  };
-
-  const handleDateChange = (event) => {
-    setSelectedDate(event.target.value);
-  };
-
-  const handleLocationChange = (event) => {
-    setSelectedLocation(event.target.value);
-  };
-
-  const cambiar = () => {
-    setCont(4);
-  };
-
-  /* cosas autocomplete ant */
-  /*
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
-  */
-  const opciones = [
-    {
-      value: "Futbol",
-      label: "⚽ Futbol",
-    },
-    {
-      value: "Basket",
-      label: "🏀 Basket",
-    },
-    {
-      value: "Tenis",
-      label: "🎾 Tenis",
-    },
-    {
-      value: "Padel",
-      label: "🏸 Padel",
-    },
-  ];
   return (
-    <div className="divAllFilter">
-      <div className="divFilters">
-        <div className="onlyFilters">
-          <h2>Encontrá tu cancha ideal!</h2>
-          <div className="autoCompleteInput">
-            <Select
-              showSearch
-              placeholder="Que buscas hoy?"
-              optionFilterProp="children"
-              onChange={handleSportChange}
-              /*onSearch={onSearch}*/
-              filterOption={(input, option) =>
-                (option?.label ?? "")
-                  .toLowerCase()
-                  .includes(input.toLowerCase())
-              }
-              options={opciones}
-            />
-          </div>
-          <div>
-            <select value={selectedLocation} onChange={handleLocationChange}>
-              <option value="Ingresa tu barrio">Elige tu barrio</option>
-              <option value="Almagro">Almagro</option>
-              <option value="Barracas">Barracas</option>
-              <option value="Belgrano">Belgrano</option>
-              <option value="Caballito">Caballito</option>
-              <option value="Colegiales">Colegiales</option>
-              <option value="La Boca">La Boca</option>
-              <option value="La Paternal">La Paternal</option>
-              <option value="Liniers">Liniers</option>
-              <option value="Mataderos">Mataderos</option>
-              <option value="Nuñez">Nuñez</option>
-              <option value="Palermo">Palermo</option>
-              <option value="Parque Avellaneda">Parque Avellaneda</option>
-            </select>
-          </div>
-          <div>
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={handleDateChange}
-            />
-          </div>
-          <div>
-            <Link to={`/Filtered/${selectedSport}`}>
-              <button>
-                <img src="images\lupa.png" alt="" />
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div>
+      <h1>Categorias</h1>
+
       <div className="card-title">
         <h2> Busca tu cancha por deporte </h2>
-        <ShareAppButton />
+        <button id="button-categorias" onClick={() => setModalVisible(true)}>
+          Agregar
+        </button>
+        {modalVisible && (
+          <div className="modal-cat">
+            <div className="modal-content-cat">
+              <span
+                className="close-cat"
+                onClick={() => setModalVisible(false)}
+              >
+                &times;
+              </span>
+              <form onSubmit={handleSubmit}>
+                <h2>Crear nueva categoría</h2>
+                <label>Nombre de categoría:</label>
+                <input
+                  type="text"
+                  value={nombreCategoria}
+                  onChange={(e) => setNombreCategoria(e.target.value)}
+                />
+
+                <label>Imagen de la categoría:</label>
+                <input
+                  type="file"
+                  value={imagenCategoria}
+                  onChange={(e) => setImagenCategoria(e.target.value)}
+                />
+
+                <label>Descripción:</label>
+                <textarea
+                  value={descripcionCategoria}
+                  onChange={(e) => setDescripcionCategoria(e.target.value)}
+                />
+
+                <button onClick={cambiar} type="submit">
+                  Guardar
+                </button>
+              </form>
+            </div>
+          </div>
+        )}
         <div className="card-container">
           {deportes.map((e, index) => {
             if (index <= cont) {
@@ -249,4 +187,4 @@ const Filters = () => {
   );
 };
 
-export default Filters;
+export default Categories;

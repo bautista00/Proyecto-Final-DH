@@ -13,6 +13,7 @@ import DeleteProduct from "./Routes/DeleteProduct";
 import UsersPermissions from "./Routes/UsersPermissions";
 import Users from "./Routes/Users";
 import Cities from "./Routes/Cities";
+import Categories from "./Routes/Categories";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/UsersPermissions" element={<UsersPermissions />} />
         <Route path="/Users" element={<Users />} />
         <Route path="/Cities" element={<Cities />} />
+        <Route path="/Categories" element={<Categories />} />
       </Routes>
       <Footer />
     </div>

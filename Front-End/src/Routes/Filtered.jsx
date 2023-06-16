@@ -1,12 +1,17 @@
-import React from 'react'
-import FilteredComp from '../Components/FilteredComp'
+import React, { useEffect, useState } from "react";
+import FilteredComp from "../Components/FilteredComp";
+import { axiosInstance } from "../config";
 
 const Filtered = () => {
-  return (
-    <div className='filtered'>
-        <FilteredComp/>
-    </div>
-  )
-}
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
-export default Filtered
+  return (
+    <div className="filtered">
+      <FilteredComp />
+    </div>
+  );
+};
+
+export default Filtered;

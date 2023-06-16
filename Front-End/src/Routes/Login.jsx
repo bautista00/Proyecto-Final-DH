@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../config";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [jwt, setJwt] = useState();
 
-  
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
@@ -17,39 +15,33 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      const ec2InstanceIP = '3.19.232.248';
-      const ec2InstancePort = 8080;
-      const endpoint = `http://${ec2InstanceIP}:${ec2InstancePort}/api/login`;
-
+    try {
       const requestData = {
-      // Los datos que deseas enviar en la solicitud
-      username:email,
-      password:password
+        // Los datos que deseas enviar en la solicitud
+        username: email,
+        password: password,
       };
 
-      await axios.post(endpoint, requestData, {headers:{"Content-Type":"application/json"}})
-      .then(response => {
-        console.log('Response:', response.data);
-        setJwt(response.data.jwt)
-        console.log(jwt)
-      })
-    
-      if(jwt){
-        window.localStorage.setItem("jwt",jwt)
-        setPassword("")
-        setEmail("")
-        setError("")
-        window.location.href = "/"
-      }
-
-    }catch(e){
-      console.log(e)
+      await axiosInstance.post("/login", requestData).then((response) => {
+        console.log("Response:", response.data);
+        const jwt = response.data.jwt;
+        const role = response.data.rol;
+        console.log(jwt);
+        if (jwt) {
+          window.localStorage.setItem("jwt", jwt);
+          window.localStorage.setItem("auth", "true");
+          window.localStorage.setItem("role", role);
+          setPassword("");
+          setEmail("");
+          setError("");
+          window.location.href = "/";
+        }
+      });
+    } catch (e) {
+      console.log(e);
     }
-
-    
   };
 
   return (

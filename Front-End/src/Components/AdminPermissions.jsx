@@ -154,8 +154,8 @@ const AdminPermissions = () => {
       </Space>
 
       <div className="adminPermissionsButton">
-        <button>Guardar</button>
-        <button>Cancelar</button>
+        <button className="buttonPermission">Guardar</button>
+        <button className="buttonPermission">Cancelar</button>
       </div>
     </div>
   );

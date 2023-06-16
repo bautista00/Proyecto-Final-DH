@@ -29,6 +29,7 @@ body {
   flex-direction: column;
   align-items: center;
   padding-bottom: 2vw;
+  
 }
 
 /* MODAL BOX */
@@ -68,7 +69,10 @@ body {
 .imageGallery img:hover {
   transform: scale(1.1);
 }
-
+.gallery button:hover {
+  border-color: #ffffff;
+  box-shadow: none;
+}
 .close {
   position: relative;
   right: -49vw;
@@ -225,11 +229,13 @@ body {
   border-radius: 5px;
   background-color: #ffffff;
   width: 10vw;
+  padding-right: 0.5rem;
   border-style: hidden;
   border-radius: 15px;
   border: solid 2px #5d994b;
   font-size: 0.9vw;
   text-align: center;
+  font-family: "Roboto", sans-serif;
 }
 .onlyFilters select {
   height: 2vw;
@@ -240,7 +246,9 @@ body {
   border: solid 2px #5d994b;
   font-size: 0.9vw;
   font-weight: 500;
-  text-align: center;
+  font-family: "Roboto", sans-serif;
+  padding-left: 1rem;
+  
 }
 
 .onlyFilters {
@@ -250,11 +258,33 @@ body {
   gap: 3vw;
   background-color: #ffffff;
   height: 5vw;
-  width: 50%;
   border-radius: 50px;
   position: relative;
   top: -2.5vw;
   border: solid 4px #5d994b;
+  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.4);
+  padding: 10px;
+}
+.onlyFilters h2 {
+  color: black;
+  font-size: 1rem;
+}
+.autoCompleteInput{
+  height: 2vw;
+  border-radius: 5px;
+  background-color: #ffffff;
+  width: 9vw;
+  padding-right: 0.5rem;
+  border-style: hidden;
+  border-radius: 15px;
+  border: solid 2px #5d994b;
+  font-size: 0.9vw;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  contain: content;
+}
+.ant-select-selector{
+  min-width: 10vw;
 }
 .divFilters {
   display: flex;
@@ -266,10 +296,6 @@ body {
   align-items: center;
   gap: 2vw;
 }
-.divFilters h2 {
-  color: #ffffff;
-  margin: 0;
-}
 /* Card Recommended*/
 .card-recommended {
   display: flex;
@@ -280,7 +306,6 @@ body {
   border-radius: 15px;
   height: 20vw;
   width: 20vw;
-  max-width: 24vw;
   border: solid 2px #5d994b;
 }
 .card-container-recommended img {
@@ -294,7 +319,8 @@ body {
   transform: scale(1.05);
   transition: 0.3s ease;
   border: solid 2px;
-  border-color: #646cff;
+  border-color: #5d994b;
+  box-shadow: 0px 0px 8px 1px #5d994bc0;
 }
 .card-container-recommended {
   display: flex;
@@ -313,7 +339,7 @@ body {
   margin-bottom: 4vw;
 }
 .card-title-recommended h2 {
-  font-size: 1.8vw;
+  font-size: 25px;
   color: rgb(79, 79, 79);
   margin: 0;
   margin-left: 5vw;
@@ -340,9 +366,9 @@ body {
   border-radius: 15px;
   height: 12vw;
   width: 20vw;
-  max-width: 24vw;
   border: solid 2px #5d994b;
 }
+
 .card-container img {
   height: 12vw;
   width: 20vw;
@@ -351,8 +377,8 @@ body {
 .card:hover {
   transform: scale(1.1);
   transition: 0.3s ease;
-  border: solid 2px;
-  border-color: #646cff;
+  border-color: #5d994b;
+  box-shadow: 0px 0px 8px 1px #5d994bc0;
 }
 .card-title {
   width: 100%;
@@ -362,7 +388,7 @@ body {
   gap: 0.5vw;
 }
 .card-title h2 {
-  font-size: 1.8vw;
+  font-size: 25px;
   color: rgb(79, 79, 79);
   margin: 0;
   margin-left: 5vw;
@@ -492,6 +518,41 @@ body {
   font-size: 2vw;
   width: 86%;
 }
+
+.dateReservation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  justify-content: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 1.5vw;
+  width: 83%;
+  align-self: center;
+  border: 1px solid grey;
+}
+
+.dateReservationContent {
+  flex-direction: row;
+  display: flex;
+  gap: 40px;
+}
+
+.buttonReservation {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  margin-top: 100px;
+}
+
+.dateReservation h2 {
+  color: rgb(52, 73, 94);
+  font-size: 2vw;
+  width: 86%;
+  text-align: center;
+}
+
 .divLocation {
   margin-bottom: 5vw;
   display: flex;
@@ -527,6 +588,9 @@ body {
   text-align: left;
 }
 /* Comments/Rating - detail */
+.ratingAvg i {
+  font-size: 1rem;
+}
 .commentSection {
   display: flex;
   flex-direction: column;
@@ -536,14 +600,21 @@ body {
   border: 1px solid grey;
 }
 .commentSection div div {
-  padding: 0;
+  padding: 2px;
   color: #fadb14;
+}
+#commentsBox {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 .testimonialBox {
   box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.1);
   background-color: #ffffff;
   padding: 20px;
   margin: 1rem;
+  width: 90%;
 }
 .boxTop {
   display: flex;
@@ -641,7 +712,7 @@ body {
   margin-top: 10px;
 }
 .avatar:hover {
-  border-color: #646cff;
+  border-color: #78c561;
   transform: scale(1.1);
   transition: 0.3s ease;
 }
@@ -781,7 +852,7 @@ body {
   color: #5d994b;
   font-weight: 800;
   font-size: 0.9vw;
-  border: 2px solid grey;
+  border-radius: 50px;
   margin-top: 1vw;
   height: 2.5vw;
   width: 8vw;
@@ -797,6 +868,7 @@ body {
   margin-top: auto;
   bottom: 0;
   width: 100%;
+  justify-content: flex-start;
 }
 
 .logoFooter {
@@ -811,7 +883,45 @@ body {
   margin-left: 0.5vw;
   color: #fefefe;
 }
-
+#button-Compartir {
+  margin-right: 4vw;
+    margin-bottom: 1vh;
+    position: absolute;
+    height: 2.2rem;
+    border-color: #5d994b;
+    font-size: 1rem;
+    right: 0.5vw;
+}
+#button-Compartir-producto {
+  align-self: center;
+  margin-top: 20px;
+  width: 20%;
+  background-color: white;
+}
+.shareAppIcons {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  gap: 8px;
+  align-items: center;
+}
+.shareAppIcons-Product {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  gap: 8px;
+  align-items: center;
+}
+.shareAppIcons-Product a i {
+  padding: 10px;
+  font-size: 2rem;
+  margin-left: 0;
+  color: #5d994b;
+}
+.shareAppIcons i {
+  font-size: 2rem;
+  color: #5d994b;
+}
 /* GENERALITIES */
 a {
   font-weight: 500;
@@ -835,7 +945,8 @@ button {
   transition: 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: #5d994b;
+  box-shadow: 0px 0px 6px 1px #78c561bb;
   transform: scale(1.1);
   transition: 0.3s ease;
 }
@@ -1010,11 +1121,17 @@ button:focus-visible {
   max-width: 500px;
   width: 100%;
 }
-
+.modal-content-cat-footer {
+  display: flex;
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 500px;
+  width: 100%;
+}
 .close-cat {
   position: relative;
   top: -1vw;
-  right: -25vw;
   font-size: 2vw;
   cursor: pointer;
   color: #5d994b;
@@ -1131,6 +1248,14 @@ textarea {
   gap: 10px;
 }
 
+.adminPermissions h1, .userPermissions h1, .ownerPermissions h1{
+  font-size: 25px !important;
+}
+
+.UsersPermissionsContainer h1{
+  font-size: 35px;
+}
+
 .ownerPermissions {
   display: flex;
   flex-direction: column;
@@ -1143,18 +1268,189 @@ textarea {
   gap: 10px;
 }
 
+.UserRoles{
+  margin-bottom: 3vw;
+}
 /* Users */
 
 .usersButton {
   display: flex;
   justify-content: flex-end;
-  background-color: #fafafa;
-  padding-top: 10px;
+  
+  padding-bottom: 20px;
 }
+
+.buttonRol, .buttonRolRight, .buttonCity, .buttonCityRight, .buttonPermission{
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #5d994b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 2vw;
+  
+}
+.buttonPermission{
+  margin-top: 1vw;
+}
+
+.buttonRolRight, .buttonCityRight{
+  margin-right: 5vw
+}
+
+.tableRol, .tableCity, .CardRole {
+  
+  margin-left: 5vw;
+  width: 90%;
+  
+}
+.roleForm, .citiesForm {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  gap: 10px;
+  margin-left: 5vw;
+  
+}
+
+.tituloRol, .tituloCity, .UsersPermissionsContainer h1{
+  margin-left: 5vw;
+  font-size: 35px;
+}
+
+
+.inputRol{
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #5d994b;
+}
+
+.labelRol, .labelCity{
+  font-weight: bold;
+}
+
+
+
+/* Cities */
 
 .citiesForm {
   display: flex;
   flex-direction: column;
   width: 30%;
   gap: 10px;
+}
+
+/*media queries*/
+
+@media (min-width: 481px) and (max-width: 767px){
+ 
+  .divHeader {
+    height: 12vw;
+  }
+  .logoDiv img {
+    width: 12vh;
+    height: 7vh;
+  }
+  .logoDiv a {
+    font-size: 0.8rem;
+    padding-left: 5vw;
+  }
+  .card-container, .card-container-recommended{
+    display: grid;    
+    grid-template-columns: repeat(2, 1fr);
+    
+       
+  } 
+  .card, .card img, .card-recommended {
+    justify-self: center;
+    height: 22vw;
+    width: 30vw;
+  } 
+  .card h3 {
+    margin: 0;
+    font-size: 3vw;
+    top: -4vw;
+    left: -8vw;
+  }
+
+  .card-container-recommended img {
+    height: 15vw;
+    width: 30vw;
+  }
+
+  .card-recommended h3 {
+    
+    font-size: 2.2vw;
+    
+  }
+  .card-recommended p {
+    margin: 0vw;
+    font-size: 1.5vw;
+  }
+
+  .card-title-recommended{
+    margin-top: 50px;
+  }
+
+  .divButtons button {
+    font-size: 8px;
+    height: 25px;
+    width: 80px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .divHeader {
+    height: 12vw;
+  }
+  .logoDiv img {
+    width: 10vh;
+    height: 6vh;
+  }
+  .logoDiv a {
+    font-size: 0.7rem;
+    padding-left: 5vw;
+  }
+  .card-container, .card-container-recommended{
+    display: grid;    
+    grid-template-columns: repeat(1, 1fr);
+    
+  }
+  .card, .card img, .card-recommended {
+    justify-self: center;
+    height: 34vw;
+    width: 42vw;
+  } 
+  
+  .card h3 {
+    margin: 0;
+    font-size: 4vw;
+    top: -6vw;
+    left: -11vw;
+  }
+
+  .card-container-recommended img {
+    height: 23vw;
+    width: 42vw;
+  }
+
+  .card-recommended h3 {    
+    font-size: 3.2vw;
+  }
+
+  .card-recommended p {
+    margin: 0vw;
+    font-size: 2.1vw;
+  }
+
+  .card-title-recommended{
+    margin-top: 50px;
+  }
+
+  .divButtons button {
+    font-size: 1.8vw;
+    height: 25px;
+    width: 70px;
+  }
 }

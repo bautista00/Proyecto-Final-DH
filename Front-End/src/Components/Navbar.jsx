@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../index.css";
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 import { useContextGlobal } from "./utils/GlobalContext";
+import { axiosInstance } from "../config";
 
 const Navbar = () => {
   const userId = parseInt(localStorage.getItem("userId"));
+  const [loggedUser, setLoggedUser] = useState({});
   const { users } = useContextGlobal();
 
-  const loggedUser = users.find((usr) => usr.id === userId);
+  useEffect(() => {
+    axiosInstance
+      .get("/all/getuser", {
+        params: {
+          token: localStorage.getItem("jwt"),
+        },
+      })
+      .then((response) => {
+        console.log("Response:", response.data);
+        setLoggedUser(response.data);
+      });
+  }, [userId]);
+
+  //const loggedUser = users.find((usr) => usr.id === userId);
 
   const renderSignLog = () => {
     return (
@@ -24,13 +39,13 @@ const Navbar = () => {
   };
 
   const renderAvClose = () => {
+    let name = `${loggedUser?.nombre} ${loggedUser?.apellido}`;
+    name = localStorage.getItem("role") === "GOD" ? "Super Admin" : name;
+
     return (
       <div className="divButtons">
         <button onClick={logOut}>Cerrar Sesión</button>
-        <Avatar
-          name={`${loggedUser?.name} ${loggedUser?.lastname}`}
-          image={""}
-        />
+        <Avatar name={name} image={""} />
       </div>
     );
   };

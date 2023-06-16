@@ -1,17 +1,17 @@
 import React from "react";
 import { Rate } from "antd";
 
-const CommentCard = () => {
+const CommentCard = ({userName, rating, comment}) => {
   return (
     <div className="testimonialBox">
         <div className="boxTop">
             <div className="profileComment">
-            <strong>Sebastián</strong> <span>@SebaM</span>
+            <strong>{userName}</strong> <span>@{userName}</span>
             </div>
-            <Rate disabled defaultValue={4} style={{ color: "#fadb14", fontSize: 20 }}/>
+            <Rate disabled defaultValue={rating} style={{ color: "#fadb14", fontSize: 20 }}/>
         </div>
       <div className="clientComment">
-        <p>Muy buenas canchas, excelente servicio. Falta alguna que otra luz de noche pero todo bien en general. Volveríamos a jugar con mis amigos sin dudas. Que el dueño se la juegue un poco y nos invite un asadito, abrazo.</p>
+        <p>{comment}</p>
       </div>
     </div>
   );

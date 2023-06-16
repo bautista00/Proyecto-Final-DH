@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { Link} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [nombre, setNombre] = useState('');
-  const [apellido, setApellido] = useState('');
-  
-  const [cuil, setCuil] = useState('');
-  const [cbu, setCbu] = useState('');
-  const [domicilio, setDomicilio] = useState('');
-  const [telefono, setTelefono] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
 
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [nombreError, setNombreError] = useState('');
-  const [apellidoError, setApellidoError] = useState('');
-  const [cuilError, setCuilError] = useState('');
-  const [cbuError, setCbuError] = useState('');
-  const [telefonoError, setTelefonoError] = useState('');
-  const [domicilioError, setDomicilioError] = useState('');
+  const [cuil, setCuil] = useState("");
+  const [cbu, setCbu] = useState("");
+  const [domicilio, setDomicilio] = useState("");
+  const [telefono, setTelefono] = useState("");
+
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [nombreError, setNombreError] = useState("");
+  const [apellidoError, setApellidoError] = useState("");
+  const [cuilError, setCuilError] = useState("");
+  const [cbuError, setCbuError] = useState("");
+  const [telefonoError, setTelefonoError] = useState("");
+  const [domicilioError, setDomicilioError] = useState("");
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false); // Nuevo estado para mostrar el mensaje de cuenta creada
@@ -27,7 +27,7 @@ const SignUp = () => {
   useEffect(() => {
     if (accountCreated) {
       setTimeout(() => {
-        window.location.href = '/login';
+        window.location.href = "/login";
       }, 20000);
     }
   }, [accountCreated]);
@@ -36,59 +36,72 @@ const SignUp = () => {
     e.preventDefault();
 
     // Restablecer los mensajes de error
-    setEmailError('');
-    setPasswordError('');
-    setNombreError('');
-    setApellidoError('');
-    setCuilError('');
-    setCbuError('');
+    setEmailError("");
+    setPasswordError("");
+    setNombreError("");
+    setApellidoError("");
+    setCuilError("");
+    setCbuError("");
 
     if (!email || !validarMail(email)) {
-      setEmailError('Ingrese un email válido.');
+      setEmailError("Ingrese un email válido.");
       return;
     }
     if (!password || password.length < 8) {
-      setPasswordError('La contraseña debe tener al menos 8 caracteres.');
+      setPasswordError("La contraseña debe tener al menos 8 caracteres.");
       return;
     }
     if (!nombre || !validarNombre(nombre)) {
-      setNombreError('Ingrese un nombre válido (solo letras).');
+      setNombreError("Ingrese un nombre válido (solo letras).");
       return;
     }
     if (!apellido || !validarNombre(apellido)) {
-      setApellidoError('Ingrese un apellido válido (solo letras).');
+      setApellidoError("Ingrese un apellido válido (solo letras).");
       return;
     }
 
     if (!cuil || !validarCuil(cuil)) {
-      setCuilError('Ingrese un cuil válido');
+      setCuilError("Ingrese un cuil válido");
       return;
     }
     if (!cbu || !validarCbu(cbu)) {
-      setCuilError('Ingrese un cbu válido. Debe contener 22 dígitos');
+      setCuilError("Ingrese un cbu válido. Debe contener 22 dígitos");
       return;
     }
     if (!telefono || !validarTelefono(telefono)) {
-      setTelefonoError('Ingrese un teléfono válido en Argentina. Debe contener 10 dígitos');
+      setTelefonoError(
+        "Ingrese un teléfono válido en Argentina. Debe contener 10 dígitos"
+      );
       return;
     }
     if (!domicilio || !validarDomicilio(domicilio)) {
-      setDomicilioError('Ingrese un domicilio válido.');
+      setDomicilioError("Ingrese un domicilio válido.");
       return;
     }
+
+    //Logica
+    axios
+      .post(endpoint, requestData, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        console.log("Response:", response.data);
+        setJwt(response.data.jwt);
+        console.log(jwt);
+      });
 
     // Realizar el registro exitoso
     setAccountCreated(true);
 
     // Restablecer los campos
-    setEmail('');
-    setPassword('');
-    setNombre('');
-    setApellido('');
-    setCuil('')
-    setCbu('')
-    setTelefono('')
-    setDomicilio('')
+    setEmail("");
+    setPassword("");
+    setNombre("");
+    setApellido("");
+    setCuil("");
+    setCbu("");
+    setTelefono("");
+    setDomicilio("");
   };
 
   const validarMail = (value) => {
@@ -122,21 +135,21 @@ const SignUp = () => {
   };
 
   return (
-    <div className='logInContent'>
+    <div className="logInContent">
       {accountCreated ? ( // Mostrar el mensaje de cuenta creada si está establecido
-        <div className='accSucced'>
+        <div className="accSucced">
           <h2>Cuenta creada con éxito</h2>
           <p>¡Tu cuenta se ha creado correctamente!</p>
           <p>Redirigiendo a la página de inicio de sesión...</p>
           {/* Aquí puedes agregar lógica para redirigir automáticamente a la página de inicio de sesión */}
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className='formSignUp'>
+        <form onSubmit={handleSubmit} className="formSignUp">
           <div>
-            <label htmlFor='nombre'>Nombre:</label>
+            <label htmlFor="nombre">Nombre:</label>
             <input
-              type='text'
-              id='nombre'
+              type="text"
+              id="nombre"
               value={nombre}
               onChange={(e) => setNombre(e.target.value)}
               required
@@ -145,10 +158,10 @@ const SignUp = () => {
           </div>
 
           <div>
-            <label htmlFor='apellido'>Apellido:</label>
+            <label htmlFor="apellido">Apellido:</label>
             <input
-              type='text'
-              id='apellido'
+              type="text"
+              id="apellido"
               value={apellido}
               onChange={(e) => setApellido(e.target.value)}
               required
@@ -157,10 +170,10 @@ const SignUp = () => {
           </div>
 
           <div>
-            <label htmlFor='email'>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
-              type='email'
-              id='email'
+              type="email"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -169,10 +182,10 @@ const SignUp = () => {
           </div>
 
           <div>
-            <label htmlFor='password'>Contraseña:</label>
+            <label htmlFor="password">Contraseña:</label>
             <input
-              type='password'
-              id='password'
+              type="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -184,10 +197,10 @@ const SignUp = () => {
           {isAdmin && (
             <div>
               <div>
-                <label htmlFor='cuil'>CUIL:</label>
+                <label htmlFor="cuil">CUIL:</label>
                 <input
-                  type='text'
-                  id='cuil'
+                  type="text"
+                  id="cuil"
                   value={cuil}
                   onChange={(e) => setCuil(e.target.value)}
                   required
@@ -196,10 +209,10 @@ const SignUp = () => {
               </div>
 
               <div>
-                <label htmlFor='cbu'>CBU:</label>
+                <label htmlFor="cbu">CBU:</label>
                 <input
-                  type='text'
-                  id='cbu'
+                  type="text"
+                  id="cbu"
                   value={cbu}
                   onChange={(e) => setCbu(e.target.value)}
                   required
@@ -208,10 +221,10 @@ const SignUp = () => {
               </div>
 
               <div>
-                <label htmlFor='telefono'>Telefono:</label>
+                <label htmlFor="telefono">Telefono:</label>
                 <input
-                  type='text'
-                  id='telefono'
+                  type="text"
+                  id="telefono"
                   value={telefono}
                   onChange={(e) => setTelefono(e.target.value)}
                   required
@@ -220,10 +233,10 @@ const SignUp = () => {
               </div>
 
               <div>
-                <label htmlFor='domicilio'>Domicilio:</label>
+                <label htmlFor="domicilio">Domicilio:</label>
                 <input
-                  type='text'
-                  id='domicilio'
+                  type="text"
+                  id="domicilio"
                   value={domicilio}
                   onChange={(e) => setDomicilio(e.target.value)}
                   required
@@ -233,22 +246,24 @@ const SignUp = () => {
             </div>
           )}
 
-          <label htmlFor='admin'>¿Queres registrate para alquilar tus canchas?</label>
+          <label htmlFor="admin">
+            ¿Queres registrate para alquilar tus canchas?
+          </label>
           <input
-            type='checkbox'
-            id='admin'
+            type="checkbox"
+            id="admin"
             onChange={() => setIsAdmin(!isAdmin)}
-            className='adminCheckbox'
+            className="adminCheckbox"
           />
 
-          <button type='submit'>Registrarse</button>
+          <button type="submit">Registrarse</button>
         </form>
       )}
 
-      <div className='inicioSesion'>
+      <div className="inicioSesion">
         <p>¿Ya tienes una cuenta?</p>
         <Link to={`/Login`}>
-          <p className='inicioSesionLink'>Inicia Sesión</p>
+          <p className="inicioSesionLink">Inicia Sesión</p>
         </Link>
       </div>
     </div>
