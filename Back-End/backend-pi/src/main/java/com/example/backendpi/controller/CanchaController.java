@@ -45,8 +45,8 @@ public class CanchaController {
     }
 
     @GetMapping("/listxsportcanchas")
-    public ResponseEntity<List<CanchaDTO>> buscarXDeporte (@RequestBody Categoria categoria)throws ResourceNotFoundException{
-        return ResponseEntity.ok(canchaService.buscarXCategoria(categoria));
+    public ResponseEntity<List<CanchaDTO>> buscarXDeporte (@RequestParam (value="categoriaNombre") String categoriaNombre)throws ResourceNotFoundException{
+        return ResponseEntity.ok(canchaService.buscarXCategoria(categoriaNombre));
     }
 
 

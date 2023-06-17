@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface CanchaRepository extends JpaRepository<Cancha, Long> {
-    List<CanchaDTO> findByCategoria(Categoria categoria);
-    List<CanchaDTO> findByUserEmail(String token);
+    List<Cancha> findByCategoria(Categoria categoria);
+    List<Cancha> findByUserEmail(String token);
 //    List<CanchaDTO> FindByBarrioAndDeporte(Barrio barrio, Categoria categoria);
     @Query(value = "SELECT user_id, br.nombre as nombrebarrio, categoria_id, domicilio_id, barrio_id, promedio_puntuacion, hora_apertura, hora_cierre, precioxhora, puntuacion, ch.id, ch.nombre, cat.nombre as nombrecategoria, dom.calle, dom.numero, dom.provincia, telefono FROM cancha as ch \n" +
             "INNER JOIN domicilio as dom ON ch.domicilio_id = dom.id \n" +

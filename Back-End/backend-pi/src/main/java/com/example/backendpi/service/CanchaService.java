@@ -25,7 +25,7 @@ public interface CanchaService {
     public List<CanchaDTO> buscarTodos();
     public CanchaDTO actualizar(CanchaDTO canchaDTO)throws ResourceNotFoundException;
 
-    public List<CanchaDTO> buscarXCategoria(Categoria categoria)throws ResourceNotFoundException;
+    public List<CanchaDTO> buscarXCategoria(String categoriaNombre)throws ResourceNotFoundException;
 
     public List<CanchaDTO> buscarPorUser(String token)throws ResourceNotFoundException;
 

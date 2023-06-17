@@ -45,7 +45,6 @@ public class CanchaServiceImpl implements CanchaService{
         images.setCancha(cancha);
         images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
         Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
-        //Meter la cancha adentro de la lista de categoria
         if(categoria != null){
             cancha.setCategoria(categoria);
         }
@@ -102,9 +101,14 @@ public class CanchaServiceImpl implements CanchaService{
     }
 
     @Override
-    public List<CanchaDTO> buscarXCategoria(Categoria categoria)throws ResourceNotFoundException {
+    public List<CanchaDTO> buscarXCategoria(String nombreCategoria)throws ResourceNotFoundException {
+        Categoria categoria = categoriaRepository.findByNombre(nombreCategoria);
         if(canchaRepository.findByCategoria(categoria).size()>0) {
-            List<CanchaDTO> canchaDTOS = canchaRepository.findByCategoria(categoria);
+            List<CanchaDTO> canchaDTOS = new ArrayList<>();
+            List<Cancha> canchaList = canchaRepository.findByCategoria(categoria);
+            for (Cancha cancha : canchaList) {
+                canchaDTOS.add(canchaToCanchaDTOConverter.convert(cancha));
+            }
             return canchaDTOS;
         }
         else {
@@ -115,7 +119,11 @@ public class CanchaServiceImpl implements CanchaService{
     @Override
     public List<CanchaDTO> buscarPorUser(String token) throws ResourceNotFoundException {
         if(canchaRepository.findByUserEmail(jwtService.extractUserName(token)).size()>0) {
-            List<CanchaDTO> canchaDTOS = canchaRepository.findByUserEmail(jwtService.extractUserName(token));
+            List<CanchaDTO> canchaDTOS = new ArrayList<>();
+            List<Cancha> canchaList = canchaRepository.findByUserEmail(jwtService.extractUserName(token));
+            for (Cancha cancha : canchaList) {
+                canchaDTOS.add(canchaToCanchaDTOConverter.convert(cancha));
+            }
             return canchaDTOS;
         }else {
             throw new ResourceNotFoundException("No existen las canchas buscadas por el propietario");
