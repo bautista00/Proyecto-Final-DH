@@ -21,13 +21,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getUser(token));
     }
 
-    @DeleteMapping("/god/deleteClient")
+    @DeleteMapping("/admin/deleteClient")
     public ResponseEntity<String> borrarUsuario(Long id) throws ResourceNotFoundException{
         userService.borrarCliente(id);
         return ResponseEntity.ok("Se borro el usuario con id "+ id);
     }
 
-    @GetMapping("/god/getallusers")
+    @GetMapping("/admin/getallusers")
     public ResponseEntity<List<User>> listarUsuarios()throws ResourceNotFoundException{
         return ResponseEntity.ok(userService.listarTodos());
     }

@@ -1,12 +1,19 @@
 package com.example.backendpi.service;
 
+import com.example.backendpi.converters.CategoriaToCategoriaDTOConverter;
+import com.example.backendpi.converters.ImagesToImagesDTOConverter;
 import com.example.backendpi.domain.Categoria;
+import com.example.backendpi.domain.Images;
+import com.example.backendpi.dto.CategoriaDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.repository.CategoriaRepository;
+import com.example.backendpi.repository.ImagesRepository;
 import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,12 +22,21 @@ import java.util.Optional;
 public class CategoriaServiceImpl implements CategoriaService{
 
     private final CategoriaRepository categoriaRepository;
+    private final AwsS3Service awsS3Service;
+
+    private final ImagesRepository imagesRepository;
+
+    private final CategoriaToCategoriaDTOConverter categoriaToCategoriaDTOConverter;
 
 
     @Override
-    public Categoria agregarCategoria(Categoria categoria) throws EntityExistsException {
+    public Categoria agregarCategoria(Categoria categoria, MultipartFile file) throws Exception {
         if (categoriaRepository.findByNombre(categoria.getNombre()) == null){
-                return categoriaRepository.save(categoria);
+               Images images = new Images();
+               images.setCategoria(categoria);
+               images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
+               imagesRepository.save(images);
+               return categoriaRepository.save(categoria);
         }
         throw new EntityExistsException("La categoria ya existe");
     }
@@ -35,10 +51,14 @@ public class CategoriaServiceImpl implements CategoriaService{
     }
 
     @Override
-    public List<Categoria> listarCategorias() throws ResourceNotFoundException {
+    public List<CategoriaDTO> listarCategorias() throws ResourceNotFoundException {
         List<Categoria> categoriaList = categoriaRepository.findAll();
+        List<CategoriaDTO> categoriaDTOS = new ArrayList<>();
         if (categoriaList.size()>0){
-            return categoriaList;
+            for (Categoria categoria : categoriaList) {
+                categoriaDTOS.add(categoriaToCategoriaDTOConverter.convert(categoria));
+            }
+            return categoriaDTOS;
         }
         throw new ResourceNotFoundException("La listas de categoria esta vacia");
     }

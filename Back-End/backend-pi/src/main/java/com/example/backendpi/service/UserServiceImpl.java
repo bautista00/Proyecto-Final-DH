@@ -4,7 +4,6 @@ import com.amazonaws.services.backup.model.MissingParameterValueException;
 import com.example.backendpi.converters.UserToUserDTOConverter;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.UserDTO;
-import com.example.backendpi.dto.PageResponseDTO;
 import com.example.backendpi.dto.SignUpRequest;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
@@ -12,8 +11,6 @@ import com.example.backendpi.repository.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.example.backendpi.domain.Role.ADMIN;
+import static com.example.backendpi.domain.Role.OWNER;
 import static com.example.backendpi.domain.Role.USER;
 
 @Service
@@ -63,7 +60,7 @@ public class UserServiceImpl implements UserService {
                         .cbu(signUpRequest.getCbu())
                         .cuil(signUpRequest.getCuil())
                         .telefono(signUpRequest.getTelefono())
-                        .role(ADMIN)
+                        .role(OWNER)
                         .tokenEmail(UUID.randomUUID().toString())
                         .verified(false)
                         .build());

@@ -18,7 +18,7 @@ public class BarrioController {
 
     private final BarrioService barrioService;
 
-    @PostMapping("/god/addbarrios")
+    @PostMapping("/admin/addbarrios")
     public ResponseEntity<Barrio> agregarBarrio(@RequestBody Barrio barrio) throws EntityExistsException {
         return ResponseEntity.ok(barrioService.guardar(barrio));
     }
@@ -28,7 +28,7 @@ public class BarrioController {
         return ResponseEntity.ok(barrioService.buscarTodos());
     }
 
-    @DeleteMapping("/god/deletebarrio/{id}")
+    @DeleteMapping("/admin/deletebarrio/{id}")
     public ResponseEntity<String> eliminarBarrio(@PathVariable Long id)throws ResourceNotFoundException{
         barrioService.borrarXId(id);
         return ResponseEntity.ok("Se elimino el barrio con el id: " +id);
