@@ -3,10 +3,7 @@ package com.example.backendpi.service;
 import com.amazonaws.services.mq.model.NotFoundException;
 import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
 import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
-import com.example.backendpi.domain.Barrio;
-import com.example.backendpi.domain.Cancha;
-import com.example.backendpi.domain.Categoria;
-import com.example.backendpi.domain.Images;
+import com.example.backendpi.domain.*;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
@@ -47,6 +44,10 @@ public class CanchaServiceImpl implements CanchaService{
         Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
         if(categoria != null){
             cancha.setCategoria(categoria);
+        }
+        List<Servicio> servicioList = canchaDTO.getServicioList();
+        if (servicioList.size()>0) {
+            cancha.setServicioList(servicioList);
         }
         domicilioService.guardar(cancha.getDomicilio());
         canchaRepository.save(cancha);

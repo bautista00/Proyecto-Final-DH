@@ -57,7 +57,10 @@ public class Cancha {
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Images> imgList = new ArrayList<>();
 
+    @ManyToMany(mappedBy = "canchaList",fetch = FetchType.LAZY)
+    private List<Servicio> servicioList = new ArrayList<>();
 
+    private String descripcion;
 
 
 }

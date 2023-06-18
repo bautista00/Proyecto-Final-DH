@@ -31,5 +31,7 @@ public class CanchaDTO {
     private List<ImagesDTO> imagesDTOSList;
     private List<ValoracionDTO> valoracionList;
     private Double promedio;
+    private List<Servicio> servicioList;
+    private String descripcion;
 }
 
