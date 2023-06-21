@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.sql.Time;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,11 +39,9 @@ public class Cancha {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime horaApertura;
+    private Time horaApertura;
 
-    @JsonFormat(pattern = "HH:mm:ss")
-    private LocalTime horaCierre;
+    private Time horaCierre;
 
     private Double promedioPuntuacion;
 
@@ -57,7 +57,10 @@ public class Cancha {
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Images> imgList = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "canchaList",fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "servicio_cancha",
+            joinColumns = { @JoinColumn(name = "cancha_id") },
+            inverseJoinColumns = { @JoinColumn(name = "servicio_id") })
     private List<Servicio> servicioList = new ArrayList<>();
 
     private String descripcion;

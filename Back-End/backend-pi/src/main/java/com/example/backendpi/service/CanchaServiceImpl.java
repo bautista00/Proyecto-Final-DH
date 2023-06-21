@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,7 +31,6 @@ public class CanchaServiceImpl implements CanchaService{
     private final ImagesRepository imagesRepository;
     private final DomicilioService domicilioService;
     private final CategoriaRepository categoriaRepository;
-    private final BarrioRepository barrioRepository;
 
 
     @Override
@@ -38,6 +38,7 @@ public class CanchaServiceImpl implements CanchaService{
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
         cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         cancha.setTurnoList(new ArrayList<>());
+        cancha.setServicioList(new ArrayList<>());
         Images images = new Images();
         images.setCancha(cancha);
         images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
@@ -49,6 +50,11 @@ public class CanchaServiceImpl implements CanchaService{
         if (servicioList.size()>0) {
             cancha.setServicioList(servicioList);
         }
+        List<Criterios> criteriosList = canchaDTO.getCriteriosList();
+        if (criteriosList.size()>0){
+            cancha.setCriteriosList(criteriosList);
+        }
+
         domicilioService.guardar(cancha.getDomicilio());
         canchaRepository.save(cancha);
         imagesRepository.save(images);

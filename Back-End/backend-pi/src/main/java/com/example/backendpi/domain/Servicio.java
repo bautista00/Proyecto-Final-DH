@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,5 +23,5 @@ public class Servicio {
     private String nombre;
     @ManyToMany(mappedBy = "servicioList",fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Cancha> canchaList;
+    private List<Cancha> canchaList = new ArrayList<>();
 }
