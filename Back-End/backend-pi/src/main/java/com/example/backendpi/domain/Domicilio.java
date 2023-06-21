@@ -21,7 +21,8 @@ public class Domicilio {
     @JoinColumn(name ="barrio_id",referencedColumnName = "id")
     private Barrio barrio;
     private String provincia;
-    @OneToOne(mappedBy = "domicilio")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonIgnore
     private User user;
 
