@@ -18,4 +18,5 @@ public interface CanchaRepository extends JpaRepository<Cancha, Long> {
             "WHERE cat.nombre = :categoria AND br.nombre = :barrio ;"
             , nativeQuery = true)
     List<Cancha> findCanchasByDeporteAndBarrio(@Param("barrio") String barrio, @Param("categoria") String categoria );
+    Cancha findByNombre(String nombre);
 }

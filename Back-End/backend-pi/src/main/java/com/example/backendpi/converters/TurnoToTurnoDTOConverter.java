@@ -12,8 +12,9 @@ public class TurnoToTurnoDTOConverter implements Converter<Turno, TurnoDTO> {
     public TurnoDTO convert(Turno source) {
         TurnoDTO turnoDTO = new TurnoDTO();
         turnoDTO.setId(source.getId());
-        turnoDTO.setDomicilioCancha(source.getCancha().getDomicilio());
-        turnoDTO.setPrecio(source.getPrecio());
+        turnoDTO.setDireccionCancha(source.getCancha().getDomicilio().getCalle());
+        turnoDTO.setBarrioCancha(source.getCancha().getDomicilio().getBarrio().getNombre());
+        turnoDTO.setPrecio(source.getCancha().getPrecioxhora());
         turnoDTO.setFecha(source.getFecha());
         turnoDTO.setHoras(source.getHoras());
         turnoDTO.setNombreCancha(source.getCancha().getNombre());

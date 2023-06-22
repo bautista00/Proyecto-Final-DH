@@ -44,8 +44,8 @@ public class TurnoController {
     }
 
     @GetMapping("/user/findxuserturnos")
-    public ResponseEntity<TurnoDTO> buscarPorUser(@RequestBody User user) throws ResourceNotFoundException{
-       return ResponseEntity.ok(turnoService.buscarPorCliente(user));
+    public ResponseEntity<TurnoDTO> buscarPorUser(@RequestParam(value = "token") String token) throws ResourceNotFoundException{
+       return ResponseEntity.ok(turnoService.buscarPorCliente(token));
     }
 
     @GetMapping("/owner/findxcanchasturnos")
