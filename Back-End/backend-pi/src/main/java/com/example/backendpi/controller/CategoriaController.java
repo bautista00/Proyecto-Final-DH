@@ -21,7 +21,7 @@ public class CategoriaController {
 
     private final CategoriaService categoriaService;
 
-    @GetMapping("/findAllCategoria/")
+    @GetMapping("/findAllCategoria")
     public ResponseEntity<List<CategoriaDTO>> buscarCategorias()throws ResourceNotFoundException {
         return ResponseEntity.ok(categoriaService.listarCategorias());
     }
