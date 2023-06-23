@@ -25,6 +25,8 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
         cancha.setTelefono(source.getTelefono());
         cancha.setCriteriosList(source.getCriteriosList());
         cancha.setPromedioPuntuacion(source.getPromedio());
+        cancha.setServicioList(source.getServicioList());
+        cancha.setDescripcion(source.getDescripcion());
         return cancha;
     }
 }

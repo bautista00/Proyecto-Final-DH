@@ -14,10 +14,10 @@ public class TurnoDTOToTurnoConverter implements Converter<TurnoDTO, Turno> {
         Turno turno = new Turno();
         User user = new User();
         Cancha cancha = new Cancha();
-        turno.setPrecio(source.getPrecio());
         turno.setHoras(source.getHoras());
         turno.setFecha(source.getFecha());
         turno.setId(source.getId());
+        turno.setCompletado(source.isCompletado());
         user.setId(source.getIdUser());
         user.setName(source.getNombreUser());
         cancha.setNombre(source.getNombreCancha());

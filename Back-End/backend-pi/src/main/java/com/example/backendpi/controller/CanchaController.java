@@ -27,7 +27,7 @@ public class CanchaController {
     private final CanchaService canchaService;
 
 
-    @PostMapping("/admin/addcancha")
+    @PostMapping("/owner/addcancha")
     public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") MultipartFile file) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
@@ -45,32 +45,32 @@ public class CanchaController {
     }
 
     @GetMapping("/listxsportcanchas")
-    public ResponseEntity<List<CanchaDTO>> buscarXDeporte (@RequestBody Categoria categoria)throws ResourceNotFoundException{
-        return ResponseEntity.ok(canchaService.buscarXCategoria(categoria));
+    public ResponseEntity<List<CanchaDTO>> buscarXDeporte (@RequestParam (value="categoriaNombre") String categoriaNombre)throws ResourceNotFoundException{
+        return ResponseEntity.ok(canchaService.buscarXCategoria(categoriaNombre));
     }
 
 
-    @GetMapping("/admin/listxownercanchas")
+    @GetMapping("/owner/listxownercanchas")
     public ResponseEntity<List<CanchaDTO>> buscarXOwner (@RequestParam(value = "token") String token) throws ResourceNotFoundException {
         return ResponseEntity.ok(canchaService.buscarPorUser(token));
     }
 
 
-    @DeleteMapping("/admin/deletecancha/{id}")
+    @DeleteMapping("/owner/deletecancha/{id}")
     public ResponseEntity<String> borrarCancha (@PathVariable Long id) throws ResourceNotFoundException {
         canchaService.borrarXId(id);
        return ResponseEntity.ok("La cancha con id " +id+ " se ha eliminado correctamente");
     }
 
 
-    @PutMapping("/admin/updatecancha")
+    @PutMapping("/owner/updatecancha")
     public ResponseEntity<CanchaDTO> actualizarCancha(@RequestBody CanchaDTO canchaDTO) throws ResourceNotFoundException {
         return ResponseEntity.ok(canchaService.actualizar(canchaDTO));
      }
 
 
      @GetMapping("/buscarFiltradas")
-    public ResponseEntity<List<CanchaDTO>> buscarPorFiltro(String barrio, String categoria)throws ResourceNotFoundException{
+    public ResponseEntity<List<Cancha>> buscarPorFiltro(@RequestParam(value = "barrio") String barrio, @RequestParam(value = "categoria")  String categoria)throws ResourceNotFoundException{
         return ResponseEntity.ok(canchaService.buscarFiltrada(barrio, categoria));
      }
 

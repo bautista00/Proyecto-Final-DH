@@ -62,10 +62,9 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
         GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
         Date expiration = new Date();
-        long expirationMillis = expiration.getTime() + 8 * 60 * 60 * 1000;
+        long expirationMillis = expiration.getTime() + (10L * 365 * 24 * 60 * 60 * 1000) ;
         expiration.setTime(expirationMillis);
         generatePresignedUrlRequest.setExpiration(expiration);
-
 
         ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
                 .withCacheControl("No-cache")

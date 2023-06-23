@@ -25,7 +25,11 @@ public interface TurnoService {
 
 //    public TurnoDTO actualizar(TurnoDTO turnoDTO)throws ResourceNotFoundException;
 
-    public TurnoDTO buscarPorCliente(User user)throws ResourceNotFoundException;
+    public TurnoDTO buscarPorCliente(String token)throws ResourceNotFoundException;
 
     public List<TurnoDTO> buscarPorCancha(Cancha cancha)throws ResourceNotFoundException;
+
+    List<TurnoDTO> buscarTodos() throws ResourceNotFoundException;
+
+    List<TurnoDTO> historialCanchaUsuario(String token) throws ResourceNotFoundException;
 }
