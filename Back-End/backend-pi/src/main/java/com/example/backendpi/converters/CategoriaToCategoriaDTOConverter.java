@@ -15,7 +15,7 @@ public class CategoriaToCategoriaDTOConverter implements Converter<Categoria, Ca
     @Override
     public CategoriaDTO convert(Categoria source) {
         CategoriaDTO categoriaDTO = new CategoriaDTO();
-        categoriaDTO.setImagesDTO(imagesToImagesDTOConverter.convert(source.getImages()));
+//        categoriaDTO.setImagesDTO(imagesToImagesDTOConverter.convert(source.getImages()));
         categoriaDTO.setId(source.getId());
         categoriaDTO.setNombre(source.getNombre());
         return categoriaDTO;
