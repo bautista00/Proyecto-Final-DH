@@ -1,7 +1,6 @@
 package com.example.backendpi.converters;
 
 import com.example.backendpi.domain.Turno;
-import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.TurnoDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -21,6 +20,7 @@ public class TurnoToTurnoDTOConverter implements Converter<Turno, TurnoDTO> {
         turnoDTO.setNombreUser(source.getUser().getName());
         turnoDTO.setIdUser(source.getUser().getId());
         turnoDTO.setIdCancha(source.getCancha().getId());
+        turnoDTO.setCompletado(source.isCompletado());
         return turnoDTO;
     }
 }

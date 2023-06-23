@@ -11,8 +11,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface TurnoRepository extends JpaRepository<Turno, Long> {
-    Turno findByFechaAndCancha(DateTime fecha, Cancha cancha);
+    Turno findByFechaAndCancha(LocalDateTime fecha, Cancha cancha);
     Turno findByUser(User user);
     List<Turno> findByCancha(Cancha cancha);
+
 
 }

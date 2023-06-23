@@ -1,8 +1,5 @@
 package com.example.backendpi.dto;
 
-import com.example.backendpi.domain.Cancha;
-import com.example.backendpi.domain.Domicilio;
-import com.example.backendpi.domain.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +17,7 @@ import java.time.LocalDateTime;
 public class TurnoDTO {
     private Long id;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    private DateTime fecha;
+    private LocalDateTime fecha;
     private Double precio;
     private Integer horas;
     private String nombreUser;
@@ -29,4 +26,5 @@ public class TurnoDTO {
     private Long idCancha;
     private String direccionCancha;
     private String barrioCancha;
+    private boolean completado;
 }

@@ -31,7 +31,7 @@ public class User implements UserDetails {
     private String telefono;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
-    private Set<Turno> turnoList = new HashSet<>();
+    private List<Turno> turnoList = new ArrayList<>();
     private String cuil;
     private String cbu;
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

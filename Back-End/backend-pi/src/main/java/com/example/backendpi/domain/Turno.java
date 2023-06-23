@@ -19,7 +19,7 @@ public class Turno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
-    private DateTime fecha;
+    private LocalDateTime fecha;
     private Integer horas;
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -29,4 +29,5 @@ public class Turno {
     @JoinColumn(name = "cancha_id", referencedColumnName = "id")
     @JsonIgnore
     private Cancha cancha;
+    private boolean completado;
 }

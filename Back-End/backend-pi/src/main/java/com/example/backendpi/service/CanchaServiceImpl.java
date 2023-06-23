@@ -3,17 +3,22 @@ package com.example.backendpi.service;
 import com.amazonaws.services.mq.model.NotFoundException;
 import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
 import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
+import com.example.backendpi.converters.TurnoDTOToTurnoConverter;
 import com.example.backendpi.domain.*;
 import com.example.backendpi.dto.CanchaDTO;
+import com.example.backendpi.dto.TurnoDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.*;
 import lombok.AllArgsConstructor;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,6 +36,10 @@ public class CanchaServiceImpl implements CanchaService{
     private final ImagesRepository imagesRepository;
     private final DomicilioService domicilioService;
     private final CategoriaRepository categoriaRepository;
+    private final TurnoService turnoService;
+    private final TurnoDTOToTurnoConverter turnoDTOToTurnoConverter;
+
+    private final TurnoRepository turnoRepository;
 
 
     @Override
@@ -64,6 +73,13 @@ public class CanchaServiceImpl implements CanchaService{
     @Override
     public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
         Optional<Cancha> cancha  = canchaRepository.findById(id);
+        List<TurnoDTO> turnoDTOS = turnoService.buscarPorCancha(canchaRepository.findById(id).get());
+        for (TurnoDTO turnoDTO : turnoDTOS) {
+            if(turnoDTO.getFecha().isBefore(LocalDateTime.now())){
+                turnoDTO.setCompletado(true);
+                turnoRepository.save(turnoDTOToTurnoConverter.convert(turnoDTO));
+            }
+        }
         if(cancha.isPresent()){
             return (canchaToCanchaDTOConverter.convert(cancha.get()));
         }else {

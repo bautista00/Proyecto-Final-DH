@@ -1,7 +1,6 @@
 package com.example.backendpi.converters;
 
 import com.example.backendpi.domain.Cancha;
-import com.example.backendpi.domain.Domicilio;
 import com.example.backendpi.domain.Turno;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.TurnoDTO;
@@ -18,6 +17,7 @@ public class TurnoDTOToTurnoConverter implements Converter<TurnoDTO, Turno> {
         turno.setHoras(source.getHoras());
         turno.setFecha(source.getFecha());
         turno.setId(source.getId());
+        turno.setCompletado(source.isCompletado());
         user.setId(source.getIdUser());
         user.setName(source.getNombreUser());
         cancha.setNombre(source.getNombreCancha());
