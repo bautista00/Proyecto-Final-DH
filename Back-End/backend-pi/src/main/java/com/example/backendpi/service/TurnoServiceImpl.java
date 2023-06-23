@@ -119,7 +119,7 @@ public class TurnoServiceImpl implements TurnoService{
         if(turno.isCompletado()){
             turnoList.add(turno);
             for (Turno turno1 : turnoList) {
-                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno1))
+                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno1));
             }
         }
         return turnoDTOS;

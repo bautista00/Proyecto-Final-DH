@@ -36,7 +36,6 @@ public class CanchaServiceImpl implements CanchaService{
     private final ImagesRepository imagesRepository;
     private final DomicilioService domicilioService;
     private final CategoriaRepository categoriaRepository;
-    private final TurnoService turnoService;
     private final TurnoDTOToTurnoConverter turnoDTOToTurnoConverter;
 
     private final TurnoRepository turnoRepository;
@@ -73,11 +72,11 @@ public class CanchaServiceImpl implements CanchaService{
     @Override
     public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
         Optional<Cancha> cancha  = canchaRepository.findById(id);
-        List<TurnoDTO> turnoDTOS = turnoService.buscarPorCancha(canchaRepository.findById(id).get());
-        for (TurnoDTO turnoDTO : turnoDTOS) {
-            if(turnoDTO.getFecha().isBefore(LocalDateTime.now())){
-                turnoDTO.setCompletado(true);
-                turnoRepository.save(turnoDTOToTurnoConverter.convert(turnoDTO));
+        List<Turno> turnoList = turnoRepository.findByCancha(cancha.get());
+        for (Turno turno : turnoList) {
+            if(turno.getFecha().isBefore(LocalDateTime.now())){
+                turno.setCompletado(true);
+                turnoRepository.save(turno);
             }
         }
         if(cancha.isPresent()){
