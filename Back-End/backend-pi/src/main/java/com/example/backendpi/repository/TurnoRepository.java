@@ -15,5 +15,7 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
     Turno findByUser(User user);
     List<Turno> findByCancha(Cancha cancha);
 
+    //query que nos traiga todos los turnos desde del -infinito hasta el dia de hoy
+
 
 }

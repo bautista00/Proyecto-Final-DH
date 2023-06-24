@@ -72,13 +72,7 @@ public class CanchaServiceImpl implements CanchaService{
     @Override
     public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
         Optional<Cancha> cancha  = canchaRepository.findById(id);
-        List<Turno> turnoList = turnoRepository.findByCancha(cancha.get());
-        for (Turno turno : turnoList) {
-            if(turno.getFecha().isBefore(LocalDateTime.now())){
-                turno.setCompletado(true);
-                turnoRepository.save(turno);
-            }
-        }
+        //logica de turnos disponibles :)))
         if(cancha.isPresent()){
             return (canchaToCanchaDTOConverter.convert(cancha.get()));
         }else {
@@ -153,19 +147,16 @@ public class CanchaServiceImpl implements CanchaService{
     }
 
     @Override
-    public List<Cancha> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException {
-        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(categoria, barrio);
-//        List<CanchaDTO> canchaDTOList = new ArrayList<>();
-
-//        if (canchaList.size()>0){
-//            for (Cancha cancha : canchaList) {
-//                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
-//            }
-//            return canchaDTOList;
-//        }
-//        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
-//    }
-
-        return canchaList;
+    public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException {
+        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(barrio, categoria);
+        List<CanchaDTO> canchaDTOList = new ArrayList<>();
+        if (canchaList.size()>0){
+            for (Cancha cancha : canchaList) {
+                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
+            }
+            return canchaDTOList;
+        }
+        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
     }
+
 }
