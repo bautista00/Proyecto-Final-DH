@@ -27,10 +27,10 @@ public class CategoriaController {
     }
 
     @PostMapping("/admin/addcategoria")
-    public ResponseEntity<Categoria> agregarCategoria (@RequestParam(value = "categoria")String categoria, @RequestParam(value = "file") MultipartFile file) throws Exception {
+    public ResponseEntity<Categoria> agregarCategoria (@RequestParam(value = "categoria")String categoria, @RequestParam(value = "file") List<MultipartFile> files) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         Categoria categoria1 = objectMapper.readValue(categoria, Categoria.class);
-        return ResponseEntity.ok(categoriaService.agregarCategoria(categoria1,file));
+        return ResponseEntity.ok(categoriaService.agregarCategoria(categoria1,files));
     }
 
 

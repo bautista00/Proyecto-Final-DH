@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ImagesDTO {
     private Long id;
-    private String url;
+    private List<String> url;
     private Long cancha_id;
 }

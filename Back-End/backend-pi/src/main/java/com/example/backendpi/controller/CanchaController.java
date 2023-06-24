@@ -28,10 +28,10 @@ public class CanchaController {
 
 
     @PostMapping("/owner/addcancha")
-    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") MultipartFile file) throws Exception {
+    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") List<MultipartFile> files) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
-        return ResponseEntity.ok(canchaService.guardar(cancha,token, file));
+        return ResponseEntity.ok(canchaService.guardar(cancha,token, files));
     }
 
     @GetMapping("/detailcancha/{id}")

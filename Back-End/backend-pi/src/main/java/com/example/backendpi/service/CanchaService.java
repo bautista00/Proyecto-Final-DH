@@ -16,7 +16,7 @@ import java.util.Optional;
 public interface CanchaService {
 
 
-    public Cancha guardar(CanchaDTO canchaDTO, String token, MultipartFile file) throws Exception;
+    public Cancha guardar(CanchaDTO canchaDTO,String token, List<MultipartFile> files) throws Exception;
 
     public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException;
 
