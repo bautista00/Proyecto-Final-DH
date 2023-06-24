@@ -119,9 +119,9 @@ public class TurnoServiceImpl implements TurnoService{
             for (Turno turno : turnoList) {
                 turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
             }
-            throw new ResourceNotFoundException("La lista esta vacia");
+            return turnoDTOS;
         }
-        return turnoDTOS;
+        throw new ResourceNotFoundException("La lista esta vacia");
     }
 
 //    @Override
