@@ -112,17 +112,16 @@ public class TurnoServiceImpl implements TurnoService{
 
     @Override
     public List<TurnoDTO> historialCanchaUsuario(String token) throws ResourceNotFoundException {
-        Turno turno = turnoRepository.findByUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         User user = userRepository.findByEmail(jwtService.extractUserName(token));
+        List<Turno> turnoList = turnoRepository.findByUserWithFecha(user.getId());
         List<TurnoDTO> turnoDTOS = new ArrayList<>();
-        List<Turno> turnoList = user.getTurnoList();
-        if(turno.isCompletado()){
-            turnoList.add(turno);
-            for (Turno turno1 : turnoList) {
-                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno1));
+        if(turnoList.size()>0){
+            for (Turno turno : turnoList) {
+                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
+                return turnoDTOS;
             }
+            throw new ResourceNotFoundException("La lista esta vacia");
         }
-        return turnoDTOS;
     }
 
 //    @Override
