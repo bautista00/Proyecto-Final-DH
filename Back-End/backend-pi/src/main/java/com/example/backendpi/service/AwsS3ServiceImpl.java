@@ -83,4 +83,24 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return imageUrls;
     }
 
+    //    public List<String> generateImageUrls(List<String> fileNames) {
+//        List<String> imageUrls = new ArrayList<>();
+//        for (String fileName : fileNames) {
+//            GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
+//            Date expiration = new Date();
+//            long expirationMillis = expiration.getTime() + (7L * 24 * 60 * 60 * 1000);
+//            expiration.setTime(expirationMillis);
+//            generatePresignedUrlRequest.setExpiration(expiration);
+//
+//            ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
+//                    .withCacheControl("No-cache")
+//                    .withContentDisposition("attachment; filename=" + fileName);
+//            generatePresignedUrlRequest.setResponseHeaders(responseHeaders);
+//
+//            URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+//            imageUrls.add(url.toString());
+//        }
+//        return imageUrls;
+//    }
+
 }
