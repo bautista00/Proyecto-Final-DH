@@ -115,13 +115,13 @@ public class TurnoServiceImpl implements TurnoService{
         User user = userRepository.findByEmail(jwtService.extractUserName(token));
         List<Turno> turnoList = turnoRepository.findByUserWithFecha(user.getId());
         List<TurnoDTO> turnoDTOS = new ArrayList<>();
-        if(turnoList.size()>0){
+        if (turnoList.size() > 0) {
             for (Turno turno : turnoList) {
                 turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
-                return turnoDTOS;
             }
             throw new ResourceNotFoundException("La lista esta vacia");
         }
+        return turnoDTOS;
     }
 
 //    @Override
