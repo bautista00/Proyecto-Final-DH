@@ -24,8 +24,10 @@ public class CanchaDTO {
     private Double precio;
     private String telefono;
     private String nombre;
-    private Time horaApertura;
-    private Time horaCierre;
+    @JsonFormat(pattern="HH:mm")
+    private LocalTime horaApertura;
+    @JsonFormat(pattern="HH:mm")
+    private LocalTime horaCierre;
     private List<Criterios> criteriosList;
     private List<ImagesDTO> imagesDTOSList;
     private List<ValoracionDTO> valoracionList;

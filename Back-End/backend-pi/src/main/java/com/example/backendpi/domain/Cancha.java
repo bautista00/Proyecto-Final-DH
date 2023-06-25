@@ -38,10 +38,10 @@ public class Cancha {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
-    private Time horaApertura;
-
-    private Time horaCierre;
+    @JsonFormat(pattern="HH:mm")
+    private LocalTime horaApertura;
+    @JsonFormat(pattern="HH:mm")
+    private LocalTime horaCierre;
 
     private Double promedioPuntuacion;
 
