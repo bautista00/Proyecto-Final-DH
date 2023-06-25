@@ -26,7 +26,7 @@ public class Images {
  @JsonIgnore
  private Cancha cancha;
  @OneToOne
- @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+ @JoinColumn( name = "categoria_id" , referencedColumnName = "id")
  @JsonIgnore
  private Categoria categoria;
 }

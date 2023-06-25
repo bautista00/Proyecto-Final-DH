@@ -37,6 +37,7 @@ public class CanchaServiceImpl implements CanchaService{
     private final DomicilioService domicilioService;
     private final CategoriaRepository categoriaRepository;
     private final TurnoDTOToTurnoConverter turnoDTOToTurnoConverter;
+    private final ServicioRepository servicioRepository;
 
     private final TurnoRepository turnoRepository;
 
@@ -55,9 +56,12 @@ public class CanchaServiceImpl implements CanchaService{
             cancha.setCategoria(categoria);
         }
         List<Servicio> servicioList = canchaDTO.getServicioList();
-        if (servicioList.size() > 0) {
-            cancha.setServicioList(servicioList);
+        for (Servicio servicio : servicioList) {
+            if(servicioRepository.findByNombre(servicio.getNombre())!=null){
+                cancha.getServicioList().add(servicio);
+            }
         }
+        cancha.setServicioList(servicioList);
         List<Criterios> criteriosList = canchaDTO.getCriteriosList();
         if (criteriosList.size() > 0) {
             cancha.setCriteriosList(criteriosList);

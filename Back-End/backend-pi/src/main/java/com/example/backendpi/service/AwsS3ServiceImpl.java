@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,12 +64,32 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return object.getObjectContent();
     }
 
-    public List<String> generateImageUrls(List<String> fileNames) {
+//    public List<String> generateImageUrls(List<String> fileNames) {
+//        List<String> imageUrls = new ArrayList<>();
+//        for (String fileName : fileNames) {
+//            GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
+//            Date expiration = new Date();
+//            long expirationMillis = expiration.getTime() + (10L * 365 * 24 * 60 * 60 * 1000);
+//            expiration.setTime(expirationMillis);
+//            generatePresignedUrlRequest.setExpiration(expiration);
+//
+//            ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
+//                    .withCacheControl("No-cache")
+//                    .withContentDisposition("attachment; filename=" + fileName);
+//            generatePresignedUrlRequest.setResponseHeaders(responseHeaders);
+//
+//            URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+//            imageUrls.add(url.toString());
+//        }
+//        return imageUrls;
+//    }
+
+        public List<String> generateImageUrls(List<String> fileNames) {
         List<String> imageUrls = new ArrayList<>();
         for (String fileName : fileNames) {
             GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
             Date expiration = new Date();
-            long expirationMillis = expiration.getTime() + (10L * 365 * 24 * 60 * 60 * 1000);
+            long expirationMillis = expiration.getTime() + (7L * 24 * 60 * 60 * 1000);
             expiration.setTime(expirationMillis);
             generatePresignedUrlRequest.setExpiration(expiration);
 
@@ -83,24 +104,8 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return imageUrls;
     }
 
-    //    public List<String> generateImageUrls(List<String> fileNames) {
-//        List<String> imageUrls = new ArrayList<>();
-//        for (String fileName : fileNames) {
-//            GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
-//            Date expiration = new Date();
-//            long expirationMillis = expiration.getTime() + (7L * 24 * 60 * 60 * 1000);
-//            expiration.setTime(expirationMillis);
-//            generatePresignedUrlRequest.setExpiration(expiration);
-//
-//            ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
-//                    .withCacheControl("No-cache")
-//                    .withContentDisposition("attachment; filename=" + fileName);
-//            generatePresignedUrlRequest.setResponseHeaders(responseHeaders);
-//
-//            URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
-//            imageUrls.add(url.toString());
-//        }
-//        return imageUrls;
-//    }
+
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.example.backendpi.dto;
 
+import com.example.backendpi.domain.Images;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +13,6 @@ import lombok.NoArgsConstructor;
 public class CategoriaDTO {
     private Long id;
     private String nombre;
-    private ImagesDTO imagesDTO;
+    private Images images;
+//    private Long imagen_id;
 }

@@ -15,4 +15,5 @@ public class ImagesDTO {
     private Long id;
     private List<String> url;
     private Long cancha_id;
+    private Long categoria_id;
 }
