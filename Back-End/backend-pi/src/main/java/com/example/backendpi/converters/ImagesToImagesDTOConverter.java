@@ -14,6 +14,7 @@ public class ImagesToImagesDTOConverter implements Converter<Images, ImagesDTO> 
         imagesDTO.setId(source.getId());
         imagesDTO.setUrl(source.getUrl());
         imagesDTO.setCancha_id(source.getCancha().getId());
+        imagesDTO.setCategoria_id(source.getCategoria().getId());
         return imagesDTO;
     }
 }

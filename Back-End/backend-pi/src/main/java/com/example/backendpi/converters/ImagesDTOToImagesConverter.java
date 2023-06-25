@@ -1,6 +1,7 @@
 package com.example.backendpi.converters;
 
 import com.example.backendpi.domain.Cancha;
+import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.domain.Images;
 import com.example.backendpi.dto.ImagesDTO;
 import org.springframework.core.convert.converter.Converter;
@@ -14,9 +15,12 @@ public class ImagesDTOToImagesConverter implements Converter<ImagesDTO, Images> 
     public Images convert(ImagesDTO source) {
         Images images = new Images();
         Cancha cancha = new Cancha();
+        Categoria categoria = new Categoria();
         images.setId(source.getId());
         images.setUrl(source.getUrl());
         cancha.setId(source.getCancha_id());
+        categoria.setId(source.getCategoria_id());
+        images.setCategoria(categoria);
         images.setCancha(cancha);
         return images;
     }

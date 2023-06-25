@@ -28,10 +28,10 @@ public class CanchaController {
 
 
     @PostMapping("/owner/addcancha")
-    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") MultipartFile file) throws Exception {
+    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") List<MultipartFile> files) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
-        return ResponseEntity.ok(canchaService.guardar(cancha,token, file));
+        return ResponseEntity.ok(canchaService.guardar(cancha,token, files));
     }
 
     @GetMapping("/detailcancha/{id}")
@@ -70,7 +70,7 @@ public class CanchaController {
 
 
      @GetMapping("/buscarFiltradas")
-    public ResponseEntity<List<Cancha>> buscarPorFiltro(@RequestParam(value = "barrio") String barrio, @RequestParam(value = "categoria")  String categoria)throws ResourceNotFoundException{
+    public ResponseEntity<List<CanchaDTO>> buscarPorFiltro(@RequestParam(value = "barrio") String barrio, @RequestParam(value = "categoria")  String categoria)throws ResourceNotFoundException{
         return ResponseEntity.ok(canchaService.buscarFiltrada(barrio, categoria));
      }
 

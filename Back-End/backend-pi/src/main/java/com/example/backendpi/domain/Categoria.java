@@ -21,8 +21,7 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Cancha> canchaList= new ArrayList<>();
-    @OneToOne
-    @JoinColumn(name = "images_id",referencedColumnName = "id")
+    @OneToOne(mappedBy = "categoria" , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private Images images;
 }

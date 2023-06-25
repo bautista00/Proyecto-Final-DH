@@ -7,11 +7,11 @@ import java.util.List;
 
 public interface AwsS3Service {
 
-    String uploadFile(MultipartFile file) throws Exception;
+    List<String> uploadFiles(List<MultipartFile> files) throws Exception;
 
     List<String> getObjectsFromS3();
 
     InputStream downloadFile(String key);
 
-    String generateImageUrl(String fileName);
+    List<String> generateImageUrls(List<String> fileName);
 }

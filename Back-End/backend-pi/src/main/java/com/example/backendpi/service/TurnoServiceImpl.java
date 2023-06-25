@@ -31,8 +31,8 @@ public class TurnoServiceImpl implements TurnoService{
 
     @Override
     public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
-        if (canchaService.buscarXId(turnoDTO.getIdCancha()) != null && userRepository.findById(turnoDTO.getIdUser()).isPresent() &&
-                turnoRepository.findByFechaAndCancha(turnoDTO.getFecha(),canchaRepository.findByNombre(turnoDTO.getNombreCancha()))!=null){
+        if (canchaService.buscarXId(turnoDTO.getIdCancha()) != null && userRepository.findById(turnoDTO.getIdUser()).isPresent()
+          && turnoRepository.findByFechaAndCancha(turnoDTO.getFecha(),canchaRepository.findByNombre(turnoDTO.getNombreCancha()))!=null){
             Turno turno = turnoDTOToTurnoConverter.convert(turnoDTO);
             turno.setUser(userRepository.findById(turnoDTO.getIdUser()).get());
             turno.setCancha(canchaRepository.findById(turnoDTO.getIdCancha()).get());
@@ -112,17 +112,16 @@ public class TurnoServiceImpl implements TurnoService{
 
     @Override
     public List<TurnoDTO> historialCanchaUsuario(String token) throws ResourceNotFoundException {
-        Turno turno = turnoRepository.findByUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         User user = userRepository.findByEmail(jwtService.extractUserName(token));
+        List<Turno> turnoList = turnoRepository.findByUserWithFecha(user.getId());
         List<TurnoDTO> turnoDTOS = new ArrayList<>();
-        List<Turno> turnoList = user.getTurnoList();
-        if(turno.isCompletado()){
-            turnoList.add(turno);
-            for (Turno turno1 : turnoList) {
-                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno1));
+        if (turnoList.size() > 0) {
+            for (Turno turno : turnoList) {
+                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
             }
+            return turnoDTOS;
         }
-        return turnoDTOS;
+        throw new ResourceNotFoundException("La lista esta vacia");
     }
 
 //    @Override

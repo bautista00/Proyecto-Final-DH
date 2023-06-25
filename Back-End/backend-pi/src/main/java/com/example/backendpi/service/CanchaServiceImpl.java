@@ -37,29 +37,33 @@ public class CanchaServiceImpl implements CanchaService{
     private final DomicilioService domicilioService;
     private final CategoriaRepository categoriaRepository;
     private final TurnoDTOToTurnoConverter turnoDTOToTurnoConverter;
+    private final ServicioRepository servicioRepository;
 
     private final TurnoRepository turnoRepository;
 
 
     @Override
-    public Cancha guardar(CanchaDTO canchaDTO,String token, MultipartFile file) throws Exception {
+    public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
         Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
         cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         cancha.setTurnoList(new ArrayList<>());
         cancha.setServicioList(new ArrayList<>());
         Images images = new Images();
         images.setCancha(cancha);
-        images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
+        images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
         Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
-        if(categoria != null){
+        if (categoria != null) {
             cancha.setCategoria(categoria);
         }
         List<Servicio> servicioList = canchaDTO.getServicioList();
-        if (servicioList.size()>0) {
-            cancha.setServicioList(servicioList);
+        for (Servicio servicio : servicioList) {
+            if(servicioRepository.findByNombre(servicio.getNombre())!=null){
+                cancha.getServicioList().add(servicio);
+            }
         }
+        cancha.setServicioList(servicioList);
         List<Criterios> criteriosList = canchaDTO.getCriteriosList();
-        if (criteriosList.size()>0){
+        if (criteriosList.size() > 0) {
             cancha.setCriteriosList(criteriosList);
         }
 
@@ -72,13 +76,7 @@ public class CanchaServiceImpl implements CanchaService{
     @Override
     public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
         Optional<Cancha> cancha  = canchaRepository.findById(id);
-        List<Turno> turnoList = turnoRepository.findByCancha(cancha.get());
-        for (Turno turno : turnoList) {
-            if(turno.getFecha().isBefore(LocalDateTime.now())){
-                turno.setCompletado(true);
-                turnoRepository.save(turno);
-            }
-        }
+        //logica de turnos disponibles :)))
         if(cancha.isPresent()){
             return (canchaToCanchaDTOConverter.convert(cancha.get()));
         }else {
@@ -153,19 +151,16 @@ public class CanchaServiceImpl implements CanchaService{
     }
 
     @Override
-    public List<Cancha> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException {
-        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(categoria, barrio);
-//        List<CanchaDTO> canchaDTOList = new ArrayList<>();
-
-//        if (canchaList.size()>0){
-//            for (Cancha cancha : canchaList) {
-//                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
-//            }
-//            return canchaDTOList;
-//        }
-//        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
-//    }
-
-        return canchaList;
+    public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException {
+        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(barrio, categoria);
+        List<CanchaDTO> canchaDTOList = new ArrayList<>();
+        if (canchaList.size()>0){
+            for (Cancha cancha : canchaList) {
+                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
+            }
+            return canchaDTOList;
+        }
+        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
     }
+
 }

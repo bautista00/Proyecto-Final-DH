@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequestMapping
 public class UploadFileController {
@@ -17,11 +19,14 @@ public class UploadFileController {
     private AwsS3Service awss3Service;
 
 
-
     @PostMapping("/all/uploadfile")
-    public ResponseEntity<String> uploadFile(@RequestPart(value="file") MultipartFile file) throws Exception {
-        awss3Service.uploadFile(file);
-        return new ResponseEntity<>("El archivo " + file.getOriginalFilename() + " fue subido exitosamente al bucket S3", HttpStatus.OK);
+    public ResponseEntity<String> uploadFiles(@RequestParam("files") List<MultipartFile> files) throws Exception {
+        awss3Service.uploadFiles(files);
+        StringBuilder response = new StringBuilder("Los siguientes archivos fueron subidos exitosamente al bucket S3:\n");
+        for (MultipartFile file : files) {
+            response.append(file.getOriginalFilename()).append("\n");
+        }
+        return new ResponseEntity<>(response.toString(), HttpStatus.OK);
     }
 
 
