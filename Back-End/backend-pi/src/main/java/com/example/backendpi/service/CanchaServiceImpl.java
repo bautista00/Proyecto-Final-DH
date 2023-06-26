@@ -19,10 +19,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 @Service
 @AllArgsConstructor
 public class CanchaServiceImpl implements CanchaService{
@@ -73,13 +71,28 @@ public class CanchaServiceImpl implements CanchaService{
         return cancha;
     }
 
+//    @Override
+//    public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
+//        Optional<Cancha> cancha  = canchaRepository.findById(id);
+//        List<Turno> turnoList = turnoRepository.findByCanchaWithFecha(id);
+//        if(cancha.isPresent()){
+//            return (canchaToCanchaDTOConverter.convert(cancha.get()));
+//        }else {
+//            throw new ResourceNotFoundException("No existe la cancha buscada con ese id" + id);
+//        }
+//    }
+
     @Override
-    public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
-        Optional<Cancha> cancha  = canchaRepository.findById(id);
-        //logica de turnos disponibles :)))
-        if(cancha.isPresent()){
-            return (canchaToCanchaDTOConverter.convert(cancha.get()));
-        }else {
+    public Map<String, Object> buscarXId(Long id) throws ResourceNotFoundException {
+        Optional<Cancha> cancha = canchaRepository.findById(id);
+        List<Turno> turnoList = turnoRepository.findByCanchaWithFecha(id);
+        if (cancha.isPresent()) {
+            CanchaDTO canchaDTO = canchaToCanchaDTOConverter.convert(cancha.get());
+            Map<String, Object> resultado = new HashMap<>();
+            resultado.put("canchaDTO", canchaDTO);
+            resultado.put("turnoList", turnoList);
+            return resultado;
+        } else {
             throw new ResourceNotFoundException("No existe la cancha buscada con ese id" + id);
         }
     }

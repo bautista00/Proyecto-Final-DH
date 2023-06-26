@@ -19,6 +19,10 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
             , nativeQuery = true)
     List<Turno> findByUserWithFecha(Long id);
 
+    @Query(value = "SELECT * FROM TURNOS as tr WHERE tr.fecha between CURDATE() AND '3000-01-01 12:59' AND tr.cancha_id =?1;"
+            , nativeQuery = true)
+    List<Turno> findByCanchaWithFecha(Long id);
+
     //query que nos traiga todos los turnos desde del -infinito hasta el dia de hoy
 
 

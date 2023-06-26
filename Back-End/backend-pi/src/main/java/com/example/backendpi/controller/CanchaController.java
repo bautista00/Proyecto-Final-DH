@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -44,7 +45,7 @@ public class CanchaController {
     }
 
     @GetMapping("/detailcancha/{id}")
-    public ResponseEntity<CanchaDTO> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Map<String, Object>> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
        return ResponseEntity.ok(canchaService.buscarXId(id));
     }
 
