@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -24,10 +26,8 @@ public class CanchaDTO {
     private Double precio;
     private String telefono;
     private String nombre;
-    @JsonFormat(pattern="HH:mm")
-    private LocalTime horaApertura;
-    @JsonFormat(pattern="HH:mm")
-    private LocalTime horaCierre;
+    private LocalDateTime horaApertura;
+    private LocalDateTime horaCierre;
     private List<Criterios> criteriosList;
     private List<ImagesDTO> imagesDTOSList;
     private List<ValoracionDTO> valoracionList;

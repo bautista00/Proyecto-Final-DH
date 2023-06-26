@@ -9,6 +9,7 @@ import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.service.CanchaService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,17 @@ public class CanchaController {
     private final CanchaService canchaService;
 
 
+//    @PostMapping("/owner/addcancha")
+//    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") List<MultipartFile> files) throws Exception {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
+//        return ResponseEntity.ok(canchaService.guardar(cancha,token, files));
+//    }
+
     @PostMapping("/owner/addcancha")
     public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") List<MultipartFile> files) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
         return ResponseEntity.ok(canchaService.guardar(cancha,token, files));
     }

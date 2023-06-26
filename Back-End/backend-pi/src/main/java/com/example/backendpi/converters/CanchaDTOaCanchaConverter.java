@@ -5,6 +5,7 @@ import com.example.backendpi.dto.CanchaDTO;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -20,8 +21,11 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
         cancha.setNombre(source.getNombre());
         cancha.setCategoria(source.getCategoria());
         cancha.setPrecioxhora(source.getPrecio());
-        cancha.setHoraApertura(source.getHoraApertura());
-        cancha.setHoraCierre(source.getHoraCierre());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+        cancha.setHoraApertura(LocalDateTime.parse(source.getHoraApertura().format(formatter)));
+        cancha.setHoraCierre(LocalDateTime.parse(source.getHoraCierre().format(formatter)));
+
         cancha.setTelefono(source.getTelefono());
         cancha.setCriteriosList(source.getCriteriosList());
         cancha.setPromedioPuntuacion(source.getPromedio());

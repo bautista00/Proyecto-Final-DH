@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,10 +40,8 @@ public class Cancha {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    @JsonFormat(pattern="HH:mm")
-    private LocalTime horaApertura;
-    @JsonFormat(pattern="HH:mm")
-    private LocalTime horaCierre;
+    private LocalDateTime horaApertura;
+    private LocalDateTime horaCierre;
 
     private Double promedioPuntuacion;
 
