@@ -30,30 +30,44 @@ public class CategoriaServiceImpl implements CategoriaService{
     private final CategoriaToCategoriaDTOConverter categoriaToCategoriaDTOConverter;
 
 
+
     @Override
     public Categoria agregarCategoria(Categoria categoria, List<MultipartFile> files) throws Exception {
-        if (categoriaRepository.findByNombre(categoria.getNombre()) == null) {
+        String nombreCategoria = categoria.getNombre();
 
-            Images images = new Images();
-            images.setCategoria(categoria);
-            images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
-            imagesRepository.save(images);
-            Categoria categoriaGuardada = categoriaRepository.save(categoria);
-
-            return categoriaGuardada;
+        if (categoriaRepository.findByNombre(nombreCategoria)!=null) {
+            throw new EntityExistsException("La categoría ya existe");
         }
-        throw new EntityExistsException("La categoria ya existe");
+
+        List<String> imageUrls = awsS3Service.uploadFiles(files);
+        Images images = new Images();
+        images.setUrl(imageUrls);
+
+        categoria.setImages(images);
+        Categoria categoriaGuardada = categoriaRepository.save(categoria);
+
+        images.setCategoria(categoriaGuardada);
+        imagesRepository.save(images);
+
+        return categoriaGuardada;
     }
+
 
     @Override
     public void eliminarCategoria(Long id) throws ResourceNotFoundException {
-       Optional<Categoria> categoria = categoriaRepository.findById(id);
-       Images images = imagesRepository.findByCategoria(categoria.get());
-        if(categoria.isPresent()){
-            imagesRepository.deleteById(images.getId());
-            categoriaRepository.deleteById(id);
+        Optional<Categoria> categoriaOptional = categoriaRepository.findById(id);
+        if (categoriaOptional.isPresent()) {
+            Categoria categoria = categoriaOptional.get();
+            Images images = categoria.getImages();
+            if (images != null) {
+                categoria.setImages(null);
+                categoriaRepository.save(categoria);
+                imagesRepository.delete(images);
+            }
+            categoriaRepository.delete(categoria);
+        } else {
+            throw new ResourceNotFoundException("No se encontró la categoría con id " + id);
         }
-        throw new ResourceNotFoundException("No se encontro la categoria con id "+ id);
     }
 
     @Override
