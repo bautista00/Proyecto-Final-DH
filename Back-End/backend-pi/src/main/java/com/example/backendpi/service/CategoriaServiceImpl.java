@@ -26,6 +26,7 @@ public class CategoriaServiceImpl implements CategoriaService{
 
     private final ImagesRepository imagesRepository;
 
+
     private final CategoriaToCategoriaDTOConverter categoriaToCategoriaDTOConverter;
 
 
@@ -47,7 +48,9 @@ public class CategoriaServiceImpl implements CategoriaService{
     @Override
     public void eliminarCategoria(Long id) throws ResourceNotFoundException {
        Optional<Categoria> categoria = categoriaRepository.findById(id);
+       Images images = imagesRepository.findByCategoria(categoria.get());
         if(categoria.isPresent()){
+            imagesRepository.deleteById(images.getId());
             categoriaRepository.deleteById(id);
         }
         throw new ResourceNotFoundException("No se encontro la categoria con id "+ id);

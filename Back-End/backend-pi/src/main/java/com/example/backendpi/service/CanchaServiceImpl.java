@@ -84,7 +84,7 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
             Map<String, Object> resultado = new HashMap<>();
             resultado.put("canchaDTO", canchaDTO);
             resultado.put("turnoList", turnoList);
-            
+
             for (Turno turno : turnoListVencido) {
                 turno.setCompletado(true);
             }
