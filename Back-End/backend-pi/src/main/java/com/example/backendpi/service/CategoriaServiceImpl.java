@@ -29,7 +29,7 @@ public class CategoriaServiceImpl implements CategoriaService{
 
     private final CategoriaToCategoriaDTOConverter categoriaToCategoriaDTOConverter;
 
-    
+
 
     @Override
     public Categoria agregarCategoria(Categoria categoria, List<MultipartFile> files) throws Exception {
