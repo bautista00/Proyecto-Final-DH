@@ -33,12 +33,12 @@ public class CategoriaServiceImpl implements CategoriaService{
     @Override
     public Categoria agregarCategoria(Categoria categoria, List<MultipartFile> files) throws Exception {
         if (categoriaRepository.findByNombre(categoria.getNombre()) == null) {
-            Categoria categoriaGuardada = categoriaRepository.save(categoria);
 
             Images images = new Images();
-            images.setCategoria(categoriaGuardada);
+            images.setCategoria(categoria);
             images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
             imagesRepository.save(images);
+            Categoria categoriaGuardada = categoriaRepository.save(categoria);
 
             return categoriaGuardada;
         }
