@@ -18,8 +18,8 @@ public class ImagesDTOToImagesConverter implements Converter<ImagesDTO, Images> 
         Categoria categoria = new Categoria();
         images.setId(source.getId());
         images.setUrl(source.getUrl());
-        cancha.setId(source.getCancha_id());
-        categoria.setId(source.getCategoria_id());
+//        cancha.setId(source.getCancha_id());
+//        categoria.setId(source.getCategoria_id());
         images.setCategoria(categoria);
         images.setCancha(cancha);
         return images;

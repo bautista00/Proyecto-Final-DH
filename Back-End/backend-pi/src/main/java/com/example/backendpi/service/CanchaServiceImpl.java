@@ -40,62 +40,61 @@ public class CanchaServiceImpl implements CanchaService{
     private final TurnoRepository turnoRepository;
 
 
-    @Override
-    public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
-        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
-        cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
-        cancha.setTurnoList(new ArrayList<>());
-        cancha.setServicioList(new ArrayList<>());
-        Images images = new Images();
-        images.setCancha(cancha);
-        images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
-        Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
-        if (categoria != null) {
-            cancha.setCategoria(categoria);
+@Override
+public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
+    Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+    cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
+    cancha.setTurnoList(new ArrayList<>());
+    cancha.setServicioList(new ArrayList<>());
+    Images images = new Images();
+    images.setCancha(cancha);
+    images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
+    Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+    if (categoria != null) {
+        cancha.setCategoria(categoria);
+    }
+    List<Servicio> servicioList = new ArrayList<>();
+    for (Servicio servicio : canchaDTO.getServicioList()) {
+        Servicio servicioExistente = servicioRepository.findByNombre(servicio.getNombre());
+        if (servicioExistente != null) {
+            servicioList.add(servicioExistente);
         }
-        List<Servicio> servicioList = canchaDTO.getServicioList();
-        for (Servicio servicio : servicioList) {
-            if(servicioRepository.findByNombre(servicio.getNombre())!=null){
-                cancha.getServicioList().add(servicio);
-            }
-        }
-        cancha.setServicioList(servicioList);
-        List<Criterios> criteriosList = canchaDTO.getCriteriosList();
-        if (criteriosList.size() > 0) {
-            cancha.setCriteriosList(criteriosList);
-        }
-
-        domicilioService.guardar(cancha.getDomicilio());
-        canchaRepository.save(cancha);
-        imagesRepository.save(images);
-        return cancha;
+    }
+    cancha.setServicioList(servicioList);
+    List<Criterios> criteriosList = canchaDTO.getCriteriosList();
+    if (!criteriosList.isEmpty()) {
+        cancha.setCriteriosList(criteriosList);
     }
 
-//    @Override
-//    public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
-//        Optional<Cancha> cancha  = canchaRepository.findById(id);
-//        List<Turno> turnoList = turnoRepository.findByCanchaWithFecha(id);
-//        if(cancha.isPresent()){
-//            return (canchaToCanchaDTOConverter.convert(cancha.get()));
-//        }else {
-//            throw new ResourceNotFoundException("No existe la cancha buscada con ese id" + id);
-//        }
-//    }
+    domicilioService.guardar(cancha.getDomicilio());
+    canchaRepository.save(cancha);
+    imagesRepository.save(images);
+    return cancha;
+}
+
 
     @Override
     public Map<String, Object> buscarXId(Long id) throws ResourceNotFoundException {
         Optional<Cancha> cancha = canchaRepository.findById(id);
         List<Turno> turnoList = turnoRepository.findByCanchaWithFecha(id);
+        List<Turno> turnoListVencido = turnoRepository.findByCanchaWithFechaVencido(id);
+
         if (cancha.isPresent()) {
             CanchaDTO canchaDTO = canchaToCanchaDTOConverter.convert(cancha.get());
             Map<String, Object> resultado = new HashMap<>();
             resultado.put("canchaDTO", canchaDTO);
             resultado.put("turnoList", turnoList);
+            
+            for (Turno turno : turnoListVencido) {
+                turno.setCompletado(true);
+            }
+
             return resultado;
         } else {
             throw new ResourceNotFoundException("No existe la cancha buscada con ese id" + id);
         }
     }
+
 
     @Override
     public void borrarXId(Long id) throws ResourceNotFoundException{

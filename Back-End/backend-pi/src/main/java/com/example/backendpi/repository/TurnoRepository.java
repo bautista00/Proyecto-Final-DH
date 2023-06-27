@@ -15,13 +15,20 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
     Turno findByFechaAndCancha(LocalDateTime fecha, Cancha cancha);
     Turno findByUser(User user);
     List<Turno> findByCancha(Cancha cancha);
-    @Query(value = "SELECT * FROM TURNOS as tr WHERE tr.fecha between '2000-01-01 12:59' AND CURDATE() AND tr.user_id =?1;"
+    @Query(value = "SELECT * FROM turno as tr WHERE tr.fecha between '2000-01-01 12:59' AND CURDATE() AND tr.user_id =?;"
             , nativeQuery = true)
     List<Turno> findByUserWithFecha(Long id);
 
-    @Query(value = "SELECT * FROM TURNOS as tr WHERE tr.fecha between CURDATE() AND '3000-01-01 12:59' AND tr.cancha_id =?1;"
+    @Query(value = "SELECT * FROM turno as tr WHERE tr.fecha between CURDATE() AND '3000-01-01 12:59' AND tr.cancha_id =?;"
             , nativeQuery = true)
     List<Turno> findByCanchaWithFecha(Long id);
+
+    @Query(value = "SELECT * FROM turno as tr WHERE tr.fecha between '2000-01-01 12:59' AND CURDATE() AND tr.cancha_id =?;"
+            , nativeQuery = true)
+    List<Turno> findByCanchaWithFechaVencido(Long id);
+
+
+
 
     //query que nos traiga todos los turnos desde del -infinito hasta el dia de hoy
 

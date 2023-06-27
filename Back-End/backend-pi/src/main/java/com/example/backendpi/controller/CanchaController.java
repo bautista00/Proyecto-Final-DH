@@ -28,6 +28,8 @@ public class CanchaController {
 
     private final CanchaService canchaService;
 
+    private final ObjectMapper objectMapper;
+
 
 //    @PostMapping("/owner/addcancha")
 //    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") List<MultipartFile> files) throws Exception {
@@ -45,7 +47,7 @@ public class CanchaController {
     }
 
     @GetMapping("/detailcancha/{id}")
-    public ResponseEntity<Map<String, Object>> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Map<String, Object>> buscarCancha(@PathVariable("id") Long id) throws ResourceNotFoundException {
        return ResponseEntity.ok(canchaService.buscarXId(id));
     }
 

@@ -22,9 +22,11 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
         cancha.setCategoria(source.getCategoria());
         cancha.setPrecioxhora(source.getPrecio());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        cancha.setHoraApertura(LocalDateTime.parse(source.getHoraApertura().format(formatter)));
-        cancha.setHoraCierre(LocalDateTime.parse(source.getHoraCierre().format(formatter)));
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm");
+//        cancha.setHoraApertura(LocalDateTime.parse(source.getHoraApertura().format(formatter)));
+//        cancha.setHoraCierre(LocalDateTime.parse(source.getHoraCierre().format(formatter)));
+        cancha.setHoraCierre(source.getHoraCierre());
+        cancha.setHoraApertura(source.getHoraApertura());
 
         cancha.setTelefono(source.getTelefono());
         cancha.setCriteriosList(source.getCriteriosList());

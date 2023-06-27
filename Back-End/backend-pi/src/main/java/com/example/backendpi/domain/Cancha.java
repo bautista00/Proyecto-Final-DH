@@ -11,6 +11,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -40,8 +41,10 @@ public class Cancha {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-    private LocalDateTime horaApertura;
-    private LocalDateTime horaCierre;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime horaApertura;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalTime horaCierre ;
 
     private Double promedioPuntuacion;
 
