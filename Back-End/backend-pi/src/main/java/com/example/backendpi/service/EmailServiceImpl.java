@@ -45,13 +45,13 @@ public class EmailServiceImpl implements EmailService {
         User user= userRepository.findByEmail(signUpRequest.getUsername());
         String verification = user.getTokenEmail();
         String subject = "Email Verification";
-        String body = "Porfavor hace click en el link de abajo para poder verificar tu cuenta:\n" + "http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/verify/"+verification;
+        String body = "Hola, "+ user.getName()+ " " + user.getApellido()+ ". Por favor hace click en el link de abajo para poder verificar tu cuenta:\n" + "http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/verify/"+verification;
         sendMail(signUpRequest.getUsername(), subject, body);
     }
 
     public void sendCongratsEmail(User user){
         String subject = "Verifiacion completa";
-        String body = "Felicitaciones tu cuenta ya fue verificada, ya podes navegar libremente en nuestra pagina.\n" +
+        String body = "Felicitaciones," + user.getName()+ " " + user.getApellido()+  ", tu cuenta ya fue verificada, ya podes navegar libremente en nuestra pagina.\n" +
         "\" Con este link podras ingresar a nustra pagina http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/login";
         sendMail(user.getEmail(),subject,body);
     }
