@@ -19,10 +19,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+
 @Service
 @AllArgsConstructor
 public class CanchaServiceImpl implements CanchaService{
@@ -37,54 +35,66 @@ public class CanchaServiceImpl implements CanchaService{
     private final DomicilioService domicilioService;
     private final CategoriaRepository categoriaRepository;
     private final TurnoDTOToTurnoConverter turnoDTOToTurnoConverter;
+    private final ServicioRepository servicioRepository;
 
     private final TurnoRepository turnoRepository;
 
 
-    @Override
-    public Cancha guardar(CanchaDTO canchaDTO,String token, MultipartFile file) throws Exception {
-        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
-        cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
-        cancha.setTurnoList(new ArrayList<>());
-        cancha.setServicioList(new ArrayList<>());
-        Images images = new Images();
-        images.setCancha(cancha);
-        images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
-        Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
-        if(categoria != null){
-            cancha.setCategoria(categoria);
+@Override
+public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
+    Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+    cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
+    cancha.setTurnoList(new ArrayList<>());
+    cancha.setServicioList(new ArrayList<>());
+    Images images = new Images();
+    images.setCancha(cancha);
+    images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
+    Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+    if (categoria != null) {
+        cancha.setCategoria(categoria);
+    }
+    List<Servicio> servicioList = new ArrayList<>();
+    for (Servicio servicio : canchaDTO.getServicioList()) {
+        Servicio servicioExistente = servicioRepository.findByNombre(servicio.getNombre());
+        if (servicioExistente != null) {
+            servicioList.add(servicioExistente);
         }
-        List<Servicio> servicioList = canchaDTO.getServicioList();
-        if (servicioList.size()>0) {
-            cancha.setServicioList(servicioList);
-        }
-        List<Criterios> criteriosList = canchaDTO.getCriteriosList();
-        if (criteriosList.size()>0){
-            cancha.setCriteriosList(criteriosList);
-        }
-
-        domicilioService.guardar(cancha.getDomicilio());
-        canchaRepository.save(cancha);
-        imagesRepository.save(images);
-        return cancha;
+    }
+    cancha.setServicioList(servicioList);
+    List<Criterios> criteriosList = canchaDTO.getCriteriosList();
+    if (!criteriosList.isEmpty()) {
+        cancha.setCriteriosList(criteriosList);
     }
 
+    domicilioService.guardar(cancha.getDomicilio());
+    canchaRepository.save(cancha);
+    imagesRepository.save(images);
+    return cancha;
+}
+
+
     @Override
-    public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException{
-        Optional<Cancha> cancha  = canchaRepository.findById(id);
-        List<Turno> turnoList = turnoRepository.findByCancha(cancha.get());
-        for (Turno turno : turnoList) {
-            if(turno.getFecha().isBefore(LocalDateTime.now())){
+    public Map<String, Object> buscarXId(Long id) throws ResourceNotFoundException {
+        Optional<Cancha> cancha = canchaRepository.findById(id);
+        List<Turno> turnoList = turnoRepository.findByCanchaWithFecha(id);
+        List<Turno> turnoListVencido = turnoRepository.findByCanchaWithFechaVencido(id);
+
+        if (cancha.isPresent()) {
+            CanchaDTO canchaDTO = canchaToCanchaDTOConverter.convert(cancha.get());
+            Map<String, Object> resultado = new HashMap<>();
+            resultado.put("canchaDTO", canchaDTO);
+            resultado.put("turnoList", turnoList);
+            
+            for (Turno turno : turnoListVencido) {
                 turno.setCompletado(true);
-                turnoRepository.save(turno);
             }
-        }
-        if(cancha.isPresent()){
-            return (canchaToCanchaDTOConverter.convert(cancha.get()));
-        }else {
+
+            return resultado;
+        } else {
             throw new ResourceNotFoundException("No existe la cancha buscada con ese id" + id);
         }
     }
+
 
     @Override
     public void borrarXId(Long id) throws ResourceNotFoundException{
@@ -153,19 +163,16 @@ public class CanchaServiceImpl implements CanchaService{
     }
 
     @Override
-    public List<Cancha> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException {
-        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(categoria, barrio);
-//        List<CanchaDTO> canchaDTOList = new ArrayList<>();
-
-//        if (canchaList.size()>0){
-//            for (Cancha cancha : canchaList) {
-//                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
-//            }
-//            return canchaDTOList;
-//        }
-//        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
-//    }
-
-        return canchaList;
+    public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException {
+        List<Cancha> canchaList = canchaRepository.findCanchasByDeporteAndBarrio(barrio, categoria);
+        List<CanchaDTO> canchaDTOList = new ArrayList<>();
+        if (canchaList.size()>0){
+            for (Cancha cancha : canchaList) {
+                canchaDTOList.add(canchaToCanchaDTOConverter.convert(cancha));
+            }
+            return canchaDTOList;
+        }
+        throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
     }
+
 }

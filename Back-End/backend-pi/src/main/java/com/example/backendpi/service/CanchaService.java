@@ -10,15 +10,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
 public interface CanchaService {
 
 
-    public Cancha guardar(CanchaDTO canchaDTO, String token, MultipartFile file) throws Exception;
+    public Cancha guardar(CanchaDTO canchaDTO,String token, List<MultipartFile> files) throws Exception;
 
-    public CanchaDTO buscarXId(Long id) throws ResourceNotFoundException;
+    public Map<String, Object> buscarXId(Long id) throws ResourceNotFoundException;
 
     public void borrarXId(Long id)throws ResourceNotFoundException;
 
@@ -29,7 +30,7 @@ public interface CanchaService {
 
     public List<CanchaDTO> buscarPorUser(String token)throws ResourceNotFoundException;
 
-   public List<Cancha> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException;
+   public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException;
 
 
 }

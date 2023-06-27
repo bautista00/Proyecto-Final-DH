@@ -21,4 +21,7 @@ public class Valoracion {
     @JoinColumn(name = "cancha_id",referencedColumnName = "id")
     @JsonIgnore
     private Cancha cancha;
+    @ManyToOne
+    @JoinColumn(name="user_id",referencedColumnName = "id")
+    private User user;
 }

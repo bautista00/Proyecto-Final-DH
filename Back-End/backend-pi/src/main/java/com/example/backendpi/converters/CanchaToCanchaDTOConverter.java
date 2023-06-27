@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +34,13 @@ public class CanchaToCanchaDTOConverter implements Converter<Cancha, CanchaDTO> 
         canchaDTO.setDomicilio(source.getDomicilio());
         canchaDTO.setNombre(source.getNombre());
         canchaDTO.setTelefono(source.getTelefono());
-        canchaDTO.setHoraApertura(source.getHoraApertura());
+
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm");
+//        canchaDTO.setHoraApertura(LocalDateTime.parse(source.getHoraApertura().format(formatter)));
+//        canchaDTO.setHoraCierre(LocalDateTime.parse(source.getHoraCierre().format(formatter)));
         canchaDTO.setHoraCierre(source.getHoraCierre());
+        canchaDTO.setHoraApertura(source.getHoraApertura());
+
         canchaDTO.setCriteriosList(source.getCriteriosList());
         canchaDTO.setServicioList(source.getServicioList());
         canchaDTO.setDescripcion(source.getDescripcion());

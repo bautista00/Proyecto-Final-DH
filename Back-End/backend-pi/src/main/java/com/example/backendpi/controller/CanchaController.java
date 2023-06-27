@@ -9,6 +9,7 @@ import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.service.CanchaService;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -26,16 +28,26 @@ public class CanchaController {
 
     private final CanchaService canchaService;
 
+    private final ObjectMapper objectMapper;
+
+
+//    @PostMapping("/owner/addcancha")
+//    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") List<MultipartFile> files) throws Exception {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
+//        return ResponseEntity.ok(canchaService.guardar(cancha,token, files));
+//    }
 
     @PostMapping("/owner/addcancha")
-    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") MultipartFile file) throws Exception {
+    public ResponseEntity<Cancha> agregarCancha(@RequestParam(value="canchaDTO") String canchaDTO, @RequestParam(value = "token") String token,@RequestPart(value="file") List<MultipartFile> files) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
         CanchaDTO cancha = objectMapper.readValue(canchaDTO, CanchaDTO.class);
-        return ResponseEntity.ok(canchaService.guardar(cancha,token, file));
+        return ResponseEntity.ok(canchaService.guardar(cancha,token, files));
     }
 
     @GetMapping("/detailcancha/{id}")
-    public ResponseEntity<CanchaDTO> buscarCancha(@PathVariable Long id) throws ResourceNotFoundException {
+    public ResponseEntity<Map<String, Object>> buscarCancha(@PathVariable("id") Long id) throws ResourceNotFoundException {
        return ResponseEntity.ok(canchaService.buscarXId(id));
     }
 
@@ -70,7 +82,7 @@ public class CanchaController {
 
 
      @GetMapping("/buscarFiltradas")
-    public ResponseEntity<List<Cancha>> buscarPorFiltro(@RequestParam(value = "barrio") String barrio, @RequestParam(value = "categoria")  String categoria)throws ResourceNotFoundException{
+    public ResponseEntity<List<CanchaDTO>> buscarPorFiltro(@RequestParam(value = "barrio") String barrio, @RequestParam(value = "categoria")  String categoria)throws ResourceNotFoundException{
         return ResponseEntity.ok(canchaService.buscarFiltrada(barrio, categoria));
      }
 

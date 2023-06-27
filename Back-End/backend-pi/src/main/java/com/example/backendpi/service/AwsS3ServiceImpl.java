@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.model.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,13 +33,17 @@ public class AwsS3ServiceImpl implements AwsS3Service {
 
 
     @Override
-    public String uploadFile(MultipartFile file) throws Exception {
+    public List<String> uploadFiles(List<MultipartFile> files) throws Exception {
+        List<String> uploadedFiles = new ArrayList<>();
         try {
-            String newFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, file.getInputStream(), null);
-            amazonS3.putObject(request);
-            LOGGER.info("Se sube archivo con el nombre... " + newFileName);
-            return newFileName;
+            for (MultipartFile file : files) {
+                String newFileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+                PutObjectRequest request = new PutObjectRequest(bucketName, newFileName, file.getInputStream(), null);
+                amazonS3.putObject(request);
+                LOGGER.info("Se sube archivo con el nombre... " + newFileName);
+                uploadedFiles.add(newFileName);
+            }
+            return uploadedFiles;
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -58,21 +64,48 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         return object.getObjectContent();
     }
 
-    public String generateImageUrl(String fileName) {
+//    public List<String> generateImageUrls(List<String> fileNames) {
+//        List<String> imageUrls = new ArrayList<>();
+//        for (String fileName : fileNames) {
+//            GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
+//            Date expiration = new Date();
+//            long expirationMillis = expiration.getTime() + (10L * 365 * 24 * 60 * 60 * 1000);
+//            expiration.setTime(expirationMillis);
+//            generatePresignedUrlRequest.setExpiration(expiration);
+//
+//            ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
+//                    .withCacheControl("No-cache")
+//                    .withContentDisposition("attachment; filename=" + fileName);
+//            generatePresignedUrlRequest.setResponseHeaders(responseHeaders);
+//
+//            URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+//            imageUrls.add(url.toString());
+//        }
+//        return imageUrls;
+//    }
 
-        GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
-        Date expiration = new Date();
-        long expirationMillis = expiration.getTime() + (10L * 365 * 24 * 60 * 60 * 1000) ;
-        expiration.setTime(expirationMillis);
-        generatePresignedUrlRequest.setExpiration(expiration);
+        public List<String> generateImageUrls(List<String> fileNames) {
+        List<String> imageUrls = new ArrayList<>();
+        for (String fileName : fileNames) {
+            GeneratePresignedUrlRequest generatePresignedUrlRequest = new GeneratePresignedUrlRequest(bucketName, fileName);
+            Date expiration = new Date();
+            long expirationMillis = expiration.getTime() + (7L * 24 * 60 * 60 * 1000);
+            expiration.setTime(expirationMillis);
+            generatePresignedUrlRequest.setExpiration(expiration);
 
-        ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
-                .withCacheControl("No-cache")
-                .withContentDisposition("attachment; filename=" + fileName);
-        generatePresignedUrlRequest.setResponseHeaders(responseHeaders);
+            ResponseHeaderOverrides responseHeaders = new ResponseHeaderOverrides()
+                    .withCacheControl("No-cache")
+                    .withContentDisposition("attachment; filename=" + fileName);
+            generatePresignedUrlRequest.setResponseHeaders(responseHeaders);
 
-        URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
-        return url.toString();
+            URL url = amazonS3.generatePresignedUrl(generatePresignedUrlRequest);
+            imageUrls.add(url.toString());
+        }
+        return imageUrls;
     }
+
+
+
+
 
 }

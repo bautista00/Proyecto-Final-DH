@@ -13,6 +13,7 @@ import com.example.backendpi.repository.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -29,19 +30,48 @@ public class TurnoServiceImpl implements TurnoService{
     private final CanchaRepository canchaRepository;
     private final JwtService jwtService;
 
-    @Override
-    public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
-        if (canchaService.buscarXId(turnoDTO.getIdCancha()) != null && userRepository.findById(turnoDTO.getIdUser()).isPresent() &&
-                turnoRepository.findByFechaAndCancha(turnoDTO.getFecha(),canchaRepository.findByNombre(turnoDTO.getNombreCancha()))!=null){
-            Turno turno = turnoDTOToTurnoConverter.convert(turnoDTO);
-            turno.setUser(userRepository.findById(turnoDTO.getIdUser()).get());
-            turno.setCancha(canchaRepository.findById(turnoDTO.getIdCancha()).get());
-            turno.setCompletado(false);
-            return (turnoRepository.save(turno));
-        }else {
-            throw new ResourceNotFoundException("No se pudo guardar correctamente el turno seleccionado");
-        }
+//    @Override
+//    public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
+//        if (canchaRepository.findById(turnoDTO.getIdUser()) != null && userRepository.findById(turnoDTO.getIdUser()).isPresent()
+//          && turnoRepository.findByFechaAndCancha(turnoDTO.getFecha(),canchaRepository.findByNombre(turnoDTO.getNombreCancha()))!=null){
+//            Turno turno = turnoDTOToTurnoConverter.convert(turnoDTO);
+//            turno.setUser(userRepository.findById(turnoDTO.getIdUser()).get());
+//            turno.setCancha(canchaRepository.findById(turnoDTO.getIdCancha()).get());
+//            turno.setCompletado(false);
+//            return (turnoRepository.save(turno));
+//        }else {
+//            throw new ResourceNotFoundException("No se pudo guardar correctamente el turno seleccionado");
+//        }
+//    }
+@Override
+public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
+    Long canchaId = turnoDTO.getIdCancha();
+    Long userId = turnoDTO.getIdUser();
+    LocalDateTime fecha = turnoDTO.getFecha();
+    String nombreCancha = turnoDTO.getNombreCancha();
+
+    Cancha cancha = canchaRepository.findById(canchaId).orElseThrow(() ->
+            new ResourceNotFoundException("No se encontró la cancha con el ID: " + canchaId));
+    User user = userRepository.findById(userId).orElseThrow(() ->
+            new ResourceNotFoundException("No se encontró el usuario con el ID: " + userId));
+
+    Turno turnoExistente = turnoRepository.findByFechaAndCancha(fecha, cancha);
+    if (turnoExistente != null) {
+        throw new ResourceNotFoundException("Ya existe un turno para la cancha y fecha especificadas");
     }
+
+    Turno turno = turnoDTOToTurnoConverter.convert(turnoDTO);
+    turno.setCancha(cancha);
+    turno.setUser(user);
+    turno.setCompletado(false);
+
+    return turnoRepository.save(turno);
+}
+
+
+
+
+
     @Override
     public void borrarXId(Long id) throws ResourceNotFoundException{
        if( turnoRepository.findById(id).isPresent()){
@@ -112,17 +142,16 @@ public class TurnoServiceImpl implements TurnoService{
 
     @Override
     public List<TurnoDTO> historialCanchaUsuario(String token) throws ResourceNotFoundException {
-        Turno turno = turnoRepository.findByUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         User user = userRepository.findByEmail(jwtService.extractUserName(token));
+        List<Turno> turnoList = turnoRepository.findByUserWithFecha(user.getId());
         List<TurnoDTO> turnoDTOS = new ArrayList<>();
-        List<Turno> turnoList = user.getTurnoList();
-        if(turno.isCompletado()){
-            turnoList.add(turno);
-            for (Turno turno1 : turnoList) {
-                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno1));
+        if (turnoList.size() > 0) {
+            for (Turno turno : turnoList) {
+                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
             }
+            return turnoDTOS;
         }
-        return turnoDTOS;
+        throw new ResourceNotFoundException("La lista esta vacia");
     }
 
 //    @Override

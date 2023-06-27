@@ -1,9 +1,12 @@
 package com.example.backendpi.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -11,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ImagesDTO {
     private Long id;
-    private String url;
-    private Long cancha_id;
+    private List<String> url;
+//    private Long cancha_id;
+//    private Long categoria_id;
 }

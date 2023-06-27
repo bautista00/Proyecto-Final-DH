@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface CategoriaService {
 
-    public Categoria agregarCategoria(Categoria categoria, MultipartFile file) throws  Exception;
+    public Categoria agregarCategoria(Categoria categoria, List<MultipartFile> files) throws  Exception;
     public void eliminarCategoria(Long id) throws ResourceNotFoundException;
     public List<CategoriaDTO> listarCategorias() throws ResourceNotFoundException;
 

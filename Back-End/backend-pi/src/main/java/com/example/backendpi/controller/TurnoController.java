@@ -53,6 +53,11 @@ public class TurnoController {
         return ResponseEntity.ok(turnoService.buscarPorCancha(cancha));
     }
 
+    @GetMapping("/user/historialCanchas")
+    public ResponseEntity<List<TurnoDTO>> historialDeCanchas(@RequestParam (value = "token") String token)throws ResourceNotFoundException{
+        return ResponseEntity.ok(turnoService.historialCanchaUsuario(token));
+    }
+
 //    @PutMapping("/all/updateShift")
 //    public ResponseEntity<TurnoDTO> actualizarTurno(@RequestBody TurnoDTO turnoDTO) throws ResourceNotFoundException {
 //        return ResponseEntity.ok(turnoService.actualizar(turnoDTO));

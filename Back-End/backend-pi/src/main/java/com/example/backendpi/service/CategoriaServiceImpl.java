@@ -30,13 +30,16 @@ public class CategoriaServiceImpl implements CategoriaService{
 
 
     @Override
-    public Categoria agregarCategoria(Categoria categoria, MultipartFile file) throws Exception {
-        if (categoriaRepository.findByNombre(categoria.getNombre()) == null){
-               Images images = new Images();
-               images.setCategoria(categoria);
-               images.setUrl(awsS3Service.generateImageUrl(awsS3Service.uploadFile(file)));
-               imagesRepository.save(images);
-               return categoriaRepository.save(categoria);
+    public Categoria agregarCategoria(Categoria categoria, List<MultipartFile> files) throws Exception {
+        if (categoriaRepository.findByNombre(categoria.getNombre()) == null) {
+            Categoria categoriaGuardada = categoriaRepository.save(categoria);
+
+            Images images = new Images();
+            images.setCategoria(categoriaGuardada);
+            images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
+            imagesRepository.save(images);
+
+            return categoriaGuardada;
         }
         throw new EntityExistsException("La categoria ya existe");
     }

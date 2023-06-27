@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
+
 @Data
 @Entity
 @Builder
@@ -17,13 +20,13 @@ public class Images {
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long id;
  @Column(length = 1000)
- private String url;
+ private List<String> url;
  @ManyToOne
  @JoinColumn(name = "cancha_id", referencedColumnName = "id")
  @JsonIgnore
  private Cancha cancha;
  @OneToOne
- @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+ @JoinColumn( name = "categoria_id" , referencedColumnName = "id")
  @JsonIgnore
  private Categoria categoria;
 }
