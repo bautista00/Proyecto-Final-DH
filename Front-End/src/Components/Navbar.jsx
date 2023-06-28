@@ -11,6 +11,7 @@ const Navbar = () => {
   const { users } = useContextGlobal();
 
   useEffect(() => {
+    if (localStorage.getItem("auth") == true)
     axiosInstance
       .get("/all/getuser", {
         params: {
@@ -50,7 +51,8 @@ const Navbar = () => {
     );
   };
   const logOut = () => {
-    localStorage.setItem("auth", JSON.stringify(false));
+    localStorage.clear()
+    localStorage.setItem("auth", JSON.stringify(false));    
     window.location.href = "/";
   };
 

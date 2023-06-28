@@ -1,13 +1,14 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useContextGlobal } from "../Components/utils/GlobalContext";
 import { useEffect, useState } from "react";
 import Gallery from "../Components/Gallery";
+import { redirect} from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import StarRating from "../Components/StarRating";
 import CommentCard from "../Components/CommentCard";
 import CommentInput from "../Components/CommentInput";
-import { Rate } from "antd";
+import { Rate, message } from "antd";
 import PoliticCards from "../Components/PoliticCards";
 import { DateRangePicker } from "react-date-range";
 import { addDays } from "date-fns";
@@ -26,7 +27,7 @@ const Detail = () => {
   const [detail, setDetail] = useState({});
   const { id } = useParams();
   const { data } = useContextGlobal();
-
+  
   const [state, setState] = useState([
     {
       startDate: new Date(),
@@ -35,11 +36,17 @@ const Detail = () => {
     },
   ]);
 
+  const [show, setShow] = useState({message: "Debe iniciar sesión como usuario para poder reservar", state: false})
+
   const fetchData = async (id) => {
-    const result = await axiosInstance.get(`/detailcancha/${id}`);
-    console.log(result.data);
-    setDetail(result.data);
-  };
+    try {
+      const result = await axiosInstance.get(`/detailcancha/${id}`);
+      console.log(result.data);
+      setDetail(result.data);
+    } catch (error) {
+      console.error("Error al obtener los detalles:", error);
+    }
+  }
 
   useEffect(() => {
     console.log(id);
@@ -48,15 +55,23 @@ const Detail = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setShow({message:show.message, state:false})
   }, []);
 
   if (!detail) return null;
+  console.log(localStorage.getItem("auth"))
+
+  const validarUser = () =>{
+    setShow({message:show.message,state:true})
+  }
 
   return (
     <div className="detailGeneralDiv">
-      <a href="../">
-        <i className="fa-solid fa-arrow-left fa-2xl"></i>
-      </a>
+      <div className="containerArrowBack">
+        <a href="../">
+          <i className="fa-solid fa-arrow-left fa-2xl"></i>
+        </a>
+      </div>
       <div className="detailMidDiv">
         <h2>{detail?.nombre}</h2>
         <h4> Valoraciones (3)</h4>
@@ -147,8 +162,17 @@ const Detail = () => {
 
             <div className="buttonReservation">
               <h3>Reserva tu cancha a un click</h3>
-              <button>Reservar</button>
+              
+              {/* Revisar autorización God - agregar or para que también permita hacer reservas */}
+              {(localStorage.getItem("auth") == "true" && localStorage.getItem("role")== "USER") ?
+                  <Link to={`/Booking`} state={{detail: detail}}> <button>Reservar</button></Link>:
+                  (localStorage.getItem("auth") == "true" && localStorage.getItem("role")== "ADMIN")?
+                  <button onClick={validarUser}>Reservar</button> :
+                  <Link to="/Login?message=Debes%20iniciar%20sesión%20o%20registrarte"> <button>Reservar</button></Link>                 
+              }
+              {show.state && <p>{show.message}</p>}
             </div>
+            
           </div>
         </div>
 

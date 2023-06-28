@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../config";
 
 const FilteredComp = () => {
-  const { sport } = useParams();
+  const { sport, barrio } = useParams();
   const { data } = useContextGlobal();
   const [currentPage, setCurrentPage] = useState(1);
   const cardsPerPage = 8;

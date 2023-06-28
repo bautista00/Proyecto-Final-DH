@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { axiosInstance } from "../config";
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const location = useLocation()
+  const searchParams = new URLSearchParams(location.search)
+  const message = searchParams.get('message')
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -41,13 +46,16 @@ const Login = () => {
       });
     } catch (e) {
       console.log(e);
+      setError("Credenciales erradas")
     }
   };
 
   return (
     <div className="logInContent">
+      
       <form onSubmit={handleSubmit} className="formSignUp">
         <div>
+          {message && <p>{message}</p>}
           <label htmlFor="email">Correo electrónico:</label>
           <input
             type="email"

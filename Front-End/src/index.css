@@ -1,11 +1,13 @@
 #root {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .allPage {
   position: relative;
-  min-height: 100vw;
+  min-height: 100vh;
 }
 
 /* BODY */
@@ -19,8 +21,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #ebebeb;
-  margin-top: 4.2vw;
   font-family: "Roboto", sans-serif;
+  min-height: 100vh;
 }
 
 /* HOME */
@@ -29,7 +31,6 @@ body {
   flex-direction: column;
   align-items: center;
   padding-bottom: 2vw;
-  
 }
 
 /* MODAL BOX */
@@ -157,8 +158,11 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
-
+.logInContent button {
+  margin-top: 25px;
+}
 .logInContent::after {
   content: "";
   background-image: url("/images/stadium.png");
@@ -240,7 +244,7 @@ body {
 .onlyFilters select {
   height: 2vw;
   background-color: #ffffff;
-  width: 8vw;
+  width: 9vw;
   border-style: hidden;
   border-radius: 15px;
   border: solid 2px #5d994b;
@@ -248,7 +252,6 @@ body {
   font-weight: 500;
   font-family: "Roboto", sans-serif;
   padding-left: 1rem;
-  
 }
 
 .onlyFilters {
@@ -269,9 +272,8 @@ body {
   color: black;
   font-size: 1rem;
 }
-.autoCompleteInput{
+.autoCompleteInput {
   height: 2vw;
-  border-radius: 5px;
   background-color: #ffffff;
   width: 9vw;
   padding-right: 0.5rem;
@@ -283,7 +285,23 @@ body {
   font-family: "Roboto", sans-serif;
   contain: content;
 }
-.ant-select-selector{
+.autoCompleteInput :where(.css-dev-only-do-not-override-w8mnev).ant-select:not(.ant-select-customize-input) .ant-select-selector, .DivWithSelectFilter :where(.css-dev-only-do-not-override-w8mnev).ant-select:not(.ant-select-customize-input) .ant-select-selector{
+  border: 0;
+}
+.DivWithSelectFilter {
+  height: 2vw;
+  background-color: #ffffff;
+  width: 9vw;
+  padding-right: 0.5rem;
+  border-style: hidden;
+  border-radius: 15px;
+  border: solid 2px #5d994b;
+  font-size: 0.9vw;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  contain: content;
+}
+.ant-select-selector {
   min-width: 10vw;
 }
 .divFilters {
@@ -333,6 +351,7 @@ body {
   width: 100%;
   margin-top: 3.5vw;
   display: flex;
+  align-items: center;
   flex-direction: column;
   gap: 0.5vw;
   margin-top: 3vw;
@@ -341,8 +360,7 @@ body {
 .card-title-recommended h2 {
   font-size: 25px;
   color: rgb(79, 79, 79);
-  margin: 0;
-  margin-left: 5vw;
+  margin: 0 0 2rem 5rem;
 }
 .card-recommended h3 {
   margin: 0.3vw;
@@ -368,7 +386,9 @@ body {
   width: 20vw;
   border: solid 2px #5d994b;
 }
-
+.card-title .card {
+  border: none;
+}
 .card-container img {
   height: 12vw;
   width: 20vw;
@@ -377,8 +397,7 @@ body {
 .card:hover {
   transform: scale(1.1);
   transition: 0.3s ease;
-  border-color: #5d994b;
-  box-shadow: 0px 0px 8px 1px #5d994bc0;
+  border-color: #5d994bdb;
 }
 .card-title {
   width: 100%;
@@ -390,8 +409,7 @@ body {
 .card-title h2 {
   font-size: 25px;
   color: rgb(79, 79, 79);
-  margin: 0;
-  margin-left: 5vw;
+  margin: 0 0 1vw 5vw;
 }
 .card h3 {
   margin: 0.3vw;
@@ -404,14 +422,24 @@ body {
   margin: 0.3vw;
   font-size: 0.9vw;
 }
+/*------- card-container carousel para desktop */
 .card-container {
   display: flex;
-  justify-content: center;
-  gap: 3vw;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow: auto;
+  overflow-y: hidden;
   width: 100%;
-  flex-wrap: wrap;
+  height: 40vh;
+  background-color: #5d994bdb;
 }
-
+.card-container .card {
+  margin: 0 2rem;
+}
+/*------- carousel p desactivado modo desktop */
+.carousel-p {
+  display: none;
+}
 /* DETAIL */
 
 .detailGeneralDiv {
@@ -419,9 +447,15 @@ body {
   flex-direction: column;
   margin-top: 1.5vw;
 }
-.detailGeneralDiv a i {
-  margin-left: 89vw;
-  width: 2vw;
+.containerArrowBack {
+  display: flex;
+  align-items: center;
+  padding: 2vh 0 2vh 0;
+  width: 92%;
+  flex-direction: row-reverse;
+}
+.containerArrowBack a i {
+  width: 2rem;
   color: #5d994b;
 }
 .blockImage {
@@ -479,7 +513,7 @@ body {
 .detailMidDiv h4 {
   margin: 0;
   color: rgb(52, 73, 94);
-  font-size: 1.3vw;
+  font-size: 1.3rem;
   align-self: center;
 }
 .detailMidDiv p {
@@ -492,8 +526,8 @@ body {
   margin-left: 5.5vw;
 }
 .detailMidDiv div img {
-  height: 1vw;
-  width: 1vw;
+  height: 1rem;
+  width: 1rem;
   margin-left: 1.5vw;
 }
 .detailBottomDiv {
@@ -515,7 +549,7 @@ body {
 }
 .divInfo h2 {
   color: rgb(52, 73, 94);
-  font-size: 2vw;
+  font-size: 2rem;
   width: 86%;
 }
 
@@ -548,7 +582,7 @@ body {
 
 .dateReservation h2 {
   color: rgb(52, 73, 94);
-  font-size: 2vw;
+  font-size: 1.5rem;
   width: 86%;
   text-align: center;
 }
@@ -565,7 +599,7 @@ body {
 }
 .divLocation h2 {
   color: rgb(52, 73, 94);
-  font-size: 2vw;
+  font-size: 2rem;
   width: 86%;
 }
 .detailDescription {
@@ -801,7 +835,7 @@ body {
 
 /* FILTERED */
 .filtered {
-  min-height: 77.8vh;
+  min-height: 100vh;
   margin-top: 2vw;
   margin-bottom: 5vw;
 }
@@ -818,7 +852,7 @@ body {
   height: 3.5vw;
   align-items: center;
   width: 100%;
-  position: fixed;
+  position: sticky;
   top: 0;
   border-bottom: 0.8vw solid #5d994b;
   z-index: 999;
@@ -864,7 +898,7 @@ body {
   background-color: #5d994b;
   display: flex;
   align-items: center;
-  height: 3.5vw;
+  height: 4vw;
   margin-top: auto;
   bottom: 0;
   width: 100%;
@@ -885,17 +919,16 @@ body {
 }
 #button-Compartir {
   margin-right: 4vw;
-    margin-bottom: 1vh;
-    position: absolute;
-    height: 2.2rem;
-    border-color: #5d994b;
-    font-size: 1rem;
-    right: 0.5vw;
+  margin-bottom: 1vh;
+  position: absolute;
+  height: 2.2rem;
+  border-color: #5d994b;
+  font-size: 1rem;
+  right: 0.5vw;
 }
 #button-Compartir-producto {
   align-self: center;
   margin-top: 20px;
-  width: 20%;
   background-color: white;
 }
 .shareAppIcons {
@@ -945,8 +978,6 @@ button {
   transition: 0.25s;
 }
 button:hover {
-  border-color: #5d994b;
-  box-shadow: 0px 0px 6px 1px #78c561bb;
   transform: scale(1.1);
   transition: 0.3s ease;
 }
@@ -955,6 +986,12 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+  /* --------------------------------- */
+
+  .vistaPrevia{
+    width: 7rem;
+    height: 7rem;
+  }
 /* Create Product */
 
 .product-form-container {
@@ -981,15 +1018,24 @@ button:focus-visible {
 }
 
 .form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   padding: 20px;
   background-color: #f2f2f2;
   width: 60%;
-  justify-content: center;
   margin-bottom: 30px;
   border: 2px solid #5d994b;
-  border-radius: 80x;
+  border-radius: 20px;
 }
-
+.form-container .buttonAgregar {
+  width: 11rem;
+  align-self: center;
+}
+.divsDataForm {
+  display: flex;
+  justify-content: space-evenly;
+}
 .product-form-input-container {
   display: flex;
   flex-direction: row;
@@ -1031,7 +1077,8 @@ button:focus-visible {
   gap: 20px;
 }
 
-.buttonAgregar {
+.buttonAgregar,
+.bookContent button {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1041,6 +1088,7 @@ button:focus-visible {
   border: 2px solid #5d994b;
   font-size: 15px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
 .banner-container {
@@ -1049,6 +1097,7 @@ button:focus-visible {
   position: relative;
   align-items: center;
   justify-content: center;
+  margin-top: 5px;
 }
 
 .banner-image {
@@ -1069,6 +1118,28 @@ button:focus-visible {
   color: #3d3d3d !important;
 }
 
+.data-container {
+  margin-bottom: 15px;
+}
+
+.data-container input {
+  padding: 6px;
+  margin-top: 5px;
+  border-radius: 15px;
+  border: solid 2px #5d994b;
+}
+.data-container select {
+  padding: 6px;
+  margin-top: 5px;
+  border-radius: 15px;
+  border: solid 2px #5d994b;
+}
+.data-container textarea {
+  padding: 6px;
+  margin-top: 5px;
+  border-radius: 8px;
+  border: solid 2px #5d994b;
+}
 /* Responsive */
 
 #imgDeleteButton {
@@ -1098,8 +1169,28 @@ button:focus-visible {
   right: -30vw;
   top: -2.5vw;
 }
-
+.container-categories .buttons-Categories {
+  width: 100%;
+  display: flex;
+  gap: 2vw;
+  justify-content: center;
+}
 /* MODAL CATEGORIA */
+
+.form-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+}
+
+.div-category {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
 
 .modal-cat {
   position: fixed;
@@ -1247,13 +1338,24 @@ textarea {
   flex-direction: column;
   gap: 10px;
 }
-
-.adminPermissions h1, .userPermissions h1, .ownerPermissions h1{
-  font-size: 25px !important;
+.adminPermissions div {
+  justify-content: space-between;
 }
-
-.UsersPermissionsContainer h1{
+.adminPermissions h1,
+.userPermissions h1,
+.ownerPermissions h1 {
+  font-size: 25px !important;
+  align-self: center;
+}
+.adminPermissionsButton {
+  align-self: center;
+  padding-top: 20px;
+}
+.UsersPermissionsContainer h1 {
   font-size: 35px;
+}
+.ant-tabs-extra-content {
+  padding-left: 3px;
 }
 
 .ownerPermissions {
@@ -1261,26 +1363,36 @@ textarea {
   flex-direction: column;
   gap: 10px;
 }
-
+.ownerPermissions div {
+  justify-content: space-between;
+}
 .userPermissions {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-
-.UserRoles{
+.userPermissions div {
+  justify-content: space-between;
+}
+.UserRoles {
   margin-bottom: 3vw;
+}
+.CardRole > div {
+  width: 100% !important;
 }
 /* Users */
 
 .usersButton {
   display: flex;
   justify-content: flex-end;
-  
-  padding-bottom: 20px;
+  padding-bottom: 29vh;
 }
 
-.buttonRol, .buttonRolRight, .buttonCity, .buttonCityRight, .buttonPermission{
+.buttonRol,
+.buttonRolRight,
+.buttonCity,
+.buttonCityRight,
+.buttonPermission {
   font-size: 16px;
   font-weight: bold;
   background-color: #5d994b;
@@ -1289,48 +1401,52 @@ textarea {
   border-radius: 4px;
   cursor: pointer;
   margin-right: 2vw;
-  
 }
-.buttonPermission{
+.buttonPermission {
   margin-top: 1vw;
 }
 
-.buttonRolRight, .buttonCityRight{
-  margin-right: 5vw
+.buttonRolRight,
+.buttonCityRight {
+  margin-right: 5vw;
 }
 
-.tableRol, .tableCity, .CardRole {
-  
+.tableRol,
+.tableCity,
+.CardRole {
   margin-left: 5vw;
   width: 90%;
-  
+  margin-bottom: 20px;
 }
-.roleForm, .citiesForm {
+.CardRole {
+  width: 50%;
+}
+.roleForm,
+.citiesForm {
   display: flex;
   flex-direction: column;
   width: 30%;
   gap: 10px;
   margin-left: 5vw;
-  
 }
 
-.tituloRol, .tituloCity, .UsersPermissionsContainer h1{
+.tituloRol,
+.tituloCity,
+.UsersPermissionsContainer h1 {
   margin-left: 5vw;
   font-size: 35px;
 }
 
-
-.inputRol{
+.inputRol {
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #5d994b;
 }
 
-.labelRol, .labelCity{
+.labelRol,
+.labelCity {
   font-weight: bold;
 }
-
-
 
 /* Cities */
 
@@ -1340,103 +1456,177 @@ textarea {
   width: 30%;
   gap: 10px;
 }
+.ant-table-cell a {
+  color: #202020;
+  cursor: auto;
+}
+/* Booking */
 
-/*media queries*/
+.bookContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+  width: 80%;
+  margin-bottom: 30px;
+  border: 2px solid #5d994b;
+  border-radius: 15px;
+  margin-left: 5%;
+}
 
-@media (min-width: 481px) and (max-width: 767px){
- 
+.bookContent::after {
+  content: "";
+  background-image: url("/images/stadium.png");
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.7;
+}
+
+.bookTitle {
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 30px;
+  text-align: center;
+  position: relative;
+  color: #3d3d3d !important;
+  margin-top: 50px;
+}
+
+.bookContent button {
+  width: 100px;
+  align-self: center;
+}
+
+/*---------------------------------------------------------------Media queries para tablets y celulares---------------------------------*/
+
+/* Celulares--------------------------------------------------------------------------------------------------------------------- */
+@media (min-width: 320px) and (max-width: 1133px) {
   .divHeader {
-    height: 12vw;
+    height: 10vh;
   }
+
   .logoDiv img {
-    width: 12vh;
-    height: 7vh;
+    width: 9vh;
+    height: 6vh;
   }
+
   .logoDiv a {
-    font-size: 0.8rem;
+    font-size: 1rem;
     padding-left: 5vw;
   }
-  .card-container, .card-container-recommended{
-    display: grid;    
-    grid-template-columns: repeat(2, 1fr);
-    
-       
-  } 
-  .card, .card img, .card-recommended {
+  /*-------------- header Avatar y botón cerrar sesión*/
+  .divButtons {
+    align-items: center;
+    padding: 1vw;
+  }
+  .avatar {
+    width: 8vw;
+    height: 8vw;
+    margin-top: 0;
+  }
+  .avatar a {
+    font-size: 1rem;
+  }
+  .divButtons button {
+    font-size: 0.45rem;
+    height: 1.4rem;
+    width: 18vw;
+    margin-top: 0;
+  }
+  /*-------------- header buscador */
+  .slider img {
+    height: 30vh;
+  }
+  .divFilters {
+    height: 0;
+  }
+  .onlyFilters {
+    flex-direction: column;
+    height: fit-content;
+    padding: 1rem;
+    width: 10rem;
+    border-radius: 10%;
+    top: 0;
+    gap: 1rem;
+  }
+
+  .onlyFilters h2 {
+    text-align: center;
+    margin: 0;
+  }
+
+  .onlyFilters input {
+    height: 1.8rem;
+    width: 8.5rem;
+    padding: 0;
+    font-size: 0.9rem;
+  }
+
+  .onlyFilters button {
+    height: 1.8rem;
+    width: 8.5rem;
+  }
+  .autoCompleteInput,
+  .DivWithSelectFilter {
+    height: 1.8rem;
+    width: 8.5rem;
+    padding: 0;
+  }
+  .autoCompleteInput .ant-select,
+  .DivWithSelectFilter .ant-select {
+    min-width: 8.5rem;
+  }
+
+  .onlyFilters .DivWithSelectFilter select {
+    height: 1.8rem;
+    width: 8.5rem;
+    padding: 0;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .onlyFilters button img {
+    width: 1rem;
+    height: 1rem;
+  }
+  /*--------------Cards home*/
+
+  .card-container-recommended {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 5vh;
+  }
+
+  .card,
+  .card img,
+  .card-recommended {
     justify-self: center;
-    height: 22vw;
-    width: 30vw;
-  } 
+    height: 60vw;
+    width: 67vw;
+    contain: content;
+    object-fit: cover;
+  }
+
   .card h3 {
     margin: 0;
-    font-size: 3vw;
-    top: -4vw;
-    left: -8vw;
+    font-size: 1.5rem;
+    top: -11.5vw;
+    left: -19vw;
   }
 
   .card-container-recommended img {
-    height: 15vw;
-    width: 30vw;
+    height: 45vw;
+    width: 70vw;
   }
 
   .card-recommended h3 {
-    
-    font-size: 2.2vw;
-    
-  }
-  .card-recommended p {
-    margin: 0vw;
-    font-size: 1.5vw;
-  }
-
-  .card-title-recommended{
-    margin-top: 50px;
-  }
-
-  .divButtons button {
-    font-size: 8px;
-    height: 25px;
-    width: 80px;
-  }
-}
-
-@media (min-width: 320px) and (max-width: 480px) {
-  .divHeader {
-    height: 12vw;
-  }
-  .logoDiv img {
-    width: 10vh;
-    height: 6vh;
-  }
-  .logoDiv a {
-    font-size: 0.7rem;
-    padding-left: 5vw;
-  }
-  .card-container, .card-container-recommended{
-    display: grid;    
-    grid-template-columns: repeat(1, 1fr);
-    
-  }
-  .card, .card img, .card-recommended {
-    justify-self: center;
-    height: 34vw;
-    width: 42vw;
-  } 
-  
-  .card h3 {
-    margin: 0;
-    font-size: 4vw;
-    top: -6vw;
-    left: -11vw;
-  }
-
-  .card-container-recommended img {
-    height: 23vw;
-    width: 42vw;
-  }
-
-  .card-recommended h3 {    
-    font-size: 3.2vw;
+    font-size: 0.9rem;
   }
 
   .card-recommended p {
@@ -1444,13 +1634,318 @@ textarea {
     font-size: 2.1vw;
   }
 
-  .card-title-recommended{
+  .card-title {
+    margin-top: 18vh;
+    align-items: center;
+    gap: 3vh;
+  }
+  .card-title h2 {
+    align-self: center;
+    margin: 9vw 0 1vw;
+    text-align: center;
+  }
+  .card-title-recommended {
     margin-top: 50px;
   }
 
-  .divButtons button {
-    font-size: 1.8vw;
-    height: 25px;
-    width: 70px;
+  .card-title-recommended h2 {
+    font-size: 25px;
+    color: rgb(79, 79, 79);
+    margin: 0 0 2rem;
+    align-self: center;
+  }
+
+  #button-Compartir {
+    margin-right: 0;
+    margin-bottom: 0;
+    position: relative;
+    height: 2.2rem;
+    border-color: #5d994b;
+    font-size: 1rem;
+    right: 0;
+    width: 10rem;
+    padding: 1px;
+  }
+  /* modal compartir*/
+  .close-cat {
+    font-size: 2rem;
+  }
+  .modal-content-cat-footer {
+    display: flex;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    border: solid 4px #5d994b;
+    max-width: 500px;
+    height: 40%;
+    width: 59%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  /*---------------- filtered cards - busqueda por categoría*/
+  .filtered h2 {
+    font-size: 1rem;
+  }
+  /*---------------- Carrusel en vez de categorías estáticas. */
+  .card-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    overflow-y: hidden;
+    width: 100%;
+    height: 43vh;
+    background-color: #5d994bdb;
+    padding-left: 2rem;
+  }
+  .card-container .card {
+    flex: 1 0 auto;
+    margin: 0 4vh;
+  }
+  .carousel-p {
+    display: inline;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  /*---------------- Footer */
+  .divFooter {
+    height: 10vh;
+  }
+  .logoFooter {
+    width: 9vh;
+    height: 6vh;
+  }
+  .divFooter p {
+    font-size: 0.7rem;
+    margin-left: 1rem;
+  }
+  /*---------------------------DETAIL responsive*/
+  .detailMidDiv {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    margin-bottom: 20px;
+  }
+  /*--------------------------- Parte registro y logueo*/
+  .formSignUp {
+    width: 35vh;
+  }
+  .formSignUp input {
+    width: 90%;
+  }
+  .formSignUp div {
+    margin-bottom: 1.5vh;
+  }
+  .formSignUp label {
+    padding-bottom: 5px;
+  }
+  .adminCheckbox {
+    height: auto;
+  }
+  .logInContent {
+    min-height: 82.6vh;
+  }
+  /*--------------------------- Parte de la Cuenta = Account/{id}*/
+  .form-container {
+    flex-direction: column;
+    width: 75%;
+  }
+  .account-content {
+    flex-direction: column;
+    align-items: center;
+  }
+  .banner-text {
+    font-size: 2rem;
+  }
+  .account-controls {
+    width: 70%;
+  }
+  .card-avatar {
+    height: auto;
+    padding: 10px;
+    margin-bottom: 45px;
+  }
+  .card-avatar .avatar {
+    width: 9vh;
+    height: 9vh;
+  }
+  .card-avatar .avatar span {
+    font-size: 1.5rem;
+  }
+  .user-information h1 {
+    font-size: 1rem;
+    align-self: center;
+  }
+  .user-information {
+    width: 65%;
+    border-radius: 20px;
+    margin-left: 20px;
+  }
+  /*--------------------------  Permisos de cada rol /UsersPermissions - Agregar Rol */
+  .tableRol,
+  .tableCity,
+  .CardRole {
+    width: 90%;
+    margin-bottom: 3vh;
+  }
+  .usersButton {
+    justify-content: center;
+  }
+  /*-------------------------- /CreateProduct creacion de cancha form*/
+  .divsDataForm{
+    flex-direction: column;
+  }
+
+  /*-------------------------- Booking datepicker */
+  #scheduleContainer {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+  /*Tamaño letra de day, week, month*/
+  .dhx_cal_navline.dhx_cal_navline_flex .dhx_cal_tab,
+  .dhx_cal_navline.dhx_cal_navline_flex .dhx_cal_tab.active,
+  .dhx_cal_navline.dhx_cal_navline_flex .dhx_cal_today_button {
+    font-size: 0.6rem;
   }
 }
+/* Tablets----------------------------------------------------------------------------------------------------------------------- */
+@media (min-width: 481px) and (max-width: 1133px) {
+  .divHeader {
+    height: 10vh;
+  }
+  .logoDiv img {
+    width: 8vh;
+    height: 5vh;
+  }
+  .logoDiv a {
+    font-size: 1.3rem;
+    padding-left: 2vw;
+  }
+  /*---------------------Home y avatar tablet*/
+  .avatar {
+    width: 5vh;
+    height: 5vh;
+  }
+  .card-container {
+    height: 300px;
+  }
+  .card-container-recommended {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .card,
+  .card img,
+  .card-recommended {
+    justify-self: center;
+    height: 22vw;
+    width: 30vw;
+  }
+  .card h3 {
+    margin: 0;
+    font-size: 3vw;
+    top: -4vw;
+    left: -8vw;
+  }
+  .card-container-recommended img {
+    height: 15vw;
+    width: 30vw;
+  }
+  .card-recommended h3 {
+    font-size: 2.2vw;
+  }
+  .card-recommended p {
+    margin: 0vw;
+    font-size: 1.5vw;
+  }
+  .card-title-recommended {
+    margin-top: 50px;
+  }
+  .card-title {
+    margin-top: 180px;
+  }
+  .card-title h2 {
+    margin: 2vw 0 1vw;
+  }
+  .divButtons {
+    margin-right: 0;
+  }
+  .divButtons button {
+    font-size: 1rem;
+    height: 3rem;
+    width: 9rem;
+  }
+  .carousel {
+    gap: 0rem;
+    height: 30vh;
+  }
+  .onlyFilters {
+    padding: 2rem;
+    width: 12rem;
+    border-radius: 8%;
+    top: 0;
+    gap: 1rem;
+  }
+  /*--------------------------Detail*/
+  .detailMidDiv {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  .detailMidDiv h4 {
+    font-size: 2rem;
+  }
+  .divInfo h2 {
+    font-size: 3rem;
+  }
+  .divInfo h3 {
+    font-size: 2rem;
+  }
+  .divInfo p {
+    font-size: 1.7rem;
+  }
+  .dateReservation h2 {
+    font-size: 2rem;
+  }
+  .profileComment strong,
+  .profileComment span {
+    font-size: 1.5rem;
+  }
+  #commentsBox button {
+    font-size: 1.5rem;
+    height: auto;
+  }
+  /*---------------- Footer */
+  .divFooter {
+    height: 10vh;
+  }
+  .logoFooter {
+    width: 9vh;
+    height: 6vh;
+  }
+  .divFooter p {
+    font-size: 1.3rem;
+    margin-left: 1rem;
+  }
+  /*------------------------------form de /CreateProduct ---------------*/
+  .data-info-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .divsDataForm {
+    margin-left: 5vw;
+  }
+  .form-container {
+    width: 60%;
+  }
+  .product-form-container {
+    margin-top: 2vh;
+    min-height: 83vh;
+  }
+  /*-----------------------------Verify------------*/
+  .logInContent {
+    font-size: 2rem;
+  }
+}
+

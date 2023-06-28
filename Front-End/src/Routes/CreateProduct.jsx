@@ -1,37 +1,45 @@
-import { PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  Cascader,
-  DatePicker,
-  Form,
-  Input,
-  InputNumber,
-  Select,
-  Switch,
-  TreeSelect,
-  Typography,
-  Upload,
-  notification,
-} from "antd";
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import Banner from "../Components/Banner";
 import { axiosInstance } from "../config";
 
 const CreateProduct = () => {
-  const [createProduct, setCreateProduct] = useState([]);
-  const [api, contextHolder] = notification.useNotification();
+  const cancha = {
+    categoria: { nombre: "" },
+    domicilio: {
+      calle: "",
+      numero: "",
+      barrio: {
+        nombre: "",
+      },
+      provincia: "Buenos Aires",
+    },
+    nombre: "",
+    precio: 0,
+    telefono: "",
+    horaApertura: "",
+    horaCierre: "",
+    criteriosList: [
+      { descripcion: "", criterioTitulo: "REGLAS_DE_LA_CANCHA" },
+      { descripcion: "", criterioTitulo: "SALUD_Y_SEGURIDAD" },
+      { descripcion: "", criterioTitulo: "POLITICAS_DE_CANCELACION" },
+    ],
+    servicioList: [],
+    descripcion: "",
+  };
 
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
+  const [product, setProduct] = useState(cancha);
+  const [files, setFiles] = useState([]);
   const [barrios, setBarrios] = useState([]);
-  const [provincias, setProvincias] = useState([]);
   const [categorias, setCategorias] = useState([]);
+  const [servicios, setServicios] = useState([]);
+  const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const formData = new FormData();
+  formData.append("canchaDTO", JSON.stringify(product));
+  files.map((file) => {
+    formData.append("file", file);
+  });
+  formData.append("token", localStorage.getItem("jwt"));
 
   const fetchBarriosData = async () => {
     const result = await axiosInstance.get("/listallbarrios");
@@ -39,198 +47,341 @@ const CreateProduct = () => {
   };
 
   const fetchCategoriasData = async () => {
-    const result = await axiosInstance.get("/findAllCategoria/");
-    setCategorias(result.data);
+    const resultado = await axiosInstance.get("/findAllCategoria/");
+    setCategorias(resultado.data);
+  };
+
+  const fetchServiciosData = async () => {
+    const resultado = await axiosInstance.get("/findAllServicio");
+    setServicios(resultado.data);
+  };
+
+  const postCancha = () => {
+    const token = localStorage.getItem("jwt");
+    const payload = {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    fetch("http://3.19.232.248:8080/owner/addcancha", payload)
+      .then((response) => response.json())
+      .then(() => {
+        setSuccessMessage("La cancha se agregó con éxito.");
+        setProduct(cancha);
+        setFiles([]);
+      })
+      .catch((error) => console.log(error));
   };
 
   useEffect(() => {
-    fetchBarriosData();
     fetchCategoriasData();
+    fetchBarriosData();
+    fetchServiciosData();
   }, []);
 
-  const onChange = (value) => {
-    console.log("changed", value);
-    setValue("precio", value);
+  const handleFile = (e) => {
+    const newFiles = Array.from(e.target.files);
+    setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+  };
+  const handleRemoveFile = (index) => {
+    setFiles((prevFiles) => {
+      const newFiles = [...prevFiles];
+      newFiles.splice(index, 1);
+      return newFiles;
+    });
+  };
+  const handleNombre = (e) => {
+    setProduct({ ...product, nombre: e.target.value });
   };
 
-  const { RangePicker } = DatePicker;
-  const { TextArea } = Input;
-
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-    return e?.fileList;
+  const handleTelefono = (e) => {
+    setProduct({ ...product, telefono: e.target.value });
   };
 
-  const openNotification = (placement, type) => {
-    if (type === "error") {
-      api.error({
-        message: `Producto existente`,
-        description: "Ya existe un producto con ese nombre.",
-        placement,
-      });
-    } else {
-      api.info({
-        message: `Producto registrado`,
-        description: "Su producto fue registrado correctamente.",
-        placement,
-      });
-    }
+  const handleCalle = (e) => {
+    setProduct({
+      ...product,
+      domicilio: { ...product.domicilio, calle: e.target.value },
+    });
   };
 
-  // const onSubmit = (values) => {
-  //   const result = await axiosInstance.get("/admin/addcancha/")
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       const existingProduct = data.find(
-  //         (product) => product.name === values.name
-  //       );
+  const handleAltura = (e) => {
+    setProduct({
+      ...product,
+      domicilio: { ...product.domicilio, numero: e.target.value },
+    });
+  };
 
-  //       if (!existingProduct) {
-  //         openNotification("top");
-  //         return;
-  //       }
+  const handleCategoria = (e) => {
+    setProduct({
+      ...product,
+      categoria: { ...product.categoria, nombre: e.target.value },
+    });
+  };
+  const handleBarrio = (e) => {
+    setProduct({
+      ...product,
+      domicilio: { ...product.domicilio, barrio: { nombre: e.target.value } },
+    });
+  };
+  const handleDescripcion = (e) => {
+    setProduct({ ...product, descripcion: e.target.value });
+  };
+  const handleHoraApertura = (e) => {
+    setProduct({ ...product, horaApertura: e.target.value });
+  };
+  const handleHoraCierre = (e) => {
+    setProduct({ ...product, horaCierre: e.target.value });
+  };
+  const handleSalud = (e) => {
+    const updatedCriteriosList = [...product.criteriosList];
+    updatedCriteriosList[1].descripcion = e.target.value;
+    setProduct({ ...product, criteriosList: updatedCriteriosList });
+  };
 
-  //       openNotification("top", "error");
-  //     });
-  // };
+  const handleReglas = (e) => {
+    const updatedCriteriosList = [...product.criteriosList];
+    updatedCriteriosList[0].descripcion = e.target.value;
+    setProduct({ ...product, criteriosList: updatedCriteriosList });
+  };
+  const handlePoliticas = (e) => {
+    const updatedCriteriosList = [...product.criteriosList];
+    updatedCriteriosList[2].descripcion = e.target.value;
+    setProduct({ ...product, criteriosList: updatedCriteriosList });
+  };
 
-  const onSubmit = async (e) => {
-    console.log(e);
-    /*try {
-      const requestData = {
-        canchaDTO: {
-          categoria: {
-            nombre: e.name
-          }
-        }
-        // pedir los campos que se necesitan
-        //addcancha: e.addcancha, // este no va
+  const handleServicios = (e) => {
+    const servicio = e.target.value;
+
+    setProduct((prevProduct) => {
+      const isChecked = prevProduct.servicioList.some(
+        (item) => item.nombre === servicio
+      );
+
+      let updatedServicioList;
+
+      if (isChecked) {
+        updatedServicioList = prevProduct.servicioList.filter(
+          (item) => item.nombre !== servicio
+        );
+      } else {
+        updatedServicioList = [
+          ...prevProduct.servicioList,
+          { nombre: servicio },
+        ];
+      }
+
+      return {
+        ...prevProduct,
+        servicioList: updatedServicioList,
       };
-      const response = await axiosInstance.post("/admin/addcancha", requestData);
-      console.log("Response:", response.data);
-      form.resetFields();
-      fetchData();
-    } catch (e) {
-      console.log(e);
-    }*/
+    });
+  };
+
+  const handlePrecio = (e) => {
+    setProduct({ ...product, precio: parseFloat(e.target.value) });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (files.length < 4) {
+      setError("Debe agregar al menos 4 fotos.");
+    } else {
+      setError("");
+      postCancha();
+    }
   };
 
   return (
     <div className="product-form-container">
-      <Banner title={"Agregar Producto"} />
-      {contextHolder}
-      <div className="form-container">
-        <Form className="custom-form" onFinish={handleSubmit(onSubmit)}>
-          <div className="product-form-input-container">
-            <Form.Item className="custom-form-item" label="Nombre o Empresa">
-              <Input
-                status={errors.name ? "error" : ""}
-                {...register("nombre", {
-                  required: {
-                    value: true,
-                    message: "Por favor ingrese el nombre o empresa",
-                  },
-                  onChange: (e) => setValue("nombre", e.target.value),
+      <h1 className="banner-text">Agregar producto</h1>
+      <form className="form-container" onSubmit={handleSubmit}>
+        <div className="divsDataForm">
+          <div className="data-info-container">
+            <h3>Datos de la cancha</h3>
+            <div className="data-container">
+              <label className="custom-form">Nombre</label>
+              <input
+                type="text"
+                value={product.nombre}
+                onChange={handleNombre}
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Descripción de la cancha</label>
+              <textarea
+                className="banner-container"
+                type="text"
+                value={product.descripcion}
+                onChange={handleDescripcion}
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Teléfono de la cancha</label>
+              <input
+                type="text"
+                value={product.telefono}
+                onChange={handleTelefono}
+              />
+            </div>
+
+            <div className="data-container">
+              <label className="custom-form">Categoría</label>
+              <select onChange={handleCategoria}>
+                <option>-Categorias-</option>
+                {categorias.map((categoria, key) => {
+                  return (
+                    <option key={key} value={categoria.nombre}>
+                      {categoria.nombre}
+                    </option>
+                  );
                 })}
+              </select>
+            </div>
+
+            <div className="data-container">
+              <label className="custom-form">Imágenes (Por lo menos 4)</label>
+              <input
+                type="file"
+                name="images"
+                id=""
+                accept="image/*"
+                multiple
+                onChange={handleFile}
               />
-              {errors.name && (
-                <Typography.Text type="danger">
-                  {errors.name?.message}
-                </Typography.Text>
-              )}
-            </Form.Item>
-            <Form.Item className="custom-form-item" label="Categoria:">
-              <Select onChange={(value) => setValue("categoria.nombre", value)}>
-                {categorias.map((categoria) => (
-                  <Select.Option key={categoria.id} value={categoria.nombre}>
-                    {categoria.nombre}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
+              {files.map((file, index) => (
+                <div className="vistaPrevia" key={index}>
+                  <img
+                    className="vistaPrevia"
+                    src={URL.createObjectURL(file)}
+                    alt={`Foto ${index}`}
+                  />
+                  <button onClick={() => handleRemoveFile(index)}>
+                    Eliminar
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-
-          <div className="product-form-input-container">
-            <Form.Item className="custom-form-item" label="Precios:">
-              <InputNumber
-                defaultValue={0}
-                formatter={(value) =>
-                  `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                }
-                parser={(value) => value.replace(/\$\s?|(,*)/g, "")}
-                onChange={onChange}
+          <div className="data-info-container">
+            <h3>Datos del domicilio</h3>
+            <div className="data-container">
+              <label className="custom-form">Calle</label>
+              <input
+                type="text"
+                value={product.domicilio.calle}
+                onChange={handleCalle}
               />
-            </Form.Item>
-            <Form.Item className="custom-form-item" label="Barrio: ">
-              <Select onChange={(value) => setValue("domicilio.barrio", value)}>
-                {barrios.map((barrio) => (
-                  <Select.Option key={barrio.id} value={barrio.nombre}>
-                    {barrio.nombre}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item className="custom-form-item" label="Provincia: ">
-              <Select
-                onChange={(value) => setValue("domicilio.provincia", value)}
-              >
-                {barrios.map((barrio) => (
-                  <Select.Option key={barrio.id} value={barrio.nombre}>
-                    {barrio.nombre}
-                  </Select.Option>
-                ))}
-              </Select>
-            </Form.Item>
-          </div>
-          <div className="product-form-input-container">
-            <Form.Item className="custom-form-item" label="Disponibilidad:">
-              <RangePicker />
-            </Form.Item>
-            <Form.Item
-              className="custom-form-item"
-              label="Cantidad de jugadores:"
-            >
-              <InputNumber />
-            </Form.Item>
-          </div>
-
-          <div className="product-form-input-container">
-            <Form.Item className="custom-form-item" label="Descripción">
-              <TextArea
-                placeholder="Descripción"
-                {...register("categoria.descripcion", {
-                  required: {
-                    value: true,
-                    message: "Por favor ingrese el nombre o empresa",
-                  },
-                  onChange: (e) =>
-                    setValue("categoria.descripcion", e.target.value),
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Número</label>
+              <input
+                type="text"
+                value={product.domicilio.numero}
+                onChange={handleAltura}
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Provincia</label>
+              <select>
+                <option value="Buenos Aires">Buenos Aires</option>
+              </select>
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Barrio</label>
+              <select onChange={handleBarrio}>
+                <option>-Barrios-</option>
+                {barrios.map((barrio, key) => {
+                  return (
+                    <option key={key} value={barrio.nombre}>
+                      {barrio.nombre}
+                    </option>
+                  );
                 })}
+              </select>
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Servicios</label>
+              {servicios.map((servicio, index) => (
+                <div key={index} className="data-container">
+                  <input
+                    type="checkbox"
+                    id={`servicio-${index}`}
+                    value={servicio.nombre}
+                    checked={product.servicioList.some(
+                      (item) => item.nombre === servicio.nombre
+                    )}
+                    onClick={handleServicios}
+                  />
+                  <label htmlFor={`servicio-${index}`}>{servicio.nombre}</label>
+                </div>
+              ))}
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Politicas de cancelacion</label>
+              <input
+                type="text"
+                value={product.criteriosList[2].descripcion}
+                onChange={handlePoliticas}
               />
-            </Form.Item>
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Reglas de la cancha</label>
+              <input
+                type="text"
+                value={product.criteriosList[0].descripcion}
+                onChange={handleReglas}
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Salud y seguridad</label>
+              <input
+                type="text"
+                value={product.criteriosList[1].descripcion}
+                onChange={handleSalud}
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Hora de Apertura</label>
+              <input
+                type="time"
+                value={product.horaApertura}
+                step="3600"
+                onChange={handleHoraApertura}
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Hora de Cierre</label>
+              <input
+                type="time"
+                value={product.horaCierre}
+                step="3600"
+                onChange={handleHoraCierre}
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Precio en pesos</label>
+              <input
+                type="number"
+                step="0.01"
+                value={product.precio}
+                onChange={handlePrecio}
+              />
+            </div>
           </div>
-
-          <div className="product-form-input-container">
-            <Upload action="/upload.do" listType="picture-card">
-              <div>
-                <PlusOutlined />
-                <div style={{ marginTop: 4 }}>Subir Imagen</div>
-              </div>
-            </Upload>
-          </div>
-
-          <Form.Item className="custom-form-buttons">
-            <Button className="buttonAgregar" htmlType="submit">
-              Agregar producto
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
+        </div>
+        <button className="buttonAgregar" type="submit">
+          {" "}
+          Agregar Producto{" "}
+        </button>
+        {error && <p className="error-message">{error}</p>}
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {error && <p className="error-message">{error}</p>}
+      </form>
     </div>
   );
 };
 
-export default () => <CreateProduct />;
+export default CreateProduct;

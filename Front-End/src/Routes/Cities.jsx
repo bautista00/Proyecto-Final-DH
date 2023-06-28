@@ -31,7 +31,7 @@ const Cities = () => {
         const handleDelete = async (id) => {
           try {
             const response = await axiosInstance.delete(
-              `/god/deletebarrio/${id}`
+              `/admin/deletebarrio/${id}`
             );
             console.log("Response:", response.data);
             fetchData();
@@ -54,7 +54,10 @@ const Cities = () => {
       const requestData = {
         nombre: e.nombre,
       };
-      const response = await axiosInstance.post("/god/addbarrios", requestData);
+      const response = await axiosInstance.post(
+        "/admin/addbarrios",
+        requestData
+      );
       console.log("Response:", response.data);
       form.resetFields();
       fetchData();
@@ -65,7 +68,7 @@ const Cities = () => {
 
   return (
     <>
-      <h1 className="tituloCity">Crear ciudad</h1>
+      <h1 className="tituloCity">Crear barrio</h1>
 
       <Form
         form={form}
@@ -74,7 +77,7 @@ const Cities = () => {
         className="citiesForm"
         onFinish={handleSubmit}
       >
-        <Form.Item className="labelCity" name="nombre" label="Nombre de ciudad">
+        <Form.Item className="labelCity" name="nombre" label="Nombre de barrio">
           <Input className="inputRol" name="nombre" />
         </Form.Item>
 

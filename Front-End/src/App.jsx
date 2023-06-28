@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Routes/Home";
@@ -14,10 +15,15 @@ import UsersPermissions from "./Routes/UsersPermissions";
 import Users from "./Routes/Users";
 import Cities from "./Routes/Cities";
 import Categories from "./Routes/Categories";
+import Booking from "./Routes/Booking";
+import Verify from "./Routes/Verify";
+import CreateCategory from "./Routes/CreateCategory";
+import DeleteCategory from "./Routes/DeleteCategory";
+
 
 function App() {
   return (
-    <div>
+    <>
       <Navbar />
       <Routes>
         <Route exact path="/" element={<Home />} />
@@ -25,16 +31,20 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Account/:user" element={<Account />} />
-        <Route path="/Filtered/:sport" element={<Filtered />} />
+        <Route path="/Filtered/:sport/:barrio" element={<Filtered />} />
         <Route path="/CreateProduct" element={<CreateProduct />} />
         <Route path="/DeleteProduct" element={<DeleteProduct />} />
         <Route path="/UsersPermissions" element={<UsersPermissions />} />
         <Route path="/Users" element={<Users />} />
         <Route path="/Cities" element={<Cities />} />
         <Route path="/Categories" element={<Categories />} />
+        <Route path="/Booking" element={<Booking />} />
+        <Route path="/Verify" element={<Verify />} />
+        <Route path="/CreateCategory" element={<CreateCategory />} />
+        <Route path="/DeleteCategory" element={<DeleteCategory />} />
       </Routes>
       <Footer />
-    </div>
+    </>
   );
 }
 

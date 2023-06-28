@@ -6,20 +6,49 @@ import { axiosInstance } from "../config";
 const Delete = () => {
   // const { data, setData } = useContextGlobal();
 
-  const [deleteCard, setDeleteCard] = useState([]);
+  const [deleteCard, setDeleteCard] = useState([]);    
 
   const fetchData = async () => {
-    const result = await axiosInstance.get("/listxsportcanchas");
-    setDeleteCard(result.data);
-  };
 
+    try{
+      const token = localStorage.getItem("jwt")
+      const formData = new FormData()
+      formData.append("token", token)
+
+      const config = {
+        headers: {
+        Authorization: `Bearer ${token}`
+        },
+        params: {
+          token: token
+        }
+      }
+      const result = await axiosInstance.get("/owner/listxownercanchas", config);
+      setDeleteCard(result.data);
+     
+
+    }catch(e){
+      console.log(e)
+    }
+    
+  };
+  
   useEffect(() => {
     fetchData();
   }, []);
 
   const borrarCard = async (id) => {
     try {
-      const response = await axiosInstance.delete(`/admin/deletecancha/${id}`);
+
+      const token = localStorage.getItem("jwt");
+      console.log(token)
+      const config = {
+      headers: {
+        Authorization: `Bearer ${token}`
+        }
+      }
+      
+      const response = await axiosInstance.delete(`/owner/deletecancha/${id}`, config);
       console.log("Response:", response.data);
       fetchData();
     } catch (e) {
@@ -31,10 +60,10 @@ const Delete = () => {
     return deleteCard.map((card, index) => (
       <DeleteCard
         key={index}
-        id={card.id}
-        name={card.name}
-        location={card.location}
-        image={card.image}
+        id={card?.id}
+        name={card.nombre}
+        location={card.domicilio.barrio.nombre}
+        image={card.images.url[0]}
         func={borrarCard}
       />
     ));

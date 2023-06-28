@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { axiosInstance } from "../config";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const SignUp = () => {
     }
   }, [accountCreated]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Restablecer los mensajes de error
@@ -60,35 +61,55 @@ const SignUp = () => {
       return;
     }
 
-    if (!cuil || !validarCuil(cuil)) {
-      setCuilError("Ingrese un cuil válido");
-      return;
-    }
-    if (!cbu || !validarCbu(cbu)) {
-      setCuilError("Ingrese un cbu válido. Debe contener 22 dígitos");
-      return;
-    }
-    if (!telefono || !validarTelefono(telefono)) {
-      setTelefonoError(
-        "Ingrese un teléfono válido en Argentina. Debe contener 10 dígitos"
-      );
-      return;
-    }
-    if (!domicilio || !validarDomicilio(domicilio)) {
-      setDomicilioError("Ingrese un domicilio válido.");
-      return;
+    if (isAdmin){
+      if (!cuil || !validarCuil(cuil)) {
+        setCuilError("Ingrese un cuil válido");
+        return;
+      }
+      if (!cbu || !validarCbu(cbu)) {
+        setCuilError("Ingrese un cbu válido. Debe contener 22 dígitos");
+        return;
+      }
+      if (!telefono || !validarTelefono(telefono)) {
+        setTelefonoError(
+          "Ingrese un teléfono válido en Argentina. Debe contener 10 dígitos"
+        );
+        return;
+      }
+      if (!domicilio || !validarDomicilio(domicilio)) {
+        setDomicilioError("Ingrese un domicilio válido.");
+        return;
+      }
     }
 
     //Logica
-    axios
-      .post(endpoint, requestData, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((response) => {
+
+    try{
+      const requestData = {
+        // Los datos que deseas enviar en la solicitud
+        nombre: nombre,
+        apellido: apellido,
+        username: email,
+        password: password
+      };
+
+      if (isAdmin) {
+        requestData.cuil = cuil;
+        requestData.cbu = cbu;
+        requestData.telefono = telefono
+      }
+
+      
+      await axiosInstance.post("/sign-up", requestData).then((response) => {
         console.log("Response:", response.data);
         setJwt(response.data.jwt);
         console.log(jwt);
       });
+
+    }catch(e){
+      console.log(e)
+    }  
+    
 
     // Realizar el registro exitoso
     setAccountCreated(true);
