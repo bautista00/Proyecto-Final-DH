@@ -132,14 +132,15 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
     cancha.setServicioList(new ArrayList<>());
     cancha.setCriteriosList(new ArrayList<>());
 
+    // Subir las imágenes a AWS S3 y generar las URL correspondientes
     List<String> imageUrls = awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files));
 
-
+    // Crear y guardar el objeto Images
     Images images = new Images();
     images.setUrl(imageUrls);
     imagesRepository.save(images);
 
-
+    // Establecer la relación entre Cancha e Images
     cancha.setImages(images);
 
     Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
@@ -159,7 +160,7 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
     List<Criterios> criteriosList = canchaDTO.getCriteriosList();
     if (!criteriosList.isEmpty()) {
         for (Criterios criterio : criteriosList) {
-            criterio.setCancha(cancha);
+            criterio.setCancha(cancha); // Asignar la instancia de Cancha a cada Criterios
         }
         cancha.setCriteriosList(criteriosList);
     }
@@ -168,9 +169,19 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
     domicilioService.guardar(domicilio);
     cancha.setDomicilio(domicilio);
 
-
+    // Guardar la instancia de Cancha
     return canchaRepository.save(cancha);
 }
+
+
+
+
+
+
+
+
+
+
 
 
     @Override

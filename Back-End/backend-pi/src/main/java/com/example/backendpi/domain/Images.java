@@ -21,7 +21,7 @@ public class Images {
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
  private Long id;
- @Column(length = 1000)
+ @Column(length = 3000)
  private List<String> url;
  @OneToOne(mappedBy = "images")
  @JsonIgnore
