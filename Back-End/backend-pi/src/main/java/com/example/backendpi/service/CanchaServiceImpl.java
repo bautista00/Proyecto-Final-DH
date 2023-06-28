@@ -1,9 +1,7 @@
 package com.example.backendpi.service;
 
 import com.amazonaws.services.mq.model.NotFoundException;
-import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
-import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
-import com.example.backendpi.converters.TurnoDTOToTurnoConverter;
+import com.example.backendpi.converters.*;
 import com.example.backendpi.domain.*;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.dto.TurnoDTO;
@@ -30,6 +28,9 @@ public class CanchaServiceImpl implements CanchaService{
     private final UserRepository userRepository;
     private final CanchaDTOaCanchaConverter canchaDTOaCanchaConverter;
     private final CanchaToCanchaDTOConverter canchaToCanchaDTOConverter;
+
+    private final ImagesToImagesDTOConverter imagesToImagesDTOConverter;
+    private final ImagesDTOToImagesConverter imagesDTOToImagesConverter;
     private final AwsS3Service awsS3Service ;
     private final ImagesRepository imagesRepository;
     private final DomicilioService domicilioService;
@@ -40,19 +41,52 @@ public class CanchaServiceImpl implements CanchaService{
     private final TurnoRepository turnoRepository;
 
 
+//@Override
+//public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
+//    Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+//    cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
+//    cancha.setTurnoList(new ArrayList<>());
+//    cancha.setServicioList(new ArrayList<>());
+//    Images images = new Images();
+//    images.setCancha(cancha);
+//    images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
+//    Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+//    if (categoria != null) {
+//        cancha.setCategoria(categoria);
+//    }
+//    List<Servicio> servicioList = new ArrayList<>();
+//    for (Servicio servicio : canchaDTO.getServicioList()) {
+//        Servicio servicioExistente = servicioRepository.findByNombre(servicio.getNombre());
+//        if (servicioExistente != null) {
+//            servicioList.add(servicioExistente);
+//        }
+//    }
+//    cancha.setServicioList(servicioList);
+//    List<Criterios> criteriosList = canchaDTO.getCriteriosList();
+//    if (!criteriosList.isEmpty()) {
+//        cancha.setCriteriosList(criteriosList);
+//    }
+//
+//    domicilioService.guardar(cancha.getDomicilio());
+//    canchaRepository.save(cancha);
+//    imagesRepository.save(images);
+//    return cancha;
+//}
 @Override
 public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
     Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
     cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
     cancha.setTurnoList(new ArrayList<>());
     cancha.setServicioList(new ArrayList<>());
+
     Images images = new Images();
-    images.setCancha(cancha);
     images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
+
     Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
     if (categoria != null) {
         cancha.setCategoria(categoria);
     }
+
     List<Servicio> servicioList = new ArrayList<>();
     for (Servicio servicio : canchaDTO.getServicioList()) {
         Servicio servicioExistente = servicioRepository.findByNombre(servicio.getNombre());
@@ -61,16 +95,26 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
         }
     }
     cancha.setServicioList(servicioList);
+
     List<Criterios> criteriosList = canchaDTO.getCriteriosList();
     if (!criteriosList.isEmpty()) {
         cancha.setCriteriosList(criteriosList);
     }
 
-    domicilioService.guardar(cancha.getDomicilio());
-    canchaRepository.save(cancha);
+    Domicilio domicilio = cancha.getDomicilio();
+    domicilioService.guardar(domicilio);
+    cancha.setDomicilio(domicilio);
+    canchaRepository.save(cancha); // Guardar primero la instancia de Cancha
+
+    images.setCancha(cancha); // Asignar la instancia de Cancha guardada a Images
     imagesRepository.save(images);
+
+    cancha.setImages(images); // Establecer la relación bidireccional entre Cancha e Images
+
     return cancha;
 }
+
+
 
 
     @Override
@@ -97,13 +141,19 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
 
 
     @Override
-    public void borrarXId(Long id) throws ResourceNotFoundException{
-        if(canchaRepository.findById(id).isPresent()){
+    public void borrarXId(Long id) throws ResourceNotFoundException {
+        Optional<Cancha> canchaOptional = canchaRepository.findById(id);
+        if (canchaOptional.isPresent()){
+            canchaRepository.borrarCancha(id);
             canchaRepository.deleteById(id);
         }else {
             throw new ResourceNotFoundException("No se pudo borrar la cancha con ese id" + id);
         }
-    }
+}
+
+
+
+
 
     @Override
     public List<CanchaDTO> buscarTodos() throws NotFoundException{
@@ -148,19 +198,39 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
         }
     }
 
+//    @Override
+//    public List<CanchaDTO> buscarPorUser(String token) throws ResourceNotFoundException {
+//        if(canchaRepository.findByUserEmail(jwtService.extractUserName(token)).size()>0) {
+//            List<CanchaDTO> canchaDTOS = new ArrayList<>();
+//            List<Cancha> canchaList = canchaRepository.findByUserEmail(jwtService.extractUserName(token));
+//            for (Cancha cancha : canchaList) {
+//                canchaDTOS.add(canchaToCanchaDTOConverter.convert(cancha));
+//            }
+//            return canchaDTOS;
+//        }else {
+//            throw new ResourceNotFoundException("No existen las canchas buscadas por el propietario");
+//        }
+//    }
+
     @Override
     public List<CanchaDTO> buscarPorUser(String token) throws ResourceNotFoundException {
-        if(canchaRepository.findByUserEmail(jwtService.extractUserName(token)).size()>0) {
+        String userEmail = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(userEmail);
+        List<Cancha> canchaList = canchaRepository.findByUser(user);
+        if (!canchaList.isEmpty()) {
             List<CanchaDTO> canchaDTOS = new ArrayList<>();
-            List<Cancha> canchaList = canchaRepository.findByUserEmail(jwtService.extractUserName(token));
             for (Cancha cancha : canchaList) {
                 canchaDTOS.add(canchaToCanchaDTOConverter.convert(cancha));
             }
+
             return canchaDTOS;
-        }else {
-            throw new ResourceNotFoundException("No existen las canchas buscadas por el propietario");
+        } else {
+            throw new ResourceNotFoundException("No existen canchas buscadas por el propietario");
         }
     }
+    ///////////////////////////////////////
+    //quizas es usar images y no imagesDTO
+
 
     @Override
     public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException {

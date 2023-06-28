@@ -28,6 +28,14 @@ public interface TurnoRepository extends JpaRepository<Turno, Long> {
     List<Turno> findByCanchaWithFechaVencido(Long id);
 
 
+    @Query(value = "SELECT * FROM turno as tr WHERE tr.cancha_id = ? ;"
+            , nativeQuery = true)
+    List<Turno> findByCancha2(Long id);
+
+
+
+
+
 
 
     //query que nos traiga todos los turnos desde del -infinito hasta el dia de hoy

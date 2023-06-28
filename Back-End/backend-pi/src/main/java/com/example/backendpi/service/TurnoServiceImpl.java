@@ -93,8 +93,9 @@ public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
     }
 
     @Override
-    public List<TurnoDTO> buscarPorCancha(Cancha cancha) throws ResourceNotFoundException{
-        List<Turno> turnoList = turnoRepository.findByCancha(cancha);
+    public List<TurnoDTO> buscarPorCancha(String nombre) throws ResourceNotFoundException{
+        Cancha cancha = canchaRepository.findByNombre(nombre);
+        List<Turno> turnoList = turnoRepository.findByCancha2(cancha.getId());
         List<TurnoDTO> turnoDTOS = new ArrayList<>();
         if (turnoList.size()>0){
             for (Turno turno : turnoList) {

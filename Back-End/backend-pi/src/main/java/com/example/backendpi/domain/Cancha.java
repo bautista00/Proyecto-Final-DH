@@ -57,9 +57,8 @@ public class Cancha {
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Valoracion> valoracionList = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "images_id", referencedColumnName = "id")
-    private Images imgages ;
+    @OneToOne(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Images images ;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "servicio_cancha",
