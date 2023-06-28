@@ -26,7 +26,6 @@ public class CanchaToCanchaDTOConverter implements Converter<Cancha, CanchaDTO> 
     public CanchaDTO convert(Cancha source) {
         CanchaDTO  canchaDTO = new CanchaDTO();
         Double promedio = 0.0;
-        List<ImagesDTO> imagesDTOList = new ArrayList<>();
         List<ValoracionDTO> valoracionDTOS = new ArrayList<>();
         canchaDTO.setId(source.getId());
         canchaDTO.setCategoria(source.getCategoria());
@@ -44,10 +43,7 @@ public class CanchaToCanchaDTOConverter implements Converter<Cancha, CanchaDTO> 
         canchaDTO.setCriteriosList(source.getCriteriosList());
         canchaDTO.setServicioList(source.getServicioList());
         canchaDTO.setDescripcion(source.getDescripcion());
-        for (Images image: source.getImgList()){
-            imagesDTOList.add(imagesToImagesDTOConverter.convert(image));
-        }
-        canchaDTO.setImagesDTOSList(imagesDTOList);
+        canchaDTO.setImagesDTO(imagesToImagesDTOConverter.convert(source.getImgages()));
         for (Valoracion valoracion : source.getValoracionList() ) {
             valoracionDTOS.add(valoracionToValoracionDTOConverter.convert(valoracion));
             promedio = promedio + valoracion.getPuntuacion();

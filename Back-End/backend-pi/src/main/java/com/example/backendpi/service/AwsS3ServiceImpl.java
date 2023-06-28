@@ -47,11 +47,12 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        throw new Exception("algo pijeo");
+        throw new Exception("No se subio el archivo correctamente");
     }
 
 
-        @Override
+
+    @Override
     public List<String> getObjectsFromS3() {
         ListObjectsV2Result result = amazonS3.listObjectsV2(bucketName);
         List<S3ObjectSummary> objects = result.getObjectSummaries();
@@ -103,6 +104,7 @@ public class AwsS3ServiceImpl implements AwsS3Service {
         }
         return imageUrls;
     }
+
 
 
 

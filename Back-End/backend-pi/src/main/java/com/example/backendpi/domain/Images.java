@@ -21,7 +21,7 @@ public class Images {
  private Long id;
  @Column(length = 1000)
  private List<String> url;
- @ManyToOne
+ @OneToOne
  @JoinColumn(name = "cancha_id", referencedColumnName = "id")
  @JsonIgnore
  private Cancha cancha;

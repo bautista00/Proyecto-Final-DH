@@ -35,22 +35,22 @@ public class CategoriaServiceImpl implements CategoriaService{
     public Categoria agregarCategoria(Categoria categoria, List<MultipartFile> files) throws Exception {
         String nombreCategoria = categoria.getNombre();
 
-        if (categoriaRepository.findByNombre(nombreCategoria)!=null) {
+        if (categoriaRepository.findByNombre(nombreCategoria) != null) {
             throw new EntityExistsException("La categoría ya existe");
         }
 
-        List<String> imageUrls = awsS3Service.uploadFiles(files);
+        List<String> imageUrls = awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files));
         Images images = new Images();
         images.setUrl(imageUrls);
 
-        categoria.setImages(images);
-        Categoria categoriaGuardada = categoriaRepository.save(categoria);
+        Images imagesGuardada = imagesRepository.save(images); // Guardar la imagen en la base de datos
 
-        images.setCategoria(categoriaGuardada);
-        imagesRepository.save(images);
+        categoria.setImages(imagesGuardada); // Establecer la imagen guardada como la imagen asociada a la categoría
+        Categoria categoriaGuardada = categoriaRepository.save(categoria); // Guardar la categoría en la base de datos
 
         return categoriaGuardada;
     }
+
 
 
     @Override
