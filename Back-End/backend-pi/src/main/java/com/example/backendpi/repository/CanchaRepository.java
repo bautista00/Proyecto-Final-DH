@@ -3,6 +3,7 @@ import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.Categoria;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.CanchaDTO;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +26,7 @@ public interface CanchaRepository extends JpaRepository<Cancha, Long> {
     Cancha findByNombre(String nombre);
 
     @Modifying
+    @Transactional
     @Query(value = "DELETE FROM servicio_cancha WHERE cancha_id = ?1", nativeQuery = true)
     void borrarCancha(Long id);
 

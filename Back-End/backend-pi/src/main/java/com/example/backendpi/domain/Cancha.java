@@ -52,13 +52,14 @@ public class Cancha {
     private List<Turno> turnoList = new ArrayList<>();
 
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Criterios> criteriosList=new ArrayList<>();
+    private List<Criterios> criteriosList = new ArrayList<>();
 
     @OneToMany(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Valoracion> valoracionList = new ArrayList<>();
 
-    @OneToOne(mappedBy = "cancha", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Images images ;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "images_id", referencedColumnName = "id")
+    private Images images;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "servicio_cancha",

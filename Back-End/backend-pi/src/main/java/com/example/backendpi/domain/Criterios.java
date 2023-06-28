@@ -16,8 +16,9 @@ public class Criterios {
     private Long id;
     private String descripcion;
     private CriterioTitulo criterioTitulo;
-    @ManyToOne
-    @JoinColumn(name = "cancha_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cancha_id")
+    @JsonIgnore
     private Cancha cancha;
 
 }

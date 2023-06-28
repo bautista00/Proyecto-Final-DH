@@ -1,6 +1,7 @@
 package com.example.backendpi.converters;
 
 import com.example.backendpi.domain.Cancha;
+import com.example.backendpi.domain.Criterios;
 import com.example.backendpi.domain.Images;
 import com.example.backendpi.domain.Valoracion;
 import com.example.backendpi.dto.CanchaDTO;

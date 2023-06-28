@@ -40,6 +40,8 @@ public class CanchaServiceImpl implements CanchaService{
 
     private final TurnoRepository turnoRepository;
 
+    private final CriterioRepository criterioRepository;
+
 
 //@Override
 //public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
@@ -72,15 +74,74 @@ public class CanchaServiceImpl implements CanchaService{
 //    imagesRepository.save(images);
 //    return cancha;
 //}
+//@Override
+//public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
+//    Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+//    cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
+//    cancha.setTurnoList(new ArrayList<>());
+//    cancha.setServicioList(new ArrayList<>());
+//    cancha.setCriteriosList(new ArrayList<>());
+//
+//    // Subir las imágenes a AWS S3 y generar las URL correspondientes
+//    List<String> imageUrls = awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files));
+//
+//    Images images = new Images();
+//    images.setUrl(imageUrls);
+//
+//    Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
+//    if (categoria != null) {
+//        cancha.setCategoria(categoria);
+//    }
+//
+//    List<Servicio> servicioList = new ArrayList<>();
+//    for (Servicio servicio : canchaDTO.getServicioList()) {
+//        Servicio servicioExistente = servicioRepository.findByNombre(servicio.getNombre());
+//        if (servicioExistente != null) {
+//            servicioList.add(servicioExistente);
+//        }
+//    }
+//    cancha.setServicioList(servicioList);
+//
+//    List<Criterios> criteriosList = canchaDTO.getCriteriosList();
+//    if (!criteriosList.isEmpty()) {
+//        for (Criterios criterio : criteriosList) {
+//            criterio.setCancha(cancha); // Asignar la instancia de Cancha a cada Criterios
+//        }
+//        cancha.setCriteriosList(criteriosList);
+//    }
+//
+//    Domicilio domicilio = cancha.getDomicilio();
+//    domicilioService.guardar(domicilio);
+//    cancha.setDomicilio(domicilio);
+//
+//    // Guardar primero la instancia de Cancha
+//    canchaRepository.save(cancha);
+//
+//    images.setCancha(cancha); // Asignar la instancia de Cancha guardada a Images
+//    imagesRepository.save(images);
+//
+//    cancha.setImages(images); // Establecer la relación bidireccional entre Cancha e Images
+//
+//    return cancha;
+//}
 @Override
 public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
     Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
     cancha.setUser(userRepository.findByEmail(jwtService.extractUserName(token)));
     cancha.setTurnoList(new ArrayList<>());
     cancha.setServicioList(new ArrayList<>());
+    cancha.setCriteriosList(new ArrayList<>());
 
+    // Subir las imágenes a AWS S3 y generar las URL correspondientes
+    List<String> imageUrls = awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files));
+
+    // Crear y guardar el objeto Images
     Images images = new Images();
-    images.setUrl(awsS3Service.generateImageUrls(awsS3Service.uploadFiles(files)));
+    images.setUrl(imageUrls);
+    imagesRepository.save(images);
+
+    // Establecer la relación entre Cancha e Images
+    cancha.setImages(images);
 
     Categoria categoria = categoriaRepository.findByNombre(canchaDTO.getCategoria().getNombre());
     if (categoria != null) {
@@ -98,21 +159,27 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
 
     List<Criterios> criteriosList = canchaDTO.getCriteriosList();
     if (!criteriosList.isEmpty()) {
+        for (Criterios criterio : criteriosList) {
+            criterio.setCancha(cancha); // Asignar la instancia de Cancha a cada Criterios
+        }
         cancha.setCriteriosList(criteriosList);
     }
 
     Domicilio domicilio = cancha.getDomicilio();
     domicilioService.guardar(domicilio);
     cancha.setDomicilio(domicilio);
-    canchaRepository.save(cancha); // Guardar primero la instancia de Cancha
 
-    images.setCancha(cancha); // Asignar la instancia de Cancha guardada a Images
-    imagesRepository.save(images);
-
-    cancha.setImages(images); // Establecer la relación bidireccional entre Cancha e Images
-
-    return cancha;
+    // Guardar la instancia de Cancha
+    return canchaRepository.save(cancha);
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -143,16 +210,17 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
     @Override
     public void borrarXId(Long id) throws ResourceNotFoundException {
         Optional<Cancha> canchaOptional = canchaRepository.findById(id);
-        if (canchaOptional.isPresent()){
-            canchaRepository.borrarCancha(id);
-            canchaRepository.deleteById(id);
-        }else {
-            throw new ResourceNotFoundException("No se pudo borrar la cancha con ese id" + id);
+        if (canchaOptional.isPresent()) {
+            Cancha cancha = canchaOptional.get();
+            canchaRepository.borrarCancha(cancha.getId());
+            criterioRepository.borrarPorCanchaID(cancha.getId());
+
+            // Eliminar la cancha
+            canchaRepository.delete(cancha);
+        } else {
+            throw new ResourceNotFoundException("No se pudo borrar la cancha con ese id: " + id);
         }
-}
-
-
-
+    }
 
 
     @Override

@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.List;
 
@@ -21,8 +23,7 @@ public class Images {
  private Long id;
  @Column(length = 1000)
  private List<String> url;
- @OneToOne
- @JoinColumn(name = "cancha_id", referencedColumnName = "id")
+ @OneToOne(mappedBy = "images")
  @JsonIgnore
  private Cancha cancha;
  @OneToOne
