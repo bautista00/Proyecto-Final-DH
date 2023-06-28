@@ -18,7 +18,8 @@ public class ValoracionDTOToValoracionConverter implements Converter<ValoracionD
         valoracion.setDescripcion(source.getDescripcion());
         valoracion.setPuntuacion(source.getPuntuacion());
         cancha.setId(source.getCanchaID());
-        user.setId(source.getUserID());
+        user.setName(source.getUserName());
+        user.setApellido(source.getApellido());
         valoracion.setUser(user);
         valoracion.setCancha(cancha);
         return valoracion;

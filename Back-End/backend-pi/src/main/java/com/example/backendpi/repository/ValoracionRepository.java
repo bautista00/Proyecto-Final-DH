@@ -11,4 +11,6 @@ public interface ValoracionRepository extends JpaRepository<Valoracion,Long> {
     Valoracion findByUser(User user);
 
     List<Valoracion> findByCancha(Cancha cancha);
+
+    Valoracion findByUserAndCancha(User user,Cancha cancha);
 }

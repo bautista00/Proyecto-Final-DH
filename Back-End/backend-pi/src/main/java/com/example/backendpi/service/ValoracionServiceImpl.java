@@ -3,9 +3,11 @@ package com.example.backendpi.service;
 import com.example.backendpi.converters.ValoracionDTOToValoracionConverter;
 import com.example.backendpi.converters.ValoracionToValoracionDTOConverter;
 import com.example.backendpi.domain.Cancha;
+import com.example.backendpi.domain.User;
 import com.example.backendpi.domain.Valoracion;
 import com.example.backendpi.dto.ValoracionDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
+import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.CanchaRepository;
 import com.example.backendpi.repository.UserRepository;
 import com.example.backendpi.repository.ValoracionRepository;
@@ -25,17 +27,33 @@ public class ValoracionServiceImpl implements ValoracionService{
 
     private final ValoracionToValoracionDTOConverter vToVDTOConverter;
 
+    private final JwtService jwtService;
+
     private final ValoracionDTOToValoracionConverter vDTOToVConverter;
 
     @Override
-    public ValoracionDTO agregarValoracion(ValoracionDTO valoracionDTO) throws ResourceNotFoundException {
-        if (valoracionRepository.findByUser(userRepository.findById(valoracionDTO.getUserID()).get())==null && canchaRepository.findById(valoracionDTO.getCanchaID()).isPresent()){
-//            List<Valoracion> valoracionList = canchaRepository.findById(valoracionDTO.getCanchaID()).get().getValoracionList();
-//            valoracionList.add(vDTOToVConverter.convert(valoracionDTO));
-            return vToVDTOConverter.convert(valoracionRepository.save(vDTOToVConverter.convert(valoracionDTO)));
+    public ValoracionDTO agregarValoracion(ValoracionDTO valoracionDTO, String token) throws ResourceNotFoundException {
+        Cancha cancha = canchaRepository.findById(valoracionDTO.getCanchaID())
+                .orElseThrow(() -> new ResourceNotFoundException("No se encontró la cancha con el ID: " + valoracionDTO.getCanchaID()));
+
+        String userName = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(userName);
+
+        if (valoracionRepository.findByUserAndCancha(user, cancha) != null) {
+            throw new ResourceNotFoundException("El usuario ya ha dejado una valoración para esta cancha");
         }
-        throw new ResourceNotFoundException("No se pudo agregar una valoracion");
+        valoracionDTO.setUserName(user.getName());
+        valoracionDTO.setApellido(user.getApellido());
+        Valoracion valoracion = vDTOToVConverter.convert(valoracionDTO);
+        valoracion.setUser(user);
+        valoracion.setCancha(cancha);
+
+        Valoracion savedValoracion = valoracionRepository.save(valoracion);
+
+        return vToVDTOConverter.convert(savedValoracion);
     }
+
+
 
     @Override
     public List<ValoracionDTO> listarValoracionPorCancha(Cancha cancha) throws ResourceNotFoundException {

@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
     User findByTokenEmail(String token);
+    Optional<User> findByName(String name);
 
     @Query("from User u where u.email =:email")
     User getFirstByEmail(@Param("email") String email);

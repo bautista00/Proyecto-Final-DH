@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ValoracionService {
 
-    ValoracionDTO agregarValoracion(ValoracionDTO valoracionDTO)throws ResourceNotFoundException;
+    ValoracionDTO agregarValoracion(ValoracionDTO valoracionDTO,String token)throws ResourceNotFoundException;
 
     List<ValoracionDTO> listarValoracionPorCancha(Cancha cancha)throws ResourceNotFoundException;
 

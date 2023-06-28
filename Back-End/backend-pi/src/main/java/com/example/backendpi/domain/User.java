@@ -44,7 +44,7 @@ public class User implements UserDetails {
     private String url;
     private String tokenEmail;
     private Boolean verified;
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Valoracion> valoracionList;
 
@@ -79,3 +79,5 @@ public class User implements UserDetails {
         return true;
     }
 }
+
+
