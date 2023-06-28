@@ -49,8 +49,8 @@ public class TurnoController {
     }
 
     @GetMapping("/owner/findxcanchasturnos")
-    public ResponseEntity<List<TurnoDTO>> buscarPorCanchas (@RequestBody Cancha cancha) throws ResourceNotFoundException{
-        return ResponseEntity.ok(turnoService.buscarPorCancha(cancha));
+    public ResponseEntity<List<TurnoDTO>> buscarPorCanchas (@RequestParam(value = "nombre") String nombre) throws ResourceNotFoundException{
+        return ResponseEntity.ok(turnoService.buscarPorCancha(nombre));
     }
 
     @GetMapping("/user/historialCanchas")
