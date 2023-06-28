@@ -2,6 +2,7 @@ package com.example.backendpi.converters;
 
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.dto.CanchaDTO;
+import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +11,12 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
+@AllArgsConstructor
 
 @Component
 public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
+
+    private final ImagesDTOToImagesConverter imagesDTOToImagesConverter;
     @Override
     public Cancha convert(CanchaDTO source) {
         Cancha cancha = new Cancha();
@@ -27,7 +31,6 @@ public class CanchaDTOaCanchaConverter implements Converter<CanchaDTO, Cancha> {
 //        cancha.setHoraCierre(LocalDateTime.parse(source.getHoraCierre().format(formatter)));
         cancha.setHoraCierre(source.getHoraCierre());
         cancha.setHoraApertura(source.getHoraApertura());
-
         cancha.setTelefono(source.getTelefono());
         cancha.setCriteriosList(source.getCriteriosList());
         cancha.setPromedioPuntuacion(source.getPromedio());

@@ -43,7 +43,7 @@ public class CanchaToCanchaDTOConverter implements Converter<Cancha, CanchaDTO> 
         canchaDTO.setCriteriosList(source.getCriteriosList());
         canchaDTO.setServicioList(source.getServicioList());
         canchaDTO.setDescripcion(source.getDescripcion());
-        canchaDTO.setImagesDTO(imagesToImagesDTOConverter.convert(source.getImgages()));
+        canchaDTO.setImages(source.getImages());
         for (Valoracion valoracion : source.getValoracionList() ) {
             valoracionDTOS.add(valoracionToValoracionDTOConverter.convert(valoracion));
             promedio = promedio + valoracion.getPuntuacion();
