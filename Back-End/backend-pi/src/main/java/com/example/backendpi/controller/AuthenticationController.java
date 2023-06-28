@@ -42,7 +42,7 @@ public class AuthenticationController {
         return authenticationService.signUp(signUpRequest);
     }
 
-    @GetMapping("/verify/{token}")
+    @PutMapping("/verify/{token}")
     public ResponseEntity<String> verifyEmail(@PathVariable String token) {
         boolean verifiedd = authenticationService.verifyUser(token);
         if (verifiedd) {

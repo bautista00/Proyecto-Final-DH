@@ -14,7 +14,7 @@ public interface CanchaRepository extends JpaRepository<Cancha, Long> {
     List<Cancha> findByCategoria(Categoria categoria);
     List<Cancha> findByUser(User user);
 //    List<CanchaDTO> FindByBarrioAndDeporte(Barrio barrio, Categoria categoria);
-    @Query(value = "SELECT ch.user_id, br.nombre as nombrebarrio, categoria_id, domicilio_id, barrio_id, promedio_puntuacion, hora_apertura, hora_cierre, precioxhora, puntuacion, ch.id, ch.nombre, cat.nombre as nombrecategoria, dom.calle, dom.numero, dom.provincia, telefono,ch.descripcion FROM cancha as ch " +
+    @Query(value = "SELECT ch.user_id, br.nombre as nombrebarrio, categoria_id, domicilio_id, barrio_id, promedio_puntuacion, hora_apertura, hora_cierre, precioxhora, ch.id, ch.nombre, cat.nombre as nombrecategoria, dom.calle, dom.numero, dom.provincia, telefono,ch.descripcion, ch.images_id FROM cancha as ch " +
             "INNER JOIN domicilio as dom ON ch.domicilio_id = dom.id " +
             "INNER JOIN barrio as br ON dom.barrio_id = br.id " +
             "INNER JOIN categoria as cat ON ch.categoria_id = cat.id " +
@@ -29,6 +29,7 @@ public interface CanchaRepository extends JpaRepository<Cancha, Long> {
     @Transactional
     @Query(value = "DELETE FROM servicio_cancha WHERE cancha_id = ?1", nativeQuery = true)
     void borrarCancha(Long id);
+
 
 
 }

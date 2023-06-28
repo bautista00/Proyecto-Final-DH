@@ -42,6 +42,8 @@ public class CanchaServiceImpl implements CanchaService{
 
     private final CriterioRepository criterioRepository;
 
+    private final DomicilioRepository domicilioRepository;
+
 
 //@Override
 //public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> files) throws Exception {
@@ -214,8 +216,6 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
             Cancha cancha = canchaOptional.get();
             canchaRepository.borrarCancha(cancha.getId());
             criterioRepository.borrarPorCanchaID(cancha.getId());
-
-            // Eliminar la cancha
             canchaRepository.delete(cancha);
         } else {
             throw new ResourceNotFoundException("No se pudo borrar la cancha con ese id: " + id);

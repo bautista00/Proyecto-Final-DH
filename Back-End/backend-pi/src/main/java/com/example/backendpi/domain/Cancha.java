@@ -30,7 +30,7 @@ public class Cancha {
     @ManyToOne
     @JoinColumn(name = "categoria_id", referencedColumnName = "id")
     private Categoria categoria;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "domicilio_id", referencedColumnName = "id")
     private Domicilio domicilio;
 

@@ -25,5 +25,8 @@ public class Domicilio {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonIgnore
     private User user;
+    @OneToOne
+    @JoinColumn(name = "cancha_id",referencedColumnName = "id")
+    private Cancha cancha;
 
 }
