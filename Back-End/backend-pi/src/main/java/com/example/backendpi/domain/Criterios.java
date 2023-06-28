@@ -18,7 +18,6 @@ public class Criterios {
     private CriterioTitulo criterioTitulo;
     @ManyToOne
     @JoinColumn(name = "cancha_id", referencedColumnName = "id")
-    @JsonIgnore
     private Cancha cancha;
 
 }

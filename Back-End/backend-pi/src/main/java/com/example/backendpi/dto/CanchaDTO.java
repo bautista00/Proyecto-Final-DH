@@ -31,7 +31,9 @@ public class CanchaDTO {
     @JsonFormat(pattern = "HH:mm")
     private LocalTime horaCierre ;
     private List<Criterios> criteriosList;
+
     private List<ImagesDTO> imagesDTOSList;
+
     private List<ValoracionDTO> valoracionList;
     private Double promedio;
     private List<Servicio> servicioList;
