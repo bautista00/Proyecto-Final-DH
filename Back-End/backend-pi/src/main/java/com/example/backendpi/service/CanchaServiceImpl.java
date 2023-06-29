@@ -8,7 +8,10 @@ import com.example.backendpi.dto.TurnoDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.jwt.JwtService;
 import com.example.backendpi.repository.*;
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -311,6 +314,30 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
             return canchaDTOList;
         }
         throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
+    }
+
+    @Override
+    public void agregarAFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
+        String email = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(email);
+        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+        List<Cancha> canchaList = new ArrayList<>();
+        if (!canchaList.contains(cancha)){
+            canchaList.add(cancha);
+            user.setFavoritas(canchaList);
+        }throw new ResourceNotFoundException("La cancha ya pertenece a la lista");
+    }
+
+    @Override
+    public void eliminarDeFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
+        String email = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(email);
+        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+        List<Cancha> canchaList = user.getFavoritas()
+        if (canchaList.contains(cancha)){
+            canchaList.remove(cancha);
+        }
+        throw new ResourceNotFoundException("La cancha no pertenece a la lista");
     }
 
 }

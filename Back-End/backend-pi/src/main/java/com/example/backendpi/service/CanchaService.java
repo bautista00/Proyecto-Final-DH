@@ -32,5 +32,9 @@ public interface CanchaService {
 
    public List<CanchaDTO> buscarFiltrada(String barrio, String categoria) throws ResourceNotFoundException;
 
+   public void agregarAFavoritos(CanchaDTO canchaDTO,String token) throws ResourceNotFoundException;
+
+   public void eliminarDeFavoritos(CanchaDTO canchaDTO,String token) throws ResourceNotFoundException;
+
 
 }

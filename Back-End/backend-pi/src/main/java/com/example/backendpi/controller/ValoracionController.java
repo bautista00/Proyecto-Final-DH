@@ -16,9 +16,8 @@ public class ValoracionController {
 
     private final ValoracionService valoracionService;
 
-    @PostMapping("/detailcancha/{id}/valoracion")
-    public ResponseEntity<ValoracionDTO> agregarValoracion(@PathVariable("id") Long id, @RequestBody ValoracionDTO valoracionDTO,@RequestParam String token) throws ResourceNotFoundException {
-        valoracionDTO.setCanchaID(id);
+    @PostMapping("/agregarValoracion")
+    public ResponseEntity<ValoracionDTO> agregarValoracion(@RequestParam(value = "canchaId") Long canchaId, @RequestParam(value = "valoracion") ValoracionDTO valoracionDTO,@RequestParam(value = "token") String token) throws ResourceNotFoundException {
         return ResponseEntity.ok(valoracionService.agregarValoracion(valoracionDTO,token));
     }
 
