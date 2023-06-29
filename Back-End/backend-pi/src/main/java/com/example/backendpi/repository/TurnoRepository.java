@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface TurnoRepository extends JpaRepository<Turno, Long> {
     Turno findByFechaAndCancha(LocalDateTime fecha, Cancha cancha);
-    Turno findByUser(User user);
+    List<Turno> findByUser(User user);
     List<Turno> findByCancha(Cancha cancha);
     @Query(value = "SELECT * FROM turno as tr WHERE tr.fecha between '2000-01-01 12:59' AND CURDATE() AND tr.user_id =?;"
             , nativeQuery = true)

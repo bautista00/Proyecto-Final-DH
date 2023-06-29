@@ -30,9 +30,9 @@ public class TurnoController {
 
 
     @PostMapping("/user/createturno")
-    public ResponseEntity<Turno> agregarTurno(@RequestBody TurnoDTO turno) throws ResourceNotFoundException {
-        if(canchaService.buscarXId(turno.getIdCancha()) != null && userRepository.findById(turno.getIdUser()).isPresent()){
-        return ResponseEntity.ok(turnoService.guardar(turno));
+    public ResponseEntity<Turno> agregarTurno(@RequestBody TurnoDTO turno,@RequestParam(value = "token")String token) throws ResourceNotFoundException {
+        if(canchaService.buscarXId(turno.getIdCancha()) != null){
+        return ResponseEntity.ok(turnoService.guardar(turno,token));
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
@@ -44,7 +44,7 @@ public class TurnoController {
     }
 
     @GetMapping("/user/findxuserturnos")
-    public ResponseEntity<TurnoDTO> buscarPorUser(@RequestParam(value = "token") String token) throws ResourceNotFoundException{
+    public ResponseEntity<List<TurnoDTO>> buscarPorUser(@RequestParam(value = "token") String token) throws ResourceNotFoundException{
        return ResponseEntity.ok(turnoService.buscarPorCliente(token));
     }
 

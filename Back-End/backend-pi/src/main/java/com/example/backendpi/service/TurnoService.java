@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface TurnoService {
 
 
-    public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException;
+    public Turno guardar(TurnoDTO turnoDTO,String token) throws ResourceNotFoundException;
 
 //    public Optional<TurnoDTO> buscarXId(Long id)throws ResourceNotFoundException;
 
@@ -25,7 +25,7 @@ public interface TurnoService {
 
 //    public TurnoDTO actualizar(TurnoDTO turnoDTO)throws ResourceNotFoundException;
 
-    public TurnoDTO buscarPorCliente(String token)throws ResourceNotFoundException;
+    public List<TurnoDTO> buscarPorCliente(String token)throws ResourceNotFoundException;
 
     public List<TurnoDTO> buscarPorCancha(String nombre)throws ResourceNotFoundException;
 

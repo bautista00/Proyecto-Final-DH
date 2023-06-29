@@ -44,29 +44,35 @@ public class TurnoServiceImpl implements TurnoService{
 //        }
 //    }
 @Override
-public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
+public Turno guardar(TurnoDTO turnoDTO, String token) throws ResourceNotFoundException {
+    String userName = jwtService.extractUserName(token);
+    User user = userRepository.findByEmail(userName);
     Long canchaId = turnoDTO.getIdCancha();
-    Long userId = turnoDTO.getIdUser();
     LocalDateTime fecha = turnoDTO.getFecha();
     String nombreCancha = turnoDTO.getNombreCancha();
 
-    Cancha cancha = canchaRepository.findById(canchaId).orElseThrow(() ->
-            new ResourceNotFoundException("No se encontró la cancha con el ID: " + canchaId));
-    User user = userRepository.findById(userId).orElseThrow(() ->
-            new ResourceNotFoundException("No se encontró el usuario con el ID: " + userId));
+    if (user == null) {
+        throw new ResourceNotFoundException("No se encontró el usuario con el token proporcionado");
+    }
+
+    Cancha cancha = canchaRepository.findById(canchaId)
+            .orElseThrow(() -> new ResourceNotFoundException("No se encontró la cancha con el ID: " + canchaId));
 
     Turno turnoExistente = turnoRepository.findByFechaAndCancha(fecha, cancha);
     if (turnoExistente != null) {
         throw new ResourceNotFoundException("Ya existe un turno para la cancha y fecha especificadas");
     }
 
-    Turno turno = turnoDTOToTurnoConverter.convert(turnoDTO);
-    turno.setCancha(cancha);
+    Turno turno = new Turno();
+    turno.setFecha(fecha);
+    turno.setHoras(turnoDTO.getHoras());
     turno.setUser(user);
+    turno.setCancha(cancha);
     turno.setCompletado(false);
 
     return turnoRepository.save(turno);
 }
+
 
 
 
@@ -83,12 +89,18 @@ public Turno guardar(TurnoDTO turnoDTO) throws ResourceNotFoundException {
 
 
     @Override
-    public TurnoDTO buscarPorCliente(String token) throws ResourceNotFoundException{
-        Turno turno = turnoRepository.findByUser(userRepository.findByEmail(jwtService.extractUserName(token)));
-        if(turno != null && !turno.isCompletado()){
-            return turnoToTurnoDTOConverter.convert(turno);
-        }else {
-            throw new ResourceNotFoundException("No se encontro un turno asocioado a este cliente llamado: " + turno.getUser().getName());
+    public List<TurnoDTO> buscarPorCliente(String token) throws ResourceNotFoundException {
+        List<Turno> turnoList = turnoRepository.findByUser(userRepository.findByEmail(jwtService.extractUserName(token)));
+        List<TurnoDTO> turnoDTOS = new ArrayList<>();
+        if (turnoList.size() > 0) {
+            for (Turno turno : turnoList) {
+                if (turno != null && !turno.isCompletado()) {
+                    turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
+                }
+            }
+            return turnoDTOS;
+        } else {
+            throw new ResourceNotFoundException("No se encontro un turno asocioado a este cliente llamado: ");
         }
     }
 
