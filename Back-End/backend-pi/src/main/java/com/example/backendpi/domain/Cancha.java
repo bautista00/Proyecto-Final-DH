@@ -7,15 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Data
@@ -68,7 +64,5 @@ public class Cancha {
     private List<Servicio> servicioList = new ArrayList<>();
 
     private String descripcion;
-
-
 
 }
