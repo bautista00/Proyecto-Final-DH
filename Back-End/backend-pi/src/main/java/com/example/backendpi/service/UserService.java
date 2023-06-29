@@ -1,6 +1,7 @@
 package com.example.backendpi.service;
 
 import com.example.backendpi.domain.User;
+import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.dto.UserDTO;
 import com.example.backendpi.dto.PageResponseDTO;
 import com.example.backendpi.dto.SignUpRequest;
@@ -22,6 +23,9 @@ public interface UserService extends UserDetailsService {
     List<User> listarTodos() throws ResourceNotFoundException;
 
     UserDTO getUser(String token) throws ResourceNotFoundException;
+
+
+    List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException;
 
 
 

@@ -316,28 +316,47 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
         throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
     }
 
-//    @Override
-//    public void agregarAFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
-//        String email = jwtService.extractUserName(token);
-//        User user = userRepository.findByEmail(email);
-//        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
-//        List<Cancha> canchaList = new ArrayList<>();
-//        if (!canchaList.contains(cancha)){
-//            canchaList.add(cancha);
-//            user.setFavoritas(canchaList);
-//        }throw new ResourceNotFoundException("La cancha ya pertenece a la lista");
-//    }
-//
-//    @Override
-//    public void eliminarDeFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
-//        String email = jwtService.extractUserName(token);
-//        User user = userRepository.findByEmail(email);
-//        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
-//        List<Cancha> canchaList = user.getFavoritas();
-//        if (canchaList.contains(cancha)){
-//            canchaList.remove(cancha);
-//        }
-//        throw new ResourceNotFoundException("La cancha no pertenece a la lista");
-//    }
+    public void agregarCanchaAFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
+        String email = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(email);
+        CanchasFavoritas favoritesList = user.getListaCanchasFavoritas();
+        if (favoritesList == null) {
+            favoritesList = new CanchasFavoritas();
+            favoritesList.setUser(user);
+            user.setListaCanchasFavoritas(favoritesList);
+        }
+        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+        List<Cancha> canchasFavoritas = favoritesList.getCanchas();
+        if (!canchasFavoritas.contains(cancha)) {
+            canchasFavoritas.add(cancha);
+            userRepository.save(user);
+        } else {
+            throw new ResourceNotFoundException("No se pudo agregar la cancha");
+        }
+    }
+
+    public void eliminarCanchaDeFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
+        String email = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(email);
+        CanchasFavoritas favoritesList = user.getListaCanchasFavoritas();
+
+        if (favoritesList != null) {
+            Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+            List<Cancha> canchasFavoritas = favoritesList.getCanchas();
+
+            if (canchasFavoritas.contains(cancha)) {
+                canchasFavoritas.remove(cancha);
+                userRepository.save(user);
+            } else {
+                throw new ResourceNotFoundException("La cancha no se encuentra en la lista de favoritos");
+            }
+        } else {
+            throw new ResourceNotFoundException("La lista de favoritos no existe");
+        }
+    }
+
+
+
+
 
 }

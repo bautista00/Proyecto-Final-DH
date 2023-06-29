@@ -87,17 +87,17 @@ public class CanchaController {
      }
 
 
-//     @PutMapping("/user/agregarAFav")
-//    public ResponseEntity<String> agregarAFav(@RequestParam(value = "canchaDTO") CanchaDTO canchaDTO, @RequestParam(value = "token") String token) throws ResourceNotFoundException{
-//        canchaService.agregarAFavoritos(canchaDTO,token);
-//        return ResponseEntity.ok("Se agrego correctamente");
-//     }
-//
-//    @PutMapping("/user/eliminarDeFav")
-//    public ResponseEntity<String> eliminarDeFav(@RequestParam(value = "canchaDTO") CanchaDTO canchaDTO, @RequestParam(value = "token") String token) throws ResourceNotFoundException{
-//        canchaService.eliminarDeFavoritos(canchaDTO,token);
-//        return ResponseEntity.ok("Se elimino correctamente");
-//    }
+     @PutMapping("/user/agregarAFav")
+    public ResponseEntity<String> agregarAFav(@RequestParam(value = "canchaDTO") CanchaDTO canchaDTO, @RequestParam(value = "token") String token) throws ResourceNotFoundException{
+        canchaService.agregarCanchaAFavoritos(canchaDTO,token);
+        return ResponseEntity.ok("Se agrego correctamente");
+     }
+
+    @PutMapping("/user/eliminarDeFav")
+    public ResponseEntity<String> eliminarDeFav(@RequestParam(value = "canchaDTO") CanchaDTO canchaDTO, @RequestParam(value = "token") String token) throws ResourceNotFoundException{
+        canchaService.eliminarCanchaDeFavoritos(canchaDTO,token);
+        return ResponseEntity.ok("Se elimino correctamente");
+    }
 
 
 }

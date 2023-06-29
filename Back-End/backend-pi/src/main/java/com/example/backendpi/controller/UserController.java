@@ -1,6 +1,7 @@
 package com.example.backendpi.controller;
 
 import com.example.backendpi.domain.User;
+import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.dto.UserDTO;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
 import com.example.backendpi.service.UserService;
@@ -32,6 +33,11 @@ public class UserController {
         return ResponseEntity.ok(userService.listarTodos());
     }
 
+
+    @GetMapping("/user/listaFavs")
+    public ResponseEntity<List<CanchaDTO>> listaFavs(@RequestParam(value = "token") String token) throws ResourceNotFoundException{
+        return ResponseEntity.ok(userService.listarCanchasFav(token));
+    }
 
 
 

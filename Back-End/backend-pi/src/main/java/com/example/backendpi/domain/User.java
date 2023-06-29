@@ -48,6 +48,10 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Valoracion> valoracionList;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private CanchasFavoritas listaCanchasFavoritas;
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

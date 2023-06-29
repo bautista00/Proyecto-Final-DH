@@ -1,8 +1,12 @@
 package com.example.backendpi.service;
 
 import com.amazonaws.services.backup.model.MissingParameterValueException;
+import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
+import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
 import com.example.backendpi.converters.UserToUserDTOConverter;
+import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.User;
+import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.dto.UserDTO;
 import com.example.backendpi.dto.SignUpRequest;
 import com.example.backendpi.exceptions.ResourceNotFoundException;
@@ -16,6 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +41,8 @@ public class UserServiceImpl implements UserService {
     private final JwtService jwtService;
 
     private final UserToUserDTOConverter userToUserDTOConverter;
+
+    private final CanchaToCanchaDTOConverter converter;
 
 
     @Override
@@ -112,7 +119,19 @@ public class UserServiceImpl implements UserService {
 //
     }
 
-
-
+    @Override
+    public List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException {
+        String email = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(email);
+        List<Cancha> canchaList = user.getListaCanchasFavoritas().getCanchas();
+        List<CanchaDTO> canchaDTOS = new ArrayList<>();
+        if (canchaList.size()>0) {
+            for (Cancha cancha : canchaList) {
+                canchaDTOS.add(converter.convert(cancha));
+            }
+            return canchaDTOS;
+        }
+        throw new ResourceNotFoundException("No existe la lista de favs");
+    }
 
 }
