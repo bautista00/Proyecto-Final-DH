@@ -32,9 +32,8 @@ public class ValoracionServiceImpl implements ValoracionService{
     private final ValoracionDTOToValoracionConverter vDTOToVConverter;
 
     @Override
-    public ValoracionDTO agregarValoracion(ValoracionDTO valoracionDTO, String token) throws ResourceNotFoundException {
-        Cancha cancha = canchaRepository.findById(valoracionDTO.getCanchaID())
-                .orElseThrow(() -> new ResourceNotFoundException("No se encontró la cancha con el ID: " + valoracionDTO.getCanchaID()));
+    public ValoracionDTO agregarValoracion(ValoracionDTO valoracionDTO, String token,Long id) throws ResourceNotFoundException {
+        Cancha cancha = canchaRepository.findById(id).get();
 
         String userName = jwtService.extractUserName(token);
         User user = userRepository.findByEmail(userName);
@@ -44,6 +43,7 @@ public class ValoracionServiceImpl implements ValoracionService{
         }
         valoracionDTO.setUserName(user.getName());
         valoracionDTO.setApellido(user.getApellido());
+        valoracionDTO.setCanchaID(id);
         Valoracion valoracion = vDTOToVConverter.convert(valoracionDTO);
         valoracion.setUser(user);
         valoracion.setCancha(cancha);
