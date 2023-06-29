@@ -15,6 +15,7 @@ public class ValoracionDTO {
     private Double puntuacion;
     private String descripcion;
     private Long canchaID;
+    private Long userID;
     private String apellido;
     private String userName;
 }

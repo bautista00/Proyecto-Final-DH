@@ -17,6 +17,7 @@ public class ValoracionToValoracionDTOConverter implements Converter<Valoracion,
         valoracionDTO.setDescripcion(source.getDescripcion());
         valoracionDTO.setPuntuacion(source.getPuntuacion());
         valoracionDTO.setCanchaID(source.getCancha().getId());
+        valoracionDTO.setUserID(source.getUser().getId());
         valoracionDTO.setUserName(source.getUser().getName());
         valoracionDTO.setApellido(source.getUser().getApellido());
         return valoracionDTO;

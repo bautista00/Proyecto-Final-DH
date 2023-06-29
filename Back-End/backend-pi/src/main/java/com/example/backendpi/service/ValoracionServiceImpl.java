@@ -38,10 +38,12 @@ public class ValoracionServiceImpl implements ValoracionService{
         String userName = jwtService.extractUserName(token);
         User user = userRepository.findByEmail(userName);
 
+
         if (valoracionRepository.findByUserAndCancha(user, cancha) != null) {
             throw new ResourceNotFoundException("El usuario ya ha dejado una valoración para esta cancha");
         }
         valoracionDTO.setUserName(user.getName());
+        valoracionDTO.setUserID(user.getId());
         valoracionDTO.setApellido(user.getApellido());
         valoracionDTO.setCanchaID(id);
         Valoracion valoracion = vDTOToVConverter.convert(valoracionDTO);
