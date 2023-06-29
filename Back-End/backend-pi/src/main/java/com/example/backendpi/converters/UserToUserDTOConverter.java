@@ -10,9 +10,11 @@ public class UserToUserDTOConverter implements Converter<User, UserDTO> {
     @Override
     public UserDTO convert(User source) {
         UserDTO userDTO = new UserDTO();
+        userDTO.setId(source.getId());
         userDTO.setApellido(source.getApellido());
         userDTO.setCBU(source.getCbu());
         userDTO.setCuil(source.getCuil());
+        userDTO.setRole(source.getRole());
         userDTO.setEmail(source.getEmail());
         userDTO.setDomicilio(source.getDomicilio());
         userDTO.setNombre(source.getName());
