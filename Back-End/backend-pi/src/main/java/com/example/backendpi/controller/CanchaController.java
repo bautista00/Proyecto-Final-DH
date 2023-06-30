@@ -100,5 +100,11 @@ public class CanchaController {
     }
 
 
+    @GetMapping("/user/is-favorite")
+    public ResponseEntity<Boolean> isCanchaFav(@RequestParam Long id, @RequestParam String token) {
+        boolean isFavorite = canchaService.isCanchaFav(id, token);
+        return ResponseEntity.ok(isFavorite);
+    }
+
 }
 

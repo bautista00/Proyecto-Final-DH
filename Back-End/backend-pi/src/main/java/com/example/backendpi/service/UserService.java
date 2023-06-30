@@ -29,4 +29,5 @@ public interface UserService extends UserDetailsService {
 
 
     void modificarUser(UserDTO userDTO) throws ResourceNotFoundException;
+
 }

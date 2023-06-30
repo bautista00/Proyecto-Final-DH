@@ -34,6 +34,7 @@ public interface CanchaService {
 
    public void eliminarCanchaDeFavoritos(Long id, String token) throws ResourceNotFoundException;
    public void agregarCanchaAFavoritos(Long id, String token) throws ResourceNotFoundException;
+    boolean isCanchaFav(Long id, String token);
 
 
 }

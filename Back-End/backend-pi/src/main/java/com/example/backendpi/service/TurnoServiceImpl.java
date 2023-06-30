@@ -58,6 +58,12 @@ public Turno guardar(TurnoDTO turnoDTO, String token) throws ResourceNotFoundExc
     Cancha cancha = canchaRepository.findById(canchaId)
             .orElseThrow(() -> new ResourceNotFoundException("No se encontró la cancha con el ID: " + canchaId));
 
+    // Verificar si la fecha es anterior a la fecha actual
+    LocalDateTime fechaActual = LocalDateTime.now();
+    if (fecha.isBefore(fechaActual)) {
+        throw new IllegalArgumentException("La fecha especificada es anterior a la fecha actual");
+    }
+
     Turno turnoExistente = turnoRepository.findByFechaAndCancha(fecha, cancha);
     if (turnoExistente != null) {
         throw new ResourceNotFoundException("Ya existe un turno para la cancha y fecha especificadas");
@@ -72,6 +78,7 @@ public Turno guardar(TurnoDTO turnoDTO, String token) throws ResourceNotFoundExc
 
     return turnoRepository.save(turno);
 }
+
 
 
 

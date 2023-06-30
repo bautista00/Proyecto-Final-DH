@@ -362,6 +362,23 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
         }
     }
 
+    @Override
+    public boolean isCanchaFav(Long id, String token) {
+        String email = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(email);
+
+        if (user != null) {
+            List<Cancha> canchasFavoritas = user.getCanchasFavoritas().getCanchas();
+            for (Cancha cancha : canchasFavoritas) {
+                if (cancha.getId().equals(id)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
 
 
 
