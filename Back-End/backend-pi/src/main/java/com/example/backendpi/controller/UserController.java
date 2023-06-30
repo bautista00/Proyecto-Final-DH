@@ -40,8 +40,8 @@ public class UserController {
     }
 
     @PutMapping("/user/modificar")
-    public ResponseEntity<String> modificarUser(@RequestBody UserDTO userDTO) throws ResourceNotFoundException{
-        userService.modificarUser(userDTO);
+    public ResponseEntity<String> modificarUser(@RequestBody UserDTO userDTO,@RequestParam(value = "token")String token) throws ResourceNotFoundException{
+        userService.modificarUser(userDTO,token);
         return ResponseEntity.ok("Ya se actualizo el user");
     }
 

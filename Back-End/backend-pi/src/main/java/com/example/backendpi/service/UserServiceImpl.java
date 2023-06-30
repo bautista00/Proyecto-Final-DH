@@ -148,13 +148,40 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void modificarUser(UserDTO userDTO) throws ResourceNotFoundException{
+    public void modificarUser(UserDTO userDTO,String token) throws ResourceNotFoundException {
         User user = userDTOToUserConverter.convert(userDTO);
-        if (user != null){
-            userRepository.save(user);
+        String email = jwtService.extractUserName(token);
+        User existingUser = userRepository.findByEmail(email);
+
+        if (userDTO.getEmail() != null) {
+            existingUser.setEmail(userDTO.getEmail());
         }
-        throw new ResourceNotFoundException("no se pudo actualizar el user");
+        if (userDTO.getNombre() != null) {
+            existingUser.setName(userDTO.getNombre());
+        }
+
+        if (userDTO.getApellido() != null) {
+            existingUser.setApellido(userDTO.getApellido());
+        }
+        if (userDTO.getCuil() != null) {
+            existingUser.setCuil(userDTO.getCuil());
+        }
+        if (userDTO.getCBU() != null) {
+            existingUser.setCbu(userDTO.getCBU());
+        }
+        if (userDTO.getTelefono() != null) {
+            existingUser.setTelefono(userDTO.getTelefono());
+        }
+
+        if (userDTO.getRole() != null) {
+            existingUser.setRole(userDTO.getRole());
+        }
+
+
+
+        userRepository.save(existingUser);
     }
+
 
 
 
