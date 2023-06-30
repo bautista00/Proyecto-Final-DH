@@ -56,7 +56,7 @@ public class EmailServiceImpl implements EmailService {
         String content = "<html>" +
                 "<body>" +
                 "<div style='text-align: start;'>" +
-                "<img src='https://bucket-fieldrent-img.s3.us-east-2.amazonaws.com/logoEmail.png' alt='Logo' style='width: 300px;'>" + // Reemplaza con la ruta de tu logo y ajusta el ancho según sea necesario
+                "<img src='https://bucket-fieldrent-img.s3.us-east-2.amazonaws.com/logoEmail.png' alt='Logo' style='width: 300px;'>" +
                 "<h1 style='color: #333;'>Bienvenido " + fullName + "</h1>" +
                 "<p style='color: #777;'>Por favor, haz clic en el siguiente enlace para verificar tu cuenta:</p>" +
                 "<a href='http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/verify" + "' style='display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Verificar cuenta</a>" +
@@ -73,7 +73,7 @@ public class EmailServiceImpl implements EmailService {
         String content = "<html>" +
                 "<body>" +
                 "<div style='text-align: start;'>" +
-                "<img src='https://bucket-fieldrent-img.s3.us-east-2.amazonaws.com/logoEmail.png' alt='Logo' style='width: 300px;'>" + // Reemplaza con la ruta de tu logo y ajusta el ancho según sea necesario
+                "<img src='https://bucket-fieldrent-img.s3.us-east-2.amazonaws.com/logoEmail.png' alt='Logo' style='width: 300px;'>" +
                 "<h1 style='color: #333;'>Verificación completa</h1>" +
                 "<p style='color: #777;'>Felicitaciones, " + fullName +" tu cuenta ya ha sido verificada. ¡Ahora puedes navegar libremente en nuestra página!</p>" +
                 "<a href='http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/login' style='display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Iniciar sesión</a>" +
@@ -83,11 +83,6 @@ public class EmailServiceImpl implements EmailService {
 
         sendMail(user.getEmail(), subject, content);
     }
-
-
-
-
-
-
+    
 }
 
