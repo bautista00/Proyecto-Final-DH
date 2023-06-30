@@ -76,8 +76,9 @@ public class CanchaController {
 
 
     @PutMapping("/owner/updatecancha")
-    public ResponseEntity<CanchaDTO> actualizarCancha(@RequestBody CanchaDTO canchaDTO) throws ResourceNotFoundException {
-        return ResponseEntity.ok(canchaService.actualizar(canchaDTO));
+    public ResponseEntity<String> actualizarCancha(@RequestBody CanchaDTO canchaDTO,@RequestParam(value = "id")Long id) throws ResourceNotFoundException {
+        canchaService.actualizar(canchaDTO,id);
+        return ResponseEntity.ok("Se actualizo la cancha con exito");
      }
 
 

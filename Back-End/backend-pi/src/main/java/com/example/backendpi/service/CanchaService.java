@@ -24,7 +24,7 @@ public interface CanchaService {
     public void borrarXId(Long id)throws ResourceNotFoundException;
 
     public List<CanchaDTO> buscarTodos();
-    public CanchaDTO actualizar(CanchaDTO canchaDTO)throws ResourceNotFoundException;
+    public void actualizar(CanchaDTO canchaDTO,Long id)throws ResourceNotFoundException;
 
     public List<CanchaDTO> buscarXCategoria(String categoriaNombre)throws ResourceNotFoundException;
 

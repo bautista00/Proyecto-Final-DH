@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -34,6 +35,8 @@ public class CanchaServiceImpl implements CanchaService{
 
     private final ImagesToImagesDTOConverter imagesToImagesDTOConverter;
     private final ImagesDTOToImagesConverter imagesDTOToImagesConverter;
+    private final ValoracionDTOToValoracionConverter valoracionDTOToValoracionConverter;
+    private final ValoracionToValoracionDTOConverter valoracionToValoracionDTOConverter;
     private final AwsS3Service awsS3Service ;
     private final ImagesRepository imagesRepository;
     private final DomicilioService domicilioService;
@@ -241,17 +244,72 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
           throw new NotFoundException("No se encontro una lista de canchas");
       }
     }
-
     @Override
-    public CanchaDTO actualizar(CanchaDTO canchaDTO) throws ResourceNotFoundException{
-        if(canchaRepository.findById(canchaDTO.getId()).isPresent()){
-            canchaToCanchaDTOConverter.convert(canchaRepository.save(canchaDTOaCanchaConverter.convert(canchaDTO)));
-            return canchaDTO;
-        }
-        else {
-            throw new ResourceNotFoundException("No se pudo actualizar correctamente la informacion");
+    public void actualizar(CanchaDTO canchaDTO, Long id) throws ResourceNotFoundException {
+        if (canchaRepository.findById(id).isPresent()) {
+            Cancha canchaExistente = canchaRepository.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("No se encontró la cancha con ID: " + canchaDTO.getId()));
+
+            if (canchaDTO.getCategoria() != null) {
+                canchaExistente.setCategoria(canchaDTO.getCategoria());
+            }
+            if (canchaDTO.getDomicilio() != null) {
+                canchaExistente.setDomicilio(canchaDTO.getDomicilio());
+            }
+            if (canchaDTO.getPrecio() != null) {
+                canchaExistente.setPrecioxhora(canchaDTO.getPrecio());
+            }
+            if (canchaDTO.getTelefono() != null) {
+                canchaExistente.setTelefono(canchaDTO.getTelefono());
+            }
+            if (canchaDTO.getNombre() != null) {
+                canchaExistente.setNombre(canchaDTO.getNombre());
+            }
+            if (canchaDTO.getHoraApertura() != null) {
+                canchaExistente.setHoraApertura(canchaDTO.getHoraApertura());
+            }
+            if (canchaDTO.getHoraCierre() != null) {
+                canchaExistente.setHoraCierre(canchaDTO.getHoraCierre());
+            }
+            if (canchaDTO.getCriteriosList() != null) {
+                canchaExistente.setCriteriosList(canchaDTO.getCriteriosList());
+            }
+            if (canchaDTO.getImages() != null) {
+                canchaExistente.setImages(canchaDTO.getImages());
+            }
+            if (canchaDTO.getValoracionList() != null) {
+                List<Valoracion> valoraciones = canchaDTO.getValoracionList().stream()
+                        .map(valoracionDTOToValoracionConverter::convert)
+                        .collect(Collectors.toList());
+                canchaExistente.setValoracionList(valoraciones);
+            }
+            if (canchaDTO.getPromedio() != null) {
+                canchaExistente.setPromedioPuntuacion(canchaDTO.getPromedio());
+            }
+            if (canchaDTO.getServicioList() != null) {
+                canchaExistente.setServicioList(canchaDTO.getServicioList());
+            }
+            if (canchaDTO.getDescripcion() != null) {
+                canchaExistente.setDescripcion(canchaDTO.getDescripcion());
+            }
+
+            canchaRepository.save(canchaExistente);
+        } else {
+            throw new ResourceNotFoundException("No se pudo actualizar correctamente la información de la cancha");
         }
     }
+
+
+//    @Override
+//    public CanchaDTO actualizar(CanchaDTO canchaDTO) throws ResourceNotFoundException{
+//        if(canchaRepository.findById(canchaDTO.getId()).isPresent()){
+//            canchaToCanchaDTOConverter.convert(canchaRepository.save(canchaDTOaCanchaConverter.convert(canchaDTO)));
+//            return canchaDTO;
+//        }
+//        else {
+//            throw new ResourceNotFoundException("No se pudo actualizar correctamente la informacion");
+//        }
+//    }
 
     @Override
     public List<CanchaDTO> buscarXCategoria(String nombreCategoria)throws ResourceNotFoundException {
