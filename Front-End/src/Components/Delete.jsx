@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import DeleteCard from "./DeleteCard";
 import { useContextGlobal } from "./utils/GlobalContext";
 import { axiosInstance } from "../config";
+import { Link } from "react-router-dom";
+
 
 const Delete = () => {
   // const { data, setData } = useContextGlobal();
@@ -71,8 +73,9 @@ const Delete = () => {
 
   return (
     <div className="card-title-recommended">
-      <h2>Eliminar canchas</h2>
+      <h2 className="banner-text">Eliminar canchas</h2>
       <div className="card-container-recommended">{renderCards()}</div>
+      <Link to={`/CreateProduct`}><button className="buttonAgregar buttonCategory">Crear nueva cancha</button></Link>
     </div>
   );
 };

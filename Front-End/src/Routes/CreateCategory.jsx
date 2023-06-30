@@ -94,7 +94,7 @@ const CreateCategory = () => {
             {catCreated && <p>Categoría creada exitosamente</p>}
             </form>
             
-            <Link to={`/Categories`}><button className="buttonAgregar buttonCategory">Ver Categorías</button></Link>
+            <Link to={`/Categories`}><button className="buttonLight">Ver Categorías</button></Link>
     </div>
   )
 }

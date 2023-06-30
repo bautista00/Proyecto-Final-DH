@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Routes/Home";
 import Detail from "./Routes/Detail";
@@ -19,7 +18,7 @@ import Booking from "./Routes/Booking";
 import Verify from "./Routes/Verify";
 import CreateCategory from "./Routes/CreateCategory";
 import DeleteCategory from "./Routes/DeleteCategory";
-
+import BookingControl from "./Routes/BookingControl";
 
 function App() {
   return (
@@ -31,7 +30,7 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Account/:user" element={<Account />} />
-        <Route path="/Filtered/:sport/:barrio" element={<Filtered />} />
+        <Route path="/Filtered/:sport" element={<Filtered />} />
         <Route path="/CreateProduct" element={<CreateProduct />} />
         <Route path="/DeleteProduct" element={<DeleteProduct />} />
         <Route path="/UsersPermissions" element={<UsersPermissions />} />
@@ -42,6 +41,7 @@ function App() {
         <Route path="/Verify" element={<Verify />} />
         <Route path="/CreateCategory" element={<CreateCategory />} />
         <Route path="/DeleteCategory" element={<DeleteCategory />} />
+        <Route path="/BookingControl" element={<BookingControl />} />
       </Routes>
       <Footer />
     </>

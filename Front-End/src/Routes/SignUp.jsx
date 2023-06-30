@@ -103,6 +103,7 @@ const SignUp = () => {
       await axiosInstance.post("/sign-up", requestData).then((response) => {
         console.log("Response:", response.data);
         setJwt(response.data.jwt);
+        localStorage.setItem("email", response.data.email)
         console.log(jwt);
       });
 

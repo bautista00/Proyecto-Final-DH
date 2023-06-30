@@ -9,7 +9,7 @@ const RecommendedCard = ({ image, id, location, name }) => {
         <img src={image} alt="imagenCancha" />
       </Link>
       <h3>{name}</h3>
-      <p>{location.provincia}</p>
+      <p>{location}</p>
     </div>
   );
 };

@@ -5,26 +5,38 @@ import { useParams } from "react-router-dom";
 import { axiosInstance } from "../config";
 
 const FilteredComp = () => {
-  const { sport, barrio } = useParams();
-  const { data } = useContextGlobal();
+  const { sport } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
-  const cardsPerPage = 8;
-
+  const cardsPerPage = 5;
   const [filtered, setFiltered] = useState([]);
 
-  const fetchData = async (sport) => {
-    const result = await axiosInstance.get(`/listxsportcanchas/${sport}`);
-    setFiltered(result.data);
+  const fetchData = async () => {
+
+    try{
+      
+      const config = {        
+        params: {
+          categoriaNombre: sport
+        }
+      }
+      const result = await axiosInstance.get(`/listxsportcanchas`, config);
+      setFiltered(result.data);
+     
+
+    }catch(e){
+      console.log(e)
+    }
+  
   };
 
   useEffect(() => {
-    fetchData(sport);
-  }, [sport]);
+    fetchData();
+  }, []);
 
   const startIndex = (currentPage - 1) * cardsPerPage;
   const endIndex = startIndex + cardsPerPage;
   const totalPages = Math.ceil(
-    data.filter((card) => card.kindOfSport === sport).length / cardsPerPage
+    filtered.filter((card) => card.nombre === sport).length / cardsPerPage
   );
 
   const handleNextPage = () => {
@@ -32,7 +44,7 @@ const FilteredComp = () => {
       setCurrentPage(currentPage + 1);
     }
   };
-
+ 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -42,21 +54,20 @@ const FilteredComp = () => {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
+  
   return (
     <div>
       <h2>Canchas de {sport}</h2>
       <div className="card-container-recommended">
-        {data
-          .filter((card) => card.kindOfSport === sport)
+        {filtered
           .slice(startIndex, endIndex)
           .map((card, index) => (
             <RecommendedCard
               key={index}
-              id={card.id}
-              name={card.name}
-              location={card.location}
-              image={card.image}
+              id={card?.id}
+              name={card?.nombre}
+              location={card?.domicilio?.barrio?.nombre}
+              image={card?.images?.url[0]}
             />
           ))}
       </div>

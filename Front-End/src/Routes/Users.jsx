@@ -38,7 +38,6 @@ const Users = () => {
           try {
             const response = await axiosInstance.delete(`/admin/deleteClient`);
             console.log("Response:", response.data);
-            t;
             fetchData();
           } catch (e) {
             console.log(e);

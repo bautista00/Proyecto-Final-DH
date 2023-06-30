@@ -198,10 +198,10 @@ const CreateProduct = () => {
     <div className="product-form-container">
       <h1 className="banner-text">Agregar producto</h1>
       <form className="form-container" onSubmit={handleSubmit}>
-        <div className="divsDataForm">
-          <div className="data-info-container">
+        <div className="divsDataForm divDataForm1">
+          <div className="data-info-container data-container-1">
             <h3>Datos de la cancha</h3>
-            <div className="data-container">
+            <div className="data-container ">
               <label className="custom-form">Nombre</label>
               <input
                 type="text"
@@ -242,7 +242,7 @@ const CreateProduct = () => {
             </div>
 
             <div className="data-container">
-              <label className="custom-form">Imágenes (Por lo menos 4)</label>
+              <label className="custom-form">Imágenes (mínimo 4)</label>
               <input
                 type="file"
                 name="images"
@@ -251,22 +251,76 @@ const CreateProduct = () => {
                 multiple
                 onChange={handleFile}
               />
-              {files.map((file, index) => (
-                <div className="vistaPrevia" key={index}>
-                  <img
-                    className="vistaPrevia"
-                    src={URL.createObjectURL(file)}
-                    alt={`Foto ${index}`}
-                  />
-                  <button onClick={() => handleRemoveFile(index)}>
-                    Eliminar
-                  </button>
-                </div>
-              ))}
+              <div className="imagenesVistaPrevia">
+                {files.map((file, index) => (
+                  <div className="vistaPrevia" key={index}>
+                    <img
+                      className="vistaPrevia"
+                      src={URL.createObjectURL(file)}
+                      alt={`Foto ${index}`}
+                    />
+                    <button onClick={() => handleRemoveFile(index)}>
+                      <i className="fa-solid fa-rectangle-xmark"></i>
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="data-info-container">
+            <h3>Servicios y Políticas</h3>
+            <div className="data-container">
+              <label className="custom-form">Servicios</label>
+              <div className="data-container-servicios">
+                {servicios.map((servicio, index) => (
+                  <div key={index} className="data-container ">
+                    <input
+                      type="checkbox"
+                      id={`servicio-${index}`}
+                      value={servicio.nombre}
+                      checked={product.servicioList.some(
+                        (item) => item.nombre === servicio.nombre
+                      )}
+                      onClick={handleServicios}
+                    />
+                    <label htmlFor={`servicio-${index}`}>
+                      {servicio.nombre}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Politicas de cancelacion</label>
+              <textarea
+                type="text"
+                value={product.criteriosList[2].descripcion}
+                onChange={handlePoliticas}
+                className="politicaInput"
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Reglas de la cancha</label>
+              <textarea
+                type="text"
+                value={product.criteriosList[0].descripcion}
+                onChange={handleReglas}
+                className="politicaInput"
+              />
+            </div>
+            <div className="data-container">
+              <label className="custom-form">Salud y seguridad</label>
+              <textarea
+                type="text"
+                value={product.criteriosList[1].descripcion}
+                onChange={handleSalud}
+                className="politicaInput"
+              />
             </div>
           </div>
           <div className="data-info-container">
-            <h3>Datos del domicilio</h3>
+            <h3>Datos de dirección del lugar</h3>
             <div className="data-container">
               <label className="custom-form">Calle</label>
               <input
@@ -302,47 +356,10 @@ const CreateProduct = () => {
                 })}
               </select>
             </div>
-            <div className="data-container">
-              <label className="custom-form">Servicios</label>
-              {servicios.map((servicio, index) => (
-                <div key={index} className="data-container">
-                  <input
-                    type="checkbox"
-                    id={`servicio-${index}`}
-                    value={servicio.nombre}
-                    checked={product.servicioList.some(
-                      (item) => item.nombre === servicio.nombre
-                    )}
-                    onClick={handleServicios}
-                  />
-                  <label htmlFor={`servicio-${index}`}>{servicio.nombre}</label>
-                </div>
-              ))}
-            </div>
-            <div className="data-container">
-              <label className="custom-form">Politicas de cancelacion</label>
-              <input
-                type="text"
-                value={product.criteriosList[2].descripcion}
-                onChange={handlePoliticas}
-              />
-            </div>
-            <div className="data-container">
-              <label className="custom-form">Reglas de la cancha</label>
-              <input
-                type="text"
-                value={product.criteriosList[0].descripcion}
-                onChange={handleReglas}
-              />
-            </div>
-            <div className="data-container">
-              <label className="custom-form">Salud y seguridad</label>
-              <input
-                type="text"
-                value={product.criteriosList[1].descripcion}
-                onChange={handleSalud}
-              />
-            </div>
+          </div>
+
+          <div className="data-info-container">
+            <h3>Horarios y Precio</h3>
             <div className="data-container">
               <label className="custom-form">Hora de Apertura</label>
               <input

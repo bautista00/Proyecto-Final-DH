@@ -10,32 +10,45 @@ const ShareAppButton = () => {
       {modalVisible && (
         <div className="modal-cat">
           <div className="modal-content-cat-footer">
-            <span className="close-cat" onClick={() => setModalVisible(false)}>
-              &times;
-            </span>
+            <div className="modalSharedTitle">
+              <span className="close-cat" onClick={() => setModalVisible(false)}>
+                &times;
+              </span>
+            </div>
+            
+            <div className="modalSharedBody">
+            <i className="logoShared">
+              <img
+                src="/images/fieldRentlogo3.png"
+                alt="logo"
+                style={{width:100}}
+              />
+            </i>
             <h2>Compartinos en todas tus redes!</h2>
             <div className="shareAppIcons">
               <a
-                href="https://api.whatsapp.com/send?text=Te invitamos a visitar nuestra app, FieldRent - tu cancha a un click www.fieldrent.com"
+                href={`https://api.whatsapp.com/send?text=Te invitamos a visitar nuestra app, FieldRent - tu cancha a un click%0Ahttp://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com`}
                 target="_blank"
                 class="whatsapp"
               >
-                <i class="fa-brands fa-whatsapp"></i>
+                <i className="fa-brands fa-whatsapp"></i>
               </a>
               <a
-                href="http://www.facebook.com/sharer.php?u=www.fieldrent.com&t=Te invitamos a visitar nuestra app, FieldRent - tu cancha a un click"
+                href={`http://www.facebook.com/sharer.php?u=http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com&t=Te invitamos a visitar nuestra app, FieldRent - tu cancha a un click%0Ahttp://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com`}
                 target="_blank"
                 class="facebook"
               >
-                <i class="fa-brands fa-facebook"></i>
+                <i className="fa-brands fa-facebook"></i>
               </a>
               <a
-                href="https://twitter.com/intent/tweet?text=Te invitamos a visitar nuestra app, FieldRent - tu cancha a un click &url=www.fieldrent.com&hashtags=#VeniAJugarConNosotros"
+                href={`https://twitter.com/intent/tweet?text=Te invitamos a visitar nuestra app, FieldRent - tu cancha a un click%0Ahttp://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com`}
                 target="_blank"
                 class="twitter"
               >
-                <i class="fa-brands fa-twitter"></i>
+                <i className="fa-brands fa-twitter"></i>
               </a>
+            </div>
+            
             </div>
           </div>
         </div>

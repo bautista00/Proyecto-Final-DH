@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import FilteredComp from "../Components/FilteredComp";
-import { axiosInstance } from "../config";
 
 const Filtered = () => {
   useEffect(() => {

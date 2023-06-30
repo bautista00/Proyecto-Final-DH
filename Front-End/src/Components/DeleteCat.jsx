@@ -50,7 +50,7 @@ const DeleteCat = () => {
     <div className="card-title-recommended">
       <h2 className="banner-text">Eliminar categorías</h2>
       <div className="card-container-recommended">{renderCards()}</div>      
-      <Link to={`/Categories`}><button className="buttonAgregar buttonCategory">Ver Categorías</button></Link>
+      <Link to={`/CreateCategory`}><button className="buttonAgregar buttonCategory">Crear nueva Categoría</button></Link>
           
     </div>
   )

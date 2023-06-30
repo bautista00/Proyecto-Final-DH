@@ -1,31 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
-import { useContextGlobal } from "./utils/GlobalContext";
-import { Link, useParams } from "react-router-dom";
-import { AutoComplete, Select } from "antd";
+import { Select } from "antd";
 import ShareAppButton from "./ShareAppButton";
 import { axiosInstance } from "../config";
+import RecommendedCard from "./RecommendedCard";
 
 const Filters = () => {
   const [selectedSport, setSelectedSport] = useState("Futbol");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedBarrio, setSelectedBarrio] = useState("Belgrano");
-
-  // const [nombreCategoria, setNombreCategoria] = useState("");
-  const [imagenCategoria, setImagenCategoria] = useState("");
-  const [descripcionCategoria, setDescripcionCategoria] = useState("");
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const [cont, setCont] = useState(3);
-  const { data } = useContextGlobal();
-
   const [categorias, setCategorias] = useState([]);
   const [barrios, setBarrios] = useState([]);
-
-  // const fetchSportData = async () => {
-  //   const result = await axiosInstance.get("/listxsport");
-  //   selectedSport(result.data);
-  // };
+  const [filtered, setFiltered] = useState([])
+  const [showFiltered, setShowFiltered] = useState(false)
 
   const fetchCategoriaData = async () => {
     const result = await axiosInstance.get("/findAllCategoria/");
@@ -38,20 +25,10 @@ const Filters = () => {
   };
 
   useEffect(() => {
-    // fetchSportData();
     fetchCategoriaData();
     fetchBarrioData();
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    setNombreCategoria("");
-    setImagenCategoria("");
-    setDescripcionCategoria("");
-
-    setModalVisible(false);
-  };
 
   const handleSportChange = (value) => {
     console.log(`selected ${value}`);
@@ -66,16 +43,39 @@ const Filters = () => {
     setSelectedBarrio(value);
   };
 
-  const cambiar = () => {
-    setCont(4);
-  };
+  
+        // codigo nuevo
 
-  /* cosas autocomplete ant */
-  /*
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
-  */
+
+        const fetchCanchasCatSport = async () => {
+  
+          try{
+            
+            const config = {        
+              params: {
+                barrio: selectedBarrio ,
+                categoria : selectedSport
+              }
+            }
+            const result = await axiosInstance.get(`/buscarFiltradas`, config)
+            setFiltered(result.data)
+            setShowFiltered(true)
+          }catch(e){
+            console.log(e)
+          }
+        }
+
+        const renderCardFiltered = () => {
+          return filtered.map((card, index)=>(
+            <RecommendedCard
+            key={index}
+            id={card?.id}
+            name={card?.nombre}
+            location={card?.domicilio?.barrio?.nombre}
+            image={card?.images?.url[0]}
+          />
+          ))
+        }
  
   return (
     <div className="divAllFilter">
@@ -111,13 +111,14 @@ const Filters = () => {
             />
           </div>
           <div>
-            <Link to={`/Filtered/${selectedSport}/${selectedBarrio}`}>
-              <button>
+              <button onClick={fetchCanchasCatSport}>
                 <img src="images\lupa.png" alt="" />
               </button>
-            </Link>
           </div>
         </div>
+      </div>
+      <div className="card-container-recommended">
+        {showFiltered && renderCardFiltered()}
       </div>
       <div className="card-title">
         <h2> Busca tu cancha por deporte </h2>
@@ -125,7 +126,7 @@ const Filters = () => {
         <p className="carousel-p">¡Desliza para ver más categorías!</p>
         <div className="card-container">
           {categorias.map((e, index) => {
-            if (index <= cont) {
+           
               return (
                 <Card
                   key={e.id}
@@ -133,7 +134,7 @@ const Filters = () => {
                   sport={e.nombre}
                 />
               );
-            }
+            
           })}
         </div>
       </div>
