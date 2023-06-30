@@ -48,7 +48,7 @@ const DeleteCat = () => {
       };
   return (
     <div className="card-title-recommended">
-      <h2 className="banner-text">Eliminar categorías</h2>
+      <h2 className="banner-text">Administrar categorías</h2>
       <div className="card-container-recommended">{renderCards()}</div>      
       <Link to={`/CreateCategory`}><button className="buttonAgregar buttonCategory">Crear nueva Categoría</button></Link>
           

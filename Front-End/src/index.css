@@ -152,7 +152,7 @@ body {
   text-decoration: underline;
 }
 .logInContent {
-  min-height: 78.6vh;
+  min-height: 81.6vh;
   position: relative;
   margin: 0;
   padding-top: 60px;
@@ -179,6 +179,19 @@ body {
 .adminCheckbox {
   width: 1.2vw;
   height: 1.2vw;
+}
+#adminCheckBoxDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+#adminCheckBoxDiv .adminCheckbox {
+  padding: 30px;
+  width: 3vw;
+}
+#adminCheckBoxDiv span {
+  color: rgb(52, 73, 94);
+  font-size: .9rem;
 }
 /* Slider */
 
@@ -242,7 +255,20 @@ body {
   text-align: center;
   font-family: "Roboto", sans-serif;
 }
-.onlyFilters select {
+
+.DivWithSelectFilter .ant-select-selection-placeholder {
+  color: black;  
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+
+.autoCompleteInput .ant-select-selection-placeholder {
+  color: black;
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
+}
+
+.onlyFilters select { 
   height: 2vw;
   background-color: #ffffff;
   width: 9vw;
@@ -296,7 +322,7 @@ body {
     .ant-select-customize-input
   )
   .ant-select-selector {
-  border: 0;
+    border: 0;
 }
 .DivWithSelectFilter {
   height: 2vw;
@@ -356,6 +382,8 @@ body {
   flex-wrap: wrap;
   gap: 3vw;
   width: 100%;
+  margin-bottom: 25px;
+  margin-top: 25px;
 }
 .card-title-recommended {
   width: 100%;
@@ -421,11 +449,16 @@ body {
   margin: 0 0 1vw 5vw;
 }
 .card h3 {
-  margin: 0.3vw;
-  font-size: 1.5vw;
-  position: relative;
-  top: -3vw;
-  left: -7vw;
+  font-size: 1.5rem;
+  position: absolute;
+  bottom: 0;
+  left: 15px;
+  cursor: pointer;
+  /*sombras*/
+  background-color: #0000002e;
+  padding: 2px;
+  box-shadow: 0px 0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 5%;
 }
 .card p {
   margin: 0.3vw;
@@ -463,7 +496,7 @@ body {
 }
 .card-container .card {
     margin: 0 2rem; 
- 
+    position: relative;
 }
 
 /*------- carousel p desactivado modo desktop */
@@ -502,9 +535,16 @@ body {
   border-radius: 15px;
   object-fit: cover;
 }
+.blockImage>.gallery {
+  display: none;
+}
 .leftBlock img {
   width: 40vw;
   height: 26.8vw;
+}
+#buttonGalleryResponsive {
+  display: none;
+  position: absolute;
 }
 .rightBlock {
   display: flex;
@@ -532,6 +572,9 @@ body {
   display: grid;
   grid-template-columns: 75% 25%;
   grid-template-rows: 50% auto;
+}
+#detail-mid-div-responsive {
+  display: none;
 }
 .detailMidDiv h2 {
   margin: 0;
@@ -616,6 +659,20 @@ body {
   margin-top: 100px;
 }
 
+.buttonReservation button{  
+    
+  font-size: 1rem;
+  right: 0.5vw;
+  padding: 10px 20px;
+  font-weight: bold;
+  background-color: #5d994b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  
+}
+
 .dateReservation h2 {
   color: rgb(52, 73, 94);
   font-size: 1.5rem;
@@ -680,8 +737,8 @@ body {
   flex-direction: column;
   align-items: center;
 }
-.testimonialBox {
-  box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.1);
+#testimonialBox {
+  box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 50%);
   background-color: #ffffff;
   padding: 20px;
   margin: 1rem;
@@ -691,6 +748,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 .boxTop ul {
   min-width: 175px;
@@ -715,7 +773,7 @@ body {
 .commentInputSection {
   display: flex;
   flex-direction: column;
-  width: 75%;
+  width: 100%;
   padding: 1rem;
   align-items: center;
 }
@@ -725,6 +783,20 @@ body {
 .commentInputSection div {
   padding: 0;
   color: #fadb14;
+}
+.commentInputSection form {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  align-items: center;
+  width: 90%;
+}
+#inputCommentSection {
+  width: 80%;
+  height: 35px;
+  border: solid 1px;
+  border-radius: 10px;
+  padding: 10px;
 }
 /* SERVICES */
 .service-item {
@@ -755,7 +827,9 @@ body {
   flex-direction: column;
   min-height: 42.75vw;
 }
-
+.account-container .banner-container {
+  margin-left: 5vw;
+}
 .account-content {
   display: flex;
   justify-content: space-around;
@@ -914,14 +988,14 @@ body {
   width: 5vw;
   height: 3vw;
 }
-.divButtons {
+.divButtons, #navbarButtonsLogin  {
   display: flex;
   justify-content: space-between;
   margin-right: 4vw;
   width: auto;
-  
+  gap: 10px;
 }
-.divButtons button {
+.divButtons button, #navbarButtonsLogin button {
   color: #5d994b;
   font-weight: 800;
   font-size: 0.9vw;
@@ -1113,7 +1187,8 @@ button:focus-visible {
 }
 .divsDataForm {
   display: flex;
-  gap: 100px;
+  column-gap: 100px;
+  row-gap: 25px;
   flex-wrap: wrap;
 }
 .divDataForm1{
@@ -1167,7 +1242,7 @@ button:focus-visible {
   gap: 20px;
 }
 
-.bookContent button, .buttonLight {
+.buttonLight {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -1221,6 +1296,7 @@ button:focus-visible {
   border: solid 2px #5d994b;
   border-radius: 15px;
   padding: 10px;
+  background-color: white;
 }
 
 .data-container input {
@@ -1287,8 +1363,8 @@ button:focus-visible {
   transform: scale(1.2);
   transition: 0.3s ease;
 }
-#card-delete {
-  height: 22vw;
+#card-delete img {
+  object-fit: cover;
 }
 #card-delete:hover {
   transform: none;
@@ -1579,7 +1655,8 @@ textarea {
 
 .tableRol,
 .tableCity,
-.CardRole {
+.CardRole,
+.tableReservas {
   margin-left: 5vw;
   width: 90%;
   margin-bottom: 20px;
@@ -1599,7 +1676,8 @@ textarea {
 .tituloRol,
 .tituloCity,
 .tituloReservas,
-.UsersPermissionsContainer h1 {
+.UsersPermissionsContainer h1,
+.tituloHistorial {
   margin-left: 5vw;
   font-size: 35px;
 }
@@ -1635,11 +1713,10 @@ textarea {
   justify-content: center;
   padding: 20px;
   background-color: #f2f2f2;
-  width: 80%;
+  width: 60%;
   margin-bottom: 30px;
   border: 2px solid #5d994b;
   border-radius: 15px;
-  margin-left: 5%;
 }
 
 .bookContent::after {
@@ -1655,6 +1732,22 @@ textarea {
   opacity: 0.7;
 }
 
+.bookContent button{
+  margin-top: 25px;
+  font-size: 1rem;
+  right: 0.5vw;
+  padding: 10px 20px;
+  font-weight: bold;
+  background-color: #5d994b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 300px;
+  align-self: center;
+
+}
+
 .bookTitle {
   font-size: 34px;
   font-weight: bold;
@@ -1664,22 +1757,46 @@ textarea {
   color: #3d3d3d !important;
   margin-top: 50px;
 }
-
-.bookContent button {
-  width: 100px;
-  align-self: center;
-}
+  
 
 .container-data-book{
   display: flex;
 }
 
-.container-data-book div{
-  width: 50%;
+.data-info2{
+  margin-top: 70px;
 }
 
-.container-data-book div img{
-  margin-right: 10px;
+.data-info-container img{
+  margin: 5px 15px 5px 0;
+  width: 100% !important;
+  height: auto !important;
+  border-radius: 10%;
+}
+.bookContentSection {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 100px;
+  row-gap: 25px;
+  margin-left: 60px;
+}
+.bookContentSection input {
+  padding: 3px;
+  padding-left: 8px;
+  margin-top: 5px;
+  border-radius: 15px;
+}
+
+
+/*--------------------------- BookingControl historial usuario */
+.tableReservas .ant-table-wrapper {
+  margin-left: 0;
+  width: 100%;
+  margin-bottom: 0;
+}
+.tableReservas .ant-table-cell .ant-space {
+  display: flex;
+  flex-wrap: wrap;
 }
 /*--------------------------- Navbar Controles*/
 .navbarControls {
@@ -1692,14 +1809,22 @@ textarea {
   width: 8vw;
   justify-content: space-between;
 }
-.navbarControls p {
+.navbarControls p, .navbarControls i {
   color: #eeeeee;
-  
 }
 .ant-popover-inner-content a, .ant-popover-inner-content p {
   color: #202020;
   cursor: pointer;
   font-weight: 500;
+}
+.navbarControlsLogin {
+  display: none;
+}
+#welcomeMessageMenu {
+  display: flex;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: 600;
 }
 
 /*---------------------------------------------------------------Media queries para tablets y celulares---------------------------------*/
@@ -1717,16 +1842,19 @@ textarea {
 
   .logoDiv a {
     font-size: 1rem;
-    padding-left: 5vw;
+    padding-left: 4px;
   }
-  /*-------------- header Avatar y botón cerrar sesión*/
+  .logoDiv {
+    margin-left: 5px;
+  }
+  /*-------------- Avatar y botones*/
   .divButtons {
     align-items: center;
     padding: 1vw;
   }
   .avatar {
-    width: 3.5rem;
-    height: 3.5rem;
+    width: 50px;
+    height: 50px;
     margin-top: 0;
   }
   .avatar span {
@@ -1737,6 +1865,30 @@ textarea {
     height: 1.4rem;
     width: 18vw;
     margin-top: 0;
+  }
+  /*--------------------------- Navbar Controles logueo*/
+  .navbarControls > div {
+    width: auto;
+  }
+  #navbarButtonsLogin{
+    display: none;
+  }
+  .navbarControlsLogin {
+    display: inline;
+    display: flex;
+    align-items: center;
+    width: 70px;
+    justify-content: space-between;
+  }
+  #buttonMenuLogin {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 15%;
+    font-size: 1.5rem;
+    padding: 0;
+  }
+  .navbarControlsLogin> i {
+    color: #eeeeee;
   }
   /*-------------- header buscador */
   .slider img {
@@ -1811,29 +1963,22 @@ textarea {
     object-fit: cover;
   }
 
-  .card h3 {
-    margin: 0;
-    font-size: 1.5rem;
-    top: -11.5vw;
-    left: -19vw;
-  }
-
   .card-container-recommended img {
     height: 45vw;
     width: 70vw;
   }
 
   .card-recommended h3 {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
 
   .card-recommended p {
     margin: 0vw;
-    font-size: 2.1vw;
+    font-size: 0.8rem;
   }
 
   .card-title {
-    margin-top: 18vh;
+    margin-top: 0;
     align-items: center;
     gap: 3vh;
   }
@@ -1863,6 +2008,9 @@ textarea {
     right: 0;
     width: 10rem;
     padding: 1px;
+  }
+  .divAllFilter .card-container-recommended {
+    margin-top: 20vh;
   }
   /* modal compartir*/
   .close-cat {
@@ -1896,7 +2044,7 @@ textarea {
     overflow: scroll;
     overflow-y: hidden;
     width: 100%;
-    height: 43vh;
+    height: 300px;
   }
   
   .card-container .card {
@@ -1922,15 +2070,110 @@ textarea {
   }
   /*---------------------------DETAIL responsive*/
   .detailMidDiv {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    margin-bottom: 20px;
+    display: none;
   }
+  #testimonialBox {
+    margin: 12px;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .detailMidDiv h2 {
+    font-size: 2.5rem;
+    margin-left: 0;
+  }
+  .locationDiv {
+    margin-left: 0;
+  }
+  .detailMidDiv div img {
+    margin-left: 0;
+  }
+  .detailMidDiv h4 {
+    font-size: 1rem;
+  }
+  #detail-mid-div-responsive {
+    display: flex;
+    margin-bottom: 20px;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 90vw;
+    margin-left: 10vw;
+    gap: 20px;
+  }
+  .valoration-buttons-ref {
+    display: flex;
+    gap: 5px;
+  }
+  .dateReservation {
+    margin-top: 30px;
+  }
+  .dateReservationContent {
+    flex-direction: column;
+    width: 90%;
+    margin: 20px;
+    text-align: center;
+    gap: 10px;
+  }
+  .buttonReservation {
+    margin-top: 15px;
+  }
+  .allServices {
+    gap: 10px;
+  }
+  /*  Bloque de imágenes responsive*/
+  .blockImage {
+    margin-left: 0;
+    width: 85%;
+    flex-direction: column;
+    align-self: center;
+    position: relative;
+  }
+  .blockImage>.gallery {
+    display: inline;
+  }
+  .leftBlock img {
+    width: 80vw;
+    height: auto;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+  .rightBlock {
+    display: none;
+  }
+  .gallery button {
+    color: white;
+    position: absolute;
+    bottom: 10px;
+    right: 40px;
+    font-size: 2rem;
+    text-decoration: underline;
+    background-color: transparent;
+    padding: 10px;
+  }
+  .modalBox {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .modalContent {
+    max-width: 70%;
+    position: relative;
+  }
+  .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  .imageGallery {
+    margin-top: 30px;
+  }
+  
   /*--------------------------- Parte registro y logueo*/
   .formSignUp {
-    width: 35vh;
+    width: 85%;
   }
   .formSignUp input {
     width: 90%;
@@ -1986,9 +2229,12 @@ textarea {
   /*--------------------------  Permisos de cada rol /UsersPermissions - Agregar Rol */
   .tableRol,
   .tableCity,
-  .CardRole {
+  .CardRole,
+  .tableReservas {
     width: 90%;
     margin-bottom: 3vh;
+    contain: content;
+    overflow: scroll;
   }
   .usersButton {
     justify-content: center;
@@ -1998,22 +2244,20 @@ textarea {
     flex-direction: column;
     gap: 0px;
   }
-
-  
   .divDataForm1{
     margin-left: 0px;
   }
-
   .banner-container {
     height: 190px;
     width: 90%;
     align-self: center;
   }
-
   .data-container-1 > .data-container{
     margin-bottom: 0px;
   }
-
+  .data-container-servicios {
+    width: 80%;
+  }
   /*-------------------------- Booking datepicker */
   #scheduleContainer {
     margin-left: 0 !important;
@@ -2031,9 +2275,25 @@ textarea {
     flex-direction: column;
     align-items: center;
   }
-  /*--------------------------- Navbar Controles*/
-  .navbarControls > div {
+  /*-------------------------- Booking */
+  .bookContentSection .data-info-container {
     width: auto;
+  }
+  .bookContentSection {
+    margin-left: 0;
+  }
+  .bookContentSection .image-grid {
+    text-align: center;
+  }
+  .bookContent {
+    margin-left: 0;
+    width: 80%;
+  }
+  .bookContent button{
+    width: 70%;
+  }
+  .data-info2{
+    margin-top: 0px;
   }
 }
 /* Tablets----------------------------------------------------------------------------------------------------------------------- */
@@ -2064,12 +2324,6 @@ textarea {
     height: 22vw;
     width: 30vw;
   }
-  .card h3 {
-    margin: 0;
-    font-size: 3vw;
-    top: -4vw;
-    left: -8vw;
-  }
   .card-container-recommended img {
     height: 15vw;
     width: 30vw;
@@ -2085,7 +2339,7 @@ textarea {
     margin-top: 50px;
   }
   .card-title {
-    margin-top: 180px;
+    margin-top: 0;
   }
   .card-title h2 {
     margin: 2vw 0 1vw;
@@ -2110,15 +2364,6 @@ textarea {
     gap: 1rem;
   }
   /*--------------------------Detail*/
-  .detailMidDiv {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-  }
-  .detailMidDiv h4 {
-    font-size: 2rem;
-  }
   .divInfo h2 {
     font-size: 3rem;
   }
@@ -2175,6 +2420,9 @@ textarea {
   .data-container-1 > .data-container{
     margin-bottom: 0px;
   }
+  .data-info-container {
+    width: auto;
+  }
   /*-----------------------------Verify------------*/
   .logInContent {
     font-size: 2rem;
@@ -2184,6 +2432,21 @@ textarea {
 
   .buttons-Categories{
     flex-direction:row;
+  }
+
+  /*-----------------------------Booking------------*/
+
+  .data-info2{
+    margin-top: 0px;
+  }
+
+  .bookContent{
+    width: 80%;
+  }
+
+  .data-info-container img{
+    
+    width: 80% !important;
   }
 }
 

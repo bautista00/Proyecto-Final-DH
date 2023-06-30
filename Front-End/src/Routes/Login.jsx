@@ -46,7 +46,7 @@ const Login = () => {
       });
     } catch (e) {
       console.log(e);
-      setError("Credenciales erradas")
+      setError("Credenciales inválidas, por favor intente nuevamente")
     }
   };
 
@@ -77,7 +77,7 @@ const Login = () => {
         {error && <p>{error}</p>}
       </form>
       <div className="inicioSesion">
-        <p>No tenes una cuenta?</p>
+        <p>No tenés una cuenta?</p>
         <Link to={`/SignUp`}>
           <p className="inicioSesionLink">Registrate</p>
         </Link>

@@ -1,18 +1,25 @@
-import React from 'react'
+import React, { useEffect} from "react";
+import { axiosInstance } from "../config";
+
 
 const Verify = () => {
 
-  useEffect(() => { 
-    axiosInstance.put("/verify", {
+  const fetchVerify = async () => {
+    const config = {        
       params: {
-        email: localStorage.getItem("email"),
-      },
-    })
+        email: localStorage.getItem("email")
+      }
+    };
+    await axiosInstance.put("/verify", {}, config);
+  };
+
+  useEffect(() => { 
+    fetchVerify()
 }, [])
 
     const goLogin = () =>{
       localStorage.removeItem("email")
-      window.location.href("/Login")
+      window.location.replace("/Login");
     }
 
   return (

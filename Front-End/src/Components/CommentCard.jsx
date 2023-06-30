@@ -3,7 +3,7 @@ import { Rate } from "antd";
 
 const CommentCard = ({userName, rating, comment}) => {
   return (
-    <div className="testimonialBox">
+    <div id="testimonialBox">
         <div className="boxTop">
             <div className="profileComment">
             <strong>{userName}</strong> <span>@{userName}</span>

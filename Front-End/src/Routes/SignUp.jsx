@@ -25,13 +25,13 @@ const SignUp = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [accountCreated, setAccountCreated] = useState(false); // Nuevo estado para mostrar el mensaje de cuenta creada
 
-  useEffect(() => {
-    if (accountCreated) {
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 20000);
-    }
-  }, [accountCreated]);
+  // useEffect(() => {
+  //   if (accountCreated) {
+  //     setTimeout(() => {
+  //       window.location.href = "/login";
+  //     }, 20000);
+  //   }
+  // }, [accountCreated]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -100,11 +100,10 @@ const SignUp = () => {
       }
 
       
-      await axiosInstance.post("/sign-up", requestData).then((response) => {
+      await axiosInstance.post("/sign-up", requestData)
+      .then((response) => {
         console.log("Response:", response.data);
-        setJwt(response.data.jwt);
         localStorage.setItem("email", response.data.email)
-        console.log(jwt);
       });
 
     }catch(e){
@@ -269,21 +268,24 @@ const SignUp = () => {
           )}
 
           <label htmlFor="admin">
-            ¿Queres registrate para alquilar tus canchas?
+            ¿Querés registrarte para alquilar tus canchas?
           </label>
-          <input
-            type="checkbox"
-            id="admin"
-            onChange={() => setIsAdmin(!isAdmin)}
-            className="adminCheckbox"
-          />
+          <div id="adminCheckBoxDiv">
+            <span>Haz click aquí</span>
+            <input
+              type="checkbox"
+              id="admin"
+              onChange={() => setIsAdmin(!isAdmin)}
+              className="adminCheckbox"
+            />
+          </div>
 
           <button type="submit">Registrarse</button>
         </form>
       )}
 
       <div className="inicioSesion">
-        <p>¿Ya tienes una cuenta?</p>
+        <p>¿Ya tenés una cuenta?</p>
         <Link to={`/Login`}>
           <p className="inicioSesionLink">Inicia Sesión</p>
         </Link>

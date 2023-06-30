@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import RecommendedCard from "../Components/RecommendedCard";
-import { useContextGlobal } from "../Components/utils/GlobalContext";
 import { axiosInstance } from "../config";
 
 const Recommended = () => {
-  // const { data } = useContextGlobal();
   const [canchas, setCanchas] = useState([]);
 
   useEffect(() => {

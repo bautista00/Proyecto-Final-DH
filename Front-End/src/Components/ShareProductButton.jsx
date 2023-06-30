@@ -7,7 +7,7 @@ const ShareProductButton = (props) => {
   return (
     <>
       <button id="button-Compartir-producto" onClick={() => setModalVisible(true)}>
-        <i class="fa-solid fa-share-nodes"></i>
+        <i className="fa-solid fa-share-nodes"></i>
       </button>
       {modalVisible && (
         <div className="modal-cat">
@@ -32,23 +32,23 @@ const ShareProductButton = (props) => {
               <a
                 href={`https://api.whatsapp.com/send?text=Te invitamos a visitar nuestra cancha, FieldRent - tu cancha a un click%0Ahttp://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/detail/${props.id}`}
                 target="_blank"
-                class="whatsapp"
+                className="whatsapp"
               >
-                <i class="fa-brands fa-whatsapp"></i>
+                <i className="fa-brands fa-whatsapp"></i>
               </a>
               <a
                 href={`http://www.facebook.com/sharer.php?u=http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/detail/${props.id}&t=Te invitamos a visitar nuestra cancha, FieldRent - tu cancha a un click%0Ahttp://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/detail/${props.id}`}
                 target="_blank"
-                class="facebook"
+                className="facebook"
               >
-                <i class="fa-brands fa-facebook"></i>
+                <i className="fa-brands fa-facebook"></i>
               </a>
               <a
                 href={`https://twitter.com/intent/tweet?text=Te invitamos a visitar nuestra cancha, FieldRent - tu cancha a un click%0Ahttp://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/detail/${props.id}`}
                 target="_blank"
-                class="twitter"
+                className="twitter"
               >
-                <i class="fa-brands fa-twitter"></i>
+                <i className="fa-brands fa-twitter"></i>
               </a>
           </div>
           

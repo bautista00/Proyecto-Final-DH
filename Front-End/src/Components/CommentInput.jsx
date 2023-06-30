@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Rate } from "antd";
 import CommentCard from "./CommentCard";
 import { useEffect } from "react";
+import { axiosInstance } from "../config";
 
 
 const CommentInput = ({valoraciones, canchaId}) => {
@@ -13,14 +14,33 @@ const CommentInput = ({valoraciones, canchaId}) => {
   const desc = ["Pesimo", "Malo", "Normal", "Bueno", "Excelente"];
   const[commentCreated, setCommentCreated] = useState(false)
 
+  const [loggedUser, setLoggedUser] = useState({});
+
+  useEffect(() => {
+    if (localStorage.getItem("auth") === "true") {
+      axiosInstance
+        .get("/all/getuser", {
+          params: {
+            token: localStorage.getItem("jwt"),
+          },
+        })
+        .then((response) => {
+          setLoggedUser(response.data);
+          console.log(response.data);
+        });
+    }
+  }, []);
 
  useEffect(()=>{
     setValorations(valoraciones)
- },[valoraciones]) 
+    
+  }, [valoraciones]);
 
-
+  console.log(valoraciones)
 
  const saveValoration = () => {
+  
+
   const token = localStorage.getItem("jwt");
   const payload = {
     method: "POST",
@@ -51,7 +71,15 @@ const CommentInput = ({valoraciones, canchaId}) => {
   }
   
   const handleSetButton = () => {
-    setshowBtn(false);
+    const hasCommented = valorations.some(
+      (valoracion) => valoracion.userID === loggedUser.id
+    );
+  
+    if (hasCommented) {
+      setCanComment(false);
+    } else {
+      setshowBtn(false);
+    }
   };
   
   const renderizarValoraciones = () => {
@@ -89,7 +117,7 @@ const CommentInput = ({valoraciones, canchaId}) => {
                 <Rate tooltips={desc} onChange={(value) => setValoracionDTO({ descripcion: valoracionDTO.descripcion, puntuacion: value})} value={valoracionDTO?.puntuacion} />
                  {valoracionDTO.puntuacion ? <span className="ant-rate-text">{desc[valoracionDTO.puntuacion - 1]}</span> : ""}
               </span>
-              <input value={valoracionDTO?.descripcion} type="text" onChange={(e)=>{setValoracionDTO({...valoracionDTO, descripcion : e.target.value})}} />
+              <input id="inputCommentSection" value={valoracionDTO?.descripcion} type="text" onChange={(e)=>{setValoracionDTO({...valoracionDTO, descripcion : e.target.value})}} maxLength={300}/>
               <span>
                 <button
                 type="button"
