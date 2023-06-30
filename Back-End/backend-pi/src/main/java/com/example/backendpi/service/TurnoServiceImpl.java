@@ -162,16 +162,19 @@ public Turno guardar(TurnoDTO turnoDTO, String token) throws ResourceNotFoundExc
 
     @Override
     public List<TurnoDTO> historialCanchaUsuario(String token) throws ResourceNotFoundException {
-        User user = userRepository.findByEmail(jwtService.extractUserName(token));
-        List<Turno> turnoList = turnoRepository.findByUserWithFecha(user.getId());
+        List<Turno> turnoList = turnoRepository.findByUser(userRepository.findByEmail(jwtService.extractUserName(token)));
         List<TurnoDTO> turnoDTOS = new ArrayList<>();
+
         if (turnoList.size() > 0) {
             for (Turno turno : turnoList) {
-                turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
+                if (turno.isCompletado()) { // Agregar condición de completado
+                    turnoDTOS.add(turnoToTurnoDTOConverter.convert(turno));
+                }
             }
             return turnoDTOS;
         }
-        throw new ResourceNotFoundException("La lista esta vacia");
+
+        throw new ResourceNotFoundException("La lista está vacía");
     }
 
 //    @Override

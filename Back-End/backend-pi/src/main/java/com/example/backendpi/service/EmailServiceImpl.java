@@ -83,6 +83,6 @@ public class EmailServiceImpl implements EmailService {
 
         sendMail(user.getEmail(), subject, content);
     }
-    
+
 }
 
