@@ -1,30 +1,23 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import axios from "axios";
 
-const ContextGlobal = createContext();
+
+export const ContextGlobal = createContext()
 
 export const ContextProvider = ({ children }) => {
-  const [data, setData] = useState([]);
+  const [favs, setFavs] = useState(() => {
+    const favsAlmacenados = localStorage.getItem("favoritos")
+    return favsAlmacenados ? JSON.parse(favsAlmacenados) : []
+  });
 
-  useEffect(() => {
-    axios.get("../data.json").then((response) => {
-      setData(response.data);
-    });
-  }, []);
-
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    axios.get("../user.json").then((response) => {
-      setUsers(response.data);
-    });
-  }, []);
+   useEffect(() => {
+    localStorage.setItem("favoritos", JSON.stringify(favs))
+  }, [favs])
 
   return (
-    <ContextGlobal.Provider value={{ data, setData, users }}>
+    <ContextGlobal.Provider value={{favs, setFavs}}>
       {children}
     </ContextGlobal.Provider>
-  );
-};
+  )
+}
 
-export const useContextGlobal = () => useContext(ContextGlobal);
+export const useContextGlobal = () => useContext(ContextGlobal)

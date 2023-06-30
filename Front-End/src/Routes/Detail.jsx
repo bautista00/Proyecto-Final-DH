@@ -40,7 +40,7 @@ const Detail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [detail, setDetail] = useState({});
-  const [rateValue, setRateValue]= useState(0)
+  const [rateValue, setRateValue] = useState(0);
   const [servicios, setServicios] = useState([]);
   const [serviciosLocal, setServiciosLocal] = useState([
     { name: "Vestuarios", icon: "fa-solid fa-person-booth" },
@@ -62,7 +62,7 @@ const Detail = () => {
   //     key: "selection",
   //   },
   // ]);
-  
+
   const [selectedDate, setSelectedDate] = useState({ date: null, hours: 0 });
 
   const [show, setShow] = useState({
@@ -90,7 +90,7 @@ const Detail = () => {
       })) || [];
 
     setProgrammedEvents(programmedEventsInDetail);
-    setMapLoaded(true)
+    setMapLoaded(true);
   };
 
   useEffect(() => {
@@ -107,6 +107,9 @@ const Detail = () => {
   }, []);
 
   useEffect(() => {
+    let reservationDate = localStorage.getItem("reservationDate");
+    reservationDate = reservationDate ? new Date(reservationDate) : new Date();
+
     scheduler.config.header = [
       "day",
       "week",
@@ -117,12 +120,14 @@ const Detail = () => {
       "next",
     ];
 
-    scheduler.parse([...programmedEvents], "json");
-    scheduler.init("scheduleContainer", new Date(), "day");
     scheduler.config.first_hour = 8;
     scheduler.config.last_hour = 18;
     scheduler.config.time_step = 60;
-    //scheduler.config.drag_move = true;
+    scheduler.config.limit_start = new Date();
+    scheduler.config.details_on_dblclick = false;
+
+    scheduler.parse([...programmedEvents], "json");
+    scheduler.init("scheduleContainer", reservationDate, "day");
 
     scheduler.templates.hour_scale = function (date) {
       return scheduler.date.date_to_str("%h:%i %A")(date);
@@ -143,6 +148,25 @@ const Detail = () => {
 
       setSelectedDate({ date, hours });
     });
+
+    // Attach the onBeforeEventChanged event handler
+    scheduler.attachEvent(
+      "onBeforeEventChanged",
+      function (event, e, is_new, original) {
+        if (is_new) {
+          // Check if the selected date is before today
+          var selectedDate = event.start_date;
+          var today = new Date();
+
+          if (selectedDate < today) {
+            // Prevent the date selection
+            return false;
+          }
+        }
+
+        return true; // Allow the date selection
+      }
+    );
   }, [programmedEvents, selectedDate]);
 
   if (!detail) return null;
@@ -163,22 +187,53 @@ const Detail = () => {
         <h4> Valoraciones ({detail?.canchaDTO?.valoracionList.length})</h4>
         <div className="locationDivIcono">
           <div className="locationDiv">
-          <img src="/images/location.png" alt="" />
-          <p>
-            {detail?.canchaDTO?.domicilio?.provincia},{" "}
-            {detail?.canchaDTO?.domicilio?.calle}{" "}
-            {detail?.canchaDTO?.domicilio?.numero}
-          </p>
-
+            <img src="/images/location.png" alt="" />
+            <p>
+              {detail?.canchaDTO?.domicilio?.provincia},{" "}
+              {detail?.canchaDTO?.domicilio?.calle}{" "}
+              {detail?.canchaDTO?.domicilio?.numero}
+            </p>
           </div>
-        
-          <ShareProductButton descripcion={detail?.canchaDTO?.descripcion} imagen={detail?.canchaDTO?.images?.url[0]} id={detail?.canchaDTO?.id} />
+
+          <ShareProductButton
+            descripcion={detail?.canchaDTO?.descripcion}
+            imagen={detail?.canchaDTO?.images?.url[0]}
+            id={detail?.canchaDTO?.id}
+          />
         </div>
         <Rate
           disabled
           value={rateValue}
           style={{ color: "#fadb14", fontSize: 20, padding: 0 }}
         />
+      </div>
+      <div id="detail-mid-div-responsive" className="detailMidDiv">
+        <h2>{detail?.canchaDTO?.nombre}</h2>
+        <div className="locationDivIcono">
+          <div className="locationDiv">
+            <img src="/images/location.png" alt="" />
+            <p>
+              {detail?.canchaDTO?.domicilio?.provincia},{" "}
+              {detail?.canchaDTO?.domicilio?.calle}{" "}
+              {detail?.canchaDTO?.domicilio?.numero}
+            </p>
+          </div>
+        </div>
+        <div className="valoration-buttons-ref">
+          <div>
+          <h4> Valoraciones ({detail?.canchaDTO?.valoracionList.length})</h4>
+          <Rate
+            disabled
+            value={rateValue}
+            style={{ color: "#fadb14", fontSize: 20, padding: 0 }}
+          />
+          </div>
+          <ShareProductButton
+            descripcion={detail?.canchaDTO?.descripcion}
+            imagen={detail?.canchaDTO?.images?.url[0]}
+            id={detail?.canchaDTO?.id}
+          />
+        </div>
       </div>
       <div className="blockImage">
         <div className="leftBlock">
@@ -195,20 +250,30 @@ const Detail = () => {
             <Gallery images={detail?.canchaDTO?.images?.url} />
           </div>
         </div>
+        <Gallery images={detail?.canchaDTO?.images?.url} />
       </div>
-      
+
       <div className="detailBottomDiv">
         <div className="divLocation">
           <h2>Dónde puedes encontrarnos</h2>
           <iframe
-            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDIXxKR3FboVvl_VMi1LhVlUjWZlpmrqP4&q=${encodeURIComponent(detail?.canchaDTO?.domicilio?.provincia + ", " + detail?.canchaDTO?.domicilio?.calle + " " + detail?.canchaDTO?.domicilio?.numero)}`}
+            src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyDIXxKR3FboVvl_VMi1LhVlUjWZlpmrqP4&q=${encodeURIComponent(
+              detail?.canchaDTO?.domicilio?.provincia +
+                ", " +
+                detail?.canchaDTO?.domicilio?.calle +
+                " " +
+                detail?.canchaDTO?.domicilio?.numero
+            )}`}
           ></iframe>
         </div>
         <div className="divInfo">
           <h2 id="valorationSection">Valoraciones</h2>
           <div className="commentSection">
             <div id="commentsBox">
-              <CommentInput valoraciones={detail?.canchaDTO?.valoracionList} canchaId = {detail?.canchaDTO?.id}/>
+              <CommentInput
+                valoraciones={detail?.canchaDTO?.valoracionList}
+                canchaId={detail?.canchaDTO?.id}
+              />
             </div>
           </div>
         </div>

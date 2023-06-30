@@ -6,7 +6,7 @@ const CompletedBookings = () => {
   const [bookings, setBookings] = useState([]);
 
   const fetchData = async () => {
-    const result = await axiosInstance.get("/user/findxuserturnos", {
+    const result = await axiosInstance.get("/user/historialCanchas", {
       params: {
         token: localStorage.getItem("jwt"),
       },
@@ -56,7 +56,6 @@ const CompletedBookings = () => {
 
         return (
           <Space size="middle">
-            <Button>Editar</Button>
             <Button onClick={() => handleDelete(record.id)}>Eliminar</Button>
           </Space>
         );
@@ -70,8 +69,6 @@ const CompletedBookings = () => {
 
   return (
     <>
-      <h1 className="tituloReservas">Reservas</h1>
-
       <Table
         className="tableRol"
         rowKey={(record) => record.id}

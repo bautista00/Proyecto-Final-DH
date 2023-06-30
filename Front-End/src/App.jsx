@@ -19,6 +19,7 @@ import Verify from "./Routes/Verify";
 import CreateCategory from "./Routes/CreateCategory";
 import DeleteCategory from "./Routes/DeleteCategory";
 import BookingControl from "./Routes/BookingControl";
+import Favoritos from "./Routes/Favoritos";
 
 function App() {
   return (
@@ -42,6 +43,8 @@ function App() {
         <Route path="/CreateCategory" element={<CreateCategory />} />
         <Route path="/DeleteCategory" element={<DeleteCategory />} />
         <Route path="/BookingControl" element={<BookingControl />} />
+        <Route path="/Favoritos" element={<Favoritos />} />
+        
       </Routes>
       <Footer />
     </>

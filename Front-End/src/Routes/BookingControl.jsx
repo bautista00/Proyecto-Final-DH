@@ -21,28 +21,23 @@ const contentListNoTitle = {
 };
 
 const BookingControl = () => {
-  const [activeTabKey2, setActiveTabKey2] = useState("User");
+  const [activeTabKey2, setActiveTabKey2] = useState("Vigentes");
 
   const onTab2Change = (key) => {
     setActiveTabKey2(key);
   };
   return (
-    <div>
-      <div>
-        <div>
+    <div className="product-form-container">
+      <h1 className="tituloHistorial">Reservas</h1>
+        <div className="tableReservas">
           <Card
-            style={{
-              width: "50%",
-            }}
             tabList={tabListNoTitle}
             activeTabKey={activeTabKey2}
-            tabBarExtraContent={<a href="#">More</a>}
             onTabChange={onTab2Change}
           >
             {contentListNoTitle[activeTabKey2]}
           </Card>
         </div>
-      </div>
     </div>
   );
 };

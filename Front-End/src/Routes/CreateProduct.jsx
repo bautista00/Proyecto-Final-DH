@@ -187,7 +187,7 @@ const CreateProduct = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (files.length < 4) {
-      setError("Debe agregar al menos 4 fotos.");
+      setError("Por favor suba al menos 4 fotos e intente nuevamente.");
     } else {
       setError("");
       postCancha();
@@ -265,6 +265,7 @@ const CreateProduct = () => {
                   </div>
                 ))}
               </div>
+              {error && <p className="error-message">{error}</p>}
             </div>
           </div>
 
@@ -393,9 +394,7 @@ const CreateProduct = () => {
           {" "}
           Agregar Producto{" "}
         </button>
-        {error && <p className="error-message">{error}</p>}
         {successMessage && <p className="success-message">{successMessage}</p>}
-        {error && <p className="error-message">{error}</p>}
       </form>
     </div>
   );

@@ -56,7 +56,6 @@ const CurrentBooking = () => {
 
         return (
           <Space size="middle">
-            <Button>Editar</Button>
             <Button onClick={() => handleDelete(record.id)}>Eliminar</Button>
           </Space>
         );
@@ -70,8 +69,6 @@ const CurrentBooking = () => {
 
   return (
     <>
-      <h1 className="tituloReservas">Reservas</h1>
-
       <Table
         className="tableRol"
         rowKey={(record) => record.id}
