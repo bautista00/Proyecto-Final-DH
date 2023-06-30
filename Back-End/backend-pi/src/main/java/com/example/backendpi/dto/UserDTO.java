@@ -22,7 +22,6 @@ public class UserDTO {
     private String CBU;
     @Enumerated(EnumType.STRING)
     private Role role;
-
     private String cuil;
     private String telefono;
     private Domicilio domicilio;

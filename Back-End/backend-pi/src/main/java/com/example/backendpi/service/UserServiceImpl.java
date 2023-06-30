@@ -1,8 +1,8 @@
 package com.example.backendpi.service;
 
 import com.amazonaws.services.backup.model.MissingParameterValueException;
-import com.example.backendpi.converters.CanchaDTOaCanchaConverter;
 import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
+import com.example.backendpi.converters.UserDTOToUserConverter;
 import com.example.backendpi.converters.UserToUserDTOConverter;
 import com.example.backendpi.domain.Cancha;
 import com.example.backendpi.domain.User;
@@ -41,6 +41,8 @@ public class UserServiceImpl implements UserService {
     private final JwtService jwtService;
 
     private final UserToUserDTOConverter userToUserDTOConverter;
+
+    private final UserDTOToUserConverter userDTOToUserConverter;
 
     private final CanchaToCanchaDTOConverter converter;
 
@@ -133,5 +135,16 @@ public class UserServiceImpl implements UserService {
         }
         throw new ResourceNotFoundException("No existe la lista de favs");
     }
+
+
+//    @Override
+//    public void modificarUser(UserDTO userDTO,String token) throws ResourceNotFoundException{
+//        String email = jwtService.extractUserName(token);
+//        User user = userRepository.findByEmail(email);
+//        UserDTO userDTO1 = userToUserDTOConverter.convert(user);
+//        if (){
+//            userRepository.save(user);
+//        }
+//    }
 
 }

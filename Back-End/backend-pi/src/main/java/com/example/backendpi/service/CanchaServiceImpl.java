@@ -299,8 +299,7 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
             throw new ResourceNotFoundException("No existen canchas buscadas por el propietario");
         }
     }
-    ///////////////////////////////////////
-    //quizas es usar images y no imagesDTO
+
 
 
     @Override
@@ -316,7 +315,7 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
         throw new ResourceNotFoundException("No se econtro una lista con esos atributos");
     }
 
-    public void agregarCanchaAFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
+    public void agregarCanchaAFavoritos(Long id, String token) throws ResourceNotFoundException {
         String email = jwtService.extractUserName(token);
         User user = userRepository.findByEmail(email);
         CanchasFavoritas favoritesList = user.getListaCanchasFavoritas();
@@ -325,23 +324,23 @@ public Cancha guardar(CanchaDTO canchaDTO, String token, List<MultipartFile> fil
             favoritesList.setUser(user);
             user.setListaCanchasFavoritas(favoritesList);
         }
-        Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+        Optional<Cancha> cancha = canchaRepository.findById(id);
         List<Cancha> canchasFavoritas = favoritesList.getCanchas();
         if (!canchasFavoritas.contains(cancha)) {
-            canchasFavoritas.add(cancha);
+            canchasFavoritas.add(cancha.get());
             userRepository.save(user);
         } else {
             throw new ResourceNotFoundException("No se pudo agregar la cancha");
         }
     }
 
-    public void eliminarCanchaDeFavoritos(CanchaDTO canchaDTO, String token) throws ResourceNotFoundException {
+    public void eliminarCanchaDeFavoritos(Long id, String token) throws ResourceNotFoundException {
         String email = jwtService.extractUserName(token);
         User user = userRepository.findByEmail(email);
         CanchasFavoritas favoritesList = user.getListaCanchasFavoritas();
 
         if (favoritesList != null) {
-            Cancha cancha = canchaDTOaCanchaConverter.convert(canchaDTO);
+            Optional<Cancha> cancha = canchaRepository.findById(id);
             List<Cancha> canchasFavoritas = favoritesList.getCanchas();
 
             if (canchasFavoritas.contains(cancha)) {
