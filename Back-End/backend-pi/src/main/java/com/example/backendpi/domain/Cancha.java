@@ -67,7 +67,7 @@ public class Cancha {
     private String descripcion;
 
 
-//    @ManyToMany(mappedBy = "canchas")
-//    private List<CanchasFavoritas> listasCanchasFavoritas = new ArrayList<>();
+    @ManyToMany(mappedBy = "canchas")
+    private List<CanchasFavoritas> listasCanchasFavoritas = new ArrayList<>();
 
 }

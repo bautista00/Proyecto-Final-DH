@@ -5,6 +5,7 @@ import com.example.backendpi.converters.CanchaToCanchaDTOConverter;
 import com.example.backendpi.converters.UserDTOToUserConverter;
 import com.example.backendpi.converters.UserToUserDTOConverter;
 import com.example.backendpi.domain.Cancha;
+import com.example.backendpi.domain.CanchasFavoritas;
 import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.CanchaDTO;
 import com.example.backendpi.dto.UserDTO;
@@ -121,20 +122,29 @@ public class UserServiceImpl implements UserService {
 //
     }
 
-//    @Override
-//    public List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException {
-//        String email = jwtService.extractUserName(token);
-//        User user = userRepository.findByEmail(email);
-//        List<Cancha> canchaList = user.getListaCanchasFavoritas().getCanchas();
-//        List<CanchaDTO> canchaDTOS = new ArrayList<>();
-//        if (canchaList.size()>0) {
-//            for (Cancha cancha : canchaList) {
-//                canchaDTOS.add(converter.convert(cancha));
-//            }
-//            return canchaDTOS;
-//        }
-//        throw new ResourceNotFoundException("No existe la lista de favs");
-//    }
+    @Override
+    public List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException {
+        String email = jwtService.extractUserName(token);
+        User user = userRepository.findByEmail(email);
+        CanchasFavoritas favoritesList = user.getCanchasFavoritas();
+
+        if (favoritesList != null) {
+            List<Cancha> canchaList = favoritesList.getCanchas();
+            List<CanchaDTO> canchaDTOS = new ArrayList<>();
+
+            if (!canchaList.isEmpty()) {
+                for (Cancha cancha : canchaList) {
+                    canchaDTOS.add(converter.convert(cancha));
+                }
+                return canchaDTOS;
+            } else {
+                throw new ResourceNotFoundException("La lista de favoritos está vacía");
+            }
+        } else {
+            throw new ResourceNotFoundException("La lista de favoritos no existe");
+        }
+    }
+
 
 
     @Override

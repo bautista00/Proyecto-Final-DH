@@ -25,7 +25,7 @@ public interface UserService extends UserDetailsService {
     UserDTO getUser(String token) throws ResourceNotFoundException;
 
 
-//    List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException;
+    List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException;
 
 
     void modificarUser(UserDTO userDTO) throws ResourceNotFoundException;

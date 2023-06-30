@@ -47,8 +47,8 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Valoracion> valoracionList;
 
-//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    private CanchasFavoritas listaCanchasFavoritas;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private CanchasFavoritas CanchasFavoritas;
 
 
     @Override
