@@ -39,7 +39,11 @@ public class UserController {
         return ResponseEntity.ok(userService.listarCanchasFav(token));
     }
 
-//    @PutMapping()
+    @PutMapping("/user/modificar")
+    public ResponseEntity<String> modificarUser(@RequestBody UserDTO userDTO) throws ResourceNotFoundException{
+        userService.modificarUser(userDTO);
+        return ResponseEntity.ok("Ya se actualizo el user");
+    }
 
 
 

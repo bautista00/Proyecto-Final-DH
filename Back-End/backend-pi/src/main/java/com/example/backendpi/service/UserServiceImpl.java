@@ -137,14 +137,13 @@ public class UserServiceImpl implements UserService {
     }
 
 
-//    @Override
-//    public void modificarUser(UserDTO userDTO,String token) throws ResourceNotFoundException{
-//        String email = jwtService.extractUserName(token);
-//        User user = userRepository.findByEmail(email);
-//        UserDTO userDTO1 = userToUserDTOConverter.convert(user);
-//        if (){
-//            userRepository.save(user);
-//        }
-//    }
+    @Override
+    public void modificarUser(UserDTO userDTO) throws ResourceNotFoundException{
+        User user = userDTOToUserConverter.convert(userDTO);
+        if (user != null){
+            userRepository.save(user);
+        }
+        throw new ResourceNotFoundException("no se pudo actualizar el user");
+    }
 
 }

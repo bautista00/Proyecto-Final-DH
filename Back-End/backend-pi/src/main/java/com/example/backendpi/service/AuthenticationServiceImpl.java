@@ -52,11 +52,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         emailService.sendVerificationEmail(signUpRequest);
         return AuthenticationResponse.builder()
                 .jwt(jwtService.generateToken(userDetails))
+                .email(signUpRequest.getUsername())
                 .build();
     }
 
-    public boolean verifyUser(String token) {
-        User user = userRepository.findByTokenEmail(token);
+    public boolean verifyUser(String email) {
+        User user = userRepository.findByEmail(email);
         if (user != null) {
             user.setVerified(true);
             user.setTokenEmail(null);

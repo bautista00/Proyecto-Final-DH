@@ -51,7 +51,6 @@ public class EmailServiceImpl implements EmailService {
 
     public void sendVerificationEmail(SignUpRequest signUpRequest) {
         User user = userRepository.findByEmail(signUpRequest.getUsername());
-        String verification = user.getTokenEmail();
         String subject = "Email Verification";
         String fullName = user.getName() + " " + user.getApellido();
         String content = "<html>" +
@@ -60,7 +59,7 @@ public class EmailServiceImpl implements EmailService {
                 "<img src='https://bucket-fieldrent-img.s3.us-east-2.amazonaws.com/logoEmail.png' alt='Logo' style='width: 300px;'>" + // Reemplaza con la ruta de tu logo y ajusta el ancho según sea necesario
                 "<h1 style='color: #333;'>Bienvenido " + fullName + "</h1>" +
                 "<p style='color: #777;'>Por favor, haz clic en el siguiente enlace para verificar tu cuenta:</p>" +
-                "<a href='http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/verify/" + verification + "' style='display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Verificar cuenta</a>" +
+                "<a href='http://bucket-fieldrent-front.s3-website.us-east-2.amazonaws.com/verify" + "' style='display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px;'>Verificar cuenta</a>" +
                 "</div>" +
                 "</body>" +
                 "</html>";

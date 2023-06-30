@@ -1,5 +1,6 @@
 package com.example.backendpi.controller;
 
+import com.example.backendpi.domain.User;
 import com.example.backendpi.dto.AuthenticationResponse;
 import com.example.backendpi.dto.LoginRequest;
 import com.example.backendpi.dto.SignUpRequest;
@@ -42,11 +43,11 @@ public class AuthenticationController {
         return authenticationService.signUp(signUpRequest);
     }
 
-    @PutMapping("/verify/{token}")
-    public ResponseEntity<String> verifyEmail(@PathVariable String token) {
-        boolean verifiedd = authenticationService.verifyUser(token);
+    @PutMapping("/verify")
+    public ResponseEntity<String> verifyEmail(@RequestParam(value = "email") String email) {
+        boolean verifiedd = authenticationService.verifyUser(email);
         if (verifiedd) {
-            emailService.sendCongratsEmail(userRepository.findByTokenEmail(token));
+            emailService.sendCongratsEmail(userRepository.findByEmail(email));
             return ResponseEntity.ok("Email verification successful.");
         } else {
             return ResponseEntity.badRequest().body("Invalid verification token.");
