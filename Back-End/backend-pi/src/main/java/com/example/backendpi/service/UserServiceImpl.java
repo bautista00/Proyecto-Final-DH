@@ -121,20 +121,20 @@ public class UserServiceImpl implements UserService {
 //
     }
 
-    @Override
-    public List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException {
-        String email = jwtService.extractUserName(token);
-        User user = userRepository.findByEmail(email);
-        List<Cancha> canchaList = user.getListaCanchasFavoritas().getCanchas();
-        List<CanchaDTO> canchaDTOS = new ArrayList<>();
-        if (canchaList.size()>0) {
-            for (Cancha cancha : canchaList) {
-                canchaDTOS.add(converter.convert(cancha));
-            }
-            return canchaDTOS;
-        }
-        throw new ResourceNotFoundException("No existe la lista de favs");
-    }
+//    @Override
+//    public List<CanchaDTO> listarCanchasFav(String token) throws ResourceNotFoundException {
+//        String email = jwtService.extractUserName(token);
+//        User user = userRepository.findByEmail(email);
+//        List<Cancha> canchaList = user.getListaCanchasFavoritas().getCanchas();
+//        List<CanchaDTO> canchaDTOS = new ArrayList<>();
+//        if (canchaList.size()>0) {
+//            for (Cancha cancha : canchaList) {
+//                canchaDTOS.add(converter.convert(cancha));
+//            }
+//            return canchaDTOS;
+//        }
+//        throw new ResourceNotFoundException("No existe la lista de favs");
+//    }
 
 
     @Override

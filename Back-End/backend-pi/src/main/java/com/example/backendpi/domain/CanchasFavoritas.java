@@ -7,25 +7,26 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+//
+//@Entity
+//@Data
+//@AllArgsConstructor
+//@NoArgsConstructor
+//public class CanchasFavoritas {
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//
+//    @ManyToMany
+//    @JoinTable(name = "canchas_favoritas",
+//            joinColumns = @JoinColumn(name = "lista_id"),
+//            inverseJoinColumns = @JoinColumn(name = "cancha_id"))
+//    private List<Cancha> canchas = new ArrayList<>();
+//
+//    @OneToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
+//
+//}
 
-@Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class CanchasFavoritas {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToMany
-    @JoinTable(name = "lista_canchas_favoritas_canchas",
-            joinColumns = @JoinColumn(name = "lista_id"),
-            inverseJoinColumns = @JoinColumn(name = "cancha_id"))
-    private List<Cancha> canchas = new ArrayList<>();
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-}

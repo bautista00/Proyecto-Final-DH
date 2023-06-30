@@ -37,6 +37,7 @@ public class Cancha {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
     @JsonFormat(pattern = "HH:mm")
     private LocalTime horaApertura;
     @JsonFormat(pattern = "HH:mm")
@@ -66,7 +67,7 @@ public class Cancha {
     private String descripcion;
 
 
-    @ManyToMany(mappedBy = "canchas")
-    private List<CanchasFavoritas> listasCanchasFavoritas = new ArrayList<>();
+//    @ManyToMany(mappedBy = "canchas")
+//    private List<CanchasFavoritas> listasCanchasFavoritas = new ArrayList<>();
 
 }

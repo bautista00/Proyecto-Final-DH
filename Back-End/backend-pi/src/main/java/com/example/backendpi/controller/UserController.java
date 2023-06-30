@@ -34,10 +34,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/listaFavs")
-    public ResponseEntity<List<CanchaDTO>> listaFavs(@RequestParam(value = "token") String token) throws ResourceNotFoundException{
-        return ResponseEntity.ok(userService.listarCanchasFav(token));
-    }
+//    @GetMapping("/user/listaFavs")
+//    public ResponseEntity<List<CanchaDTO>> listaFavs(@RequestParam(value = "token") String token) throws ResourceNotFoundException{
+//        return ResponseEntity.ok(userService.listarCanchasFav(token));
+//    }
 
     @PutMapping("/user/modificar")
     public ResponseEntity<String> modificarUser(@RequestBody UserDTO userDTO) throws ResourceNotFoundException{

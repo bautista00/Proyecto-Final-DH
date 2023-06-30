@@ -17,7 +17,6 @@ import java.util.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table (name = "Users")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,9 +47,8 @@ public class User implements UserDetails {
     @JsonIgnore
     private List<Valoracion> valoracionList;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CanchasFavoritas listaCanchasFavoritas;
-
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+//    private CanchasFavoritas listaCanchasFavoritas;
 
 
     @Override
